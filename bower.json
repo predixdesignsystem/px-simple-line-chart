@@ -1,0 +1,15 @@
+{
+  "name": "px-line-chart",
+  "version": "0.0.0",
+  "authors": [
+    "Eric Knudtson <knudtson@ge.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
