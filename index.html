@@ -22,7 +22,19 @@
                     fill: #F7F7FC;
                 }
                 text.axisLabel {
-                    color: #7C7C84;
+                    fill: #7C7C84;
+                    font-family: sans-serif;
+                    font-size: 14px;
+                    font-weight: lighter;
+                }
+                polyline.chartLine {
+                    stroke: #01B2E5;
+                    stroke-width: 1;
+                    fill: none;
+                }
+                line.thresholdLine {
+                    stroke: #FAA43A;
+                    stroke-width: 1;
                 }
                 /* ]]> */
             </style>
@@ -39,6 +51,8 @@
                 <line class="chartGrid" x1="0" x2="283" y1="114" y2="114" />
                 <line class="chartGrid" x1="0" x2="283" y1="133" y2="133" />
 
+                <line class="thresholdLine" x1="0" x2="283" y1="38" y2="38" />
+
                 <!-- vertical axis left bar --->
                 <rect class="axisBar" x="0" y="0" width="38" height="150"/>
 
@@ -53,12 +67,79 @@
                 <line class="chartGrid" x1="248" x2="248" y1="0" y2="150" />
                 <line class="chartGrid" x1="283" x2="283" y1="0" y2="150" />
 
-
                 <!-- top and bottom lines -->
                 <line class="chartBorder" x1="0" x2="283" y1="1" y2="1" />
                 <line class="chartBorder" x1="0" x2="283" y1="149" y2="149" />
-                <text class="axisLabel" x="5" y="42">100</text>
-                
+
+
+                <text class="axisLabel" x="7" y="42">100</text>
+
+                <polyline class="chartLine" points="
+                    38,32
+                    42,42
+                    46,52
+                    48,32
+                    52,30
+                    56,23
+                    60,22
+                    64,29
+                    68,23
+                    72,32
+                    76,48
+                    80,12
+                    84,16
+                    88,19
+                    92,22
+                    96,43
+                    100,48
+                    104,40
+                    108,41
+                    112,46
+                    116,48
+                    120,52
+                    124,44
+                    128,41
+                    132,49
+                    136,40
+                    140,46
+                    144,43
+                    148,78
+                    152,72
+                    156,62
+                    160,80
+                    164,102
+                    168,100
+                    172,98
+                    176,67
+                    180,52
+                    184,45
+                    188,40
+                    192,42
+                    196,45
+                    200,56
+                    204,75
+                    208,55
+                    212,14
+                    216,15
+                    220,10
+                    224,12
+                    228,10
+                    232,38
+                    236,40
+                    240,42
+                    244,39
+                    248,32
+                    252,62
+                    256,54
+                    260,52
+                    264,14
+                    268,42
+                    272,22
+                    276,13
+                    280,11
+                    284,20
+                " />
+
             </g>
 
         </svg>
