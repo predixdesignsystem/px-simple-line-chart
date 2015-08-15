@@ -1,0 +1,27 @@
+.chartBorder {
+    stroke: #000000;
+    stroke-width: 1;
+}
+.chartGrid {
+    stroke: #E4E4EA;
+    stroke-width: 1;
+    fill: none;
+}
+rect.axisBar {
+    fill: #F7F7FC;
+}
+text.axisLabel {
+    fill: #7C7C84;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: lighter;
+}
+.chartLine {
+    stroke: #01B2E5;
+    stroke-width: 1;
+    fill: none;
+}
+.thresholdLine {
+    stroke: #FAA43A;
+    stroke-width: 1;
+}
