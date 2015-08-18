@@ -1,0 +1,10 @@
+var width = 283;
+var height = 150;
+var numCols = 8;
+var numRows = 8;
+var colSize = width / numCols;
+var rowSize = height / numRows;
+var xMin = 0;
+var xMax = 10;
+var yMin = 0;
+var yMax = 30;
