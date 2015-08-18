@@ -74,7 +74,8 @@ module.exports = function (grunt) {
 
         depserve: {
             options: {
-                open: '<%= depserveOpenUrl %>'
+                open: '<%= depserveOpenUrl %>',
+                livereload: [__dirname + "/js", __dirname + "/css"]
             }
         },
 
