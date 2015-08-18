@@ -88,3 +88,8 @@ text.axisLabel {
 .thresholdLine {
   stroke: #FAA43A;
   stroke-width: 1; }
+
+.dude {
+  stroke: 1;
+  fill: 100;
+  color: black; }

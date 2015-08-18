@@ -20,8 +20,39 @@ Simple line chart component
 @demo demo.html
 -->
 <dom-module id="px-simple-line-chart">
-    <link rel="import" type="css" href="css/px-simple-line-chart.css" />
+    <!-- TODO: Why doesn't this import apply styles correctly?
+        <link rel="import" type="css" href="css/px-simple-line-chart.css" />
+    -->
     <template>
+        <style>
+            .chartBorder {
+              stroke: #000000;
+              stroke-width: 1;
+            }
+            .chartGrid {
+              stroke: #E4E4EA;
+              stroke-width: 1;
+              fill: none;
+            }
+            rect.axisBar {
+              fill: #F7F7FC;
+            }
+            text.axisLabel {
+              fill: #7C7C84;
+              font-family: sans-serif;
+              font-size: 14px;
+              font-weight: lighter;
+            }
+            .chartLine {
+              stroke: #01B2E5;
+              stroke-width: 1;
+              fill: none;
+            }
+            .thresholdLine {
+              stroke: #FAA43A;
+              stroke-width: 1;
+            }
+        </style>
         <svg id="svg"></svg>
     </template>
 </dom-module>
@@ -40,9 +71,9 @@ Simple line chart component
          * @type Object
          */
         properties: {
-            counterValue: {
-                type: Number,
-                reflect: true
+            data: {
+                type: Object,
+                observer: '_dataChanged'
             }
         },
 
@@ -60,6 +91,10 @@ Simple line chart component
             this.rowSize = this.height / this.numRows;
         },
 
+        _dataChanged: function(newValue, old) {
+            console.log(newValue, old);
+        },
+
         attached: function() {
 
             this.setSizes();
@@ -73,6 +108,7 @@ Simple line chart component
             this.addGridLines();
             this.addAxisBar();
             this.addAxisLabel();
+            this.addChartBorders();
 
         },
 
@@ -117,8 +153,8 @@ Simple line chart component
             this.svg.append("path")
                 .attr("class", "chartBorder")
                 .attr("d", this.linearLineFunction([
-                    { "x": 0, "y": this.height },
-                    { "x": this.width, "y": this.height }
+                    { "x": 0, "y": this.height - 1 },
+                    { "x": this.width, "y": this.height - 1 }
                 ])
             );
             this.svg.append("path")

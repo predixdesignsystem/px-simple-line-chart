@@ -83,10 +83,13 @@ text.axisLabel {
 .chartLine {
   stroke: #01B2E5;
   stroke-width: 1;
-  fill: none;
-}
+  fill: none; }
 
 .thresholdLine {
   stroke: #FAA43A;
-  stroke-width: 1;
-}
+  stroke-width: 1; }
+
+.dude {
+  stroke: 1;
+  fill: 100;
+  color: black; }

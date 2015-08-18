@@ -4,6 +4,7 @@
 module.exports = function (grunt) {
 
     var importOnce = require('node-sass-import-once');
+
     // Project configuration.
     grunt.initConfig({
 
@@ -84,7 +85,17 @@ module.exports = function (grunt) {
             local: {
                 webdrivers: ['chrome']
             }
+        },
+
+        concurrent: {
+            devmode: {
+                tasks: ['watch', 'depserve'],
+                options: {
+                    logConcurrentOutput: true
+                }
+            }
         }
+
     });
 
     grunt.loadNpmTasks('grunt-sass');
@@ -95,11 +106,17 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-dep-serve');
     grunt.loadNpmTasks('webdriver-support');
     grunt.loadNpmTasks('grunt-autoprefixer');
+    grunt.loadNpmTasks('grunt-sass');
+    grunt.loadNpmTasks('grunt-concurrent');
 
     // Default task.
     grunt.registerTask('default', 'Basic build', [
         'sass',
         'autoprefixer'
+    ]);
+
+    grunt.registerTask('devmode', 'Development Mode', [
+        'concurrent:devmode'
     ]);
 
     // First run task.
