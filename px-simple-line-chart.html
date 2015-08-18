@@ -24,7 +24,6 @@ Simple line chart component
     <link rel="import" type="css" href="css/px-simple-line-chart.css" />
     <template>
         <svg id="svg"></svg>
-        <h1>Hello</h1>
     </template>
 </dom-module>
 
@@ -48,8 +47,8 @@ Simple line chart component
             }
         },
 
-        width: 283,
-        height: 150,
+        width: 1083,
+        height: 350,
         numCols: 8,
         numRows: 8,
         xMin: 0,
@@ -58,8 +57,10 @@ Simple line chart component
         yMax: 30,
 
         setSizes: function() {
-            this.colSize = this.width / this.numCols;
-            this.rowSize = this.height / this.numRows;
+            this.colSize = parseInt(this.width / this.numCols);
+            this.rowSize = parseInt(this.height / this.numRows);
+            this.barWidth = this.colSize + (this.width % this.colSize);
+            this.height = this.height - (this.height % this.rowSize);
         },
 
         _dataChanged: function(newValue, old) {
@@ -80,7 +81,6 @@ Simple line chart component
             this.addAxisBar();
             this.addAxisLabel();
             this.addChartBorders();
-
             this.addStyleScope();
 
         },
@@ -95,15 +95,16 @@ Simple line chart component
                 .attr("class", "axisBar")
                 .attr("x", 1)
                 .attr("y", 0)
-                .attr("width", this.colSize - 2)
+                .attr("width", this.barWidth - 2)
                 .attr("height", this.height);
         },
 
         addAxisLabel: function() {
             this.svg.append("text")
                 .attr("class", "axisLabel")
-                .attr("x", 7)
+                .attr("x", this.barWidth/2)
                 .attr("y", 42)
+                .attr("text-anchor", "middle")
                 .text("100");
         },
 
@@ -131,8 +132,8 @@ Simple line chart component
             this.svg.append("path")
                 .attr("class", "chartBorder")
                 .attr("d", this.linearLineFunction([
-                    { "x": 0, "y": this.height - 1 },
-                    { "x": this.width, "y": this.height - 1 }
+                    { "x": 0, "y": this.height },
+                    { "x": this.width, "y": this.height}
                 ])
             );
             this.svg.append("path")
@@ -149,18 +150,23 @@ Simple line chart component
             var gridLines = [];
 
             // Vertical column lines
-            for( i = 0; i <= this.numCols; i++) {
+            gridLines.push([
+                { "x": 0.5, "y": 0 },
+                { "x": 0.5, "y": this.height }
+            ]);
+
+            for( i = 1; i <= this.numCols; i++) {
                 gridLines.push([
-                    { "x": i*this.colSize, "y": 0 },
-                    { "x": i*this.colSize, "y": this.height }
+                    { "x": ((i-1)*this.colSize)+this.barWidth-0.5, "y": 0 },
+                    { "x": ((i-1)*this.colSize)+this.barWidth-0.5, "y": this.height }
                 ]);
             };
 
             // Horizontal row lines
             for( i = 0; i <= this.numRows; i++) {
                 gridLines.push([
-                    { "x": 0, "y": i * this.rowSize },
-                    { "x": this.width, "y": i * this.rowSize }
+                    { "x": 0, "y": i*this.rowSize+0.5 },
+                    { "x": this.width, "y": i*this.rowSize+0.5 }
                 ]);
             };
 
