@@ -20,13 +20,15 @@ Simple line chart component
 @demo demo.html
 -->
 <dom-module id="px-simple-line-chart">
+    <script type="text/javascript" src="../d3/d3.js"></script>
     <link rel="import" type="css" href="css/px-simple-line-chart.css" />
     <template>
         <svg id="svg"></svg>
+        <h1>Hello</h1>
     </template>
 </dom-module>
 
-<script type="text/javascript" src="../d3/d3.js"></script>
+
 
 <script>
     Polymer({
@@ -79,6 +81,13 @@ Simple line chart component
             this.addAxisLabel();
             this.addChartBorders();
 
+            this.addStyleScope();
+
+        },
+
+        addStyleScope: function() {
+            d3.selectAll(this.svg[0][0].childNodes)
+                .classed("px-simple-line-chart", true);
         },
 
         addAxisBar: function() {

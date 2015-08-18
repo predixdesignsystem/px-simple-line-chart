@@ -91,6 +91,6 @@ text.axisLabel {
 
 .newClass {
   stroke: #000; }
-
-body {
-  background: black; }
+h1 {
+    color: red;
+}
