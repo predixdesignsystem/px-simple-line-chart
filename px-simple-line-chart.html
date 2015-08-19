@@ -1,0 +1,260 @@
+
+<!--
+    Relative paths assume component is being run from inside an app or another component, where dependencies are flat
+    siblings. When this component is run from its own repo (e.g. ui tests, examples), we assume the server is started with
+    'grunt depserve' (or similar server setup) to enable correct finding of bower dependencies for local runs
+    See https://github.sw.ge.com/jreichenberg/grunt-dep-serve#why-do-we-need-this
+-->
+<link rel="import" href="bower_components/polymer/polymer.html"/>
+
+<!--
+Simple line chart component
+
+##### Usage
+
+    <px-simple-line-chart data="{{data}}"></px-simple-line-chart>
+
+@element px-simple-line-chart
+@blurb Simple line chart component
+@homepage index.html
+@demo demo.html
+-->
+<dom-module id="px-simple-line-chart">
+    <script type="text/javascript" src="../d3/d3.js"></script>
+    <link rel="import" type="css" href="css/px-simple-line-chart.css" />
+    <template>
+        <svg id="svg"></svg>
+    </template>
+</dom-module>
+<script>
+    Polymer({
+
+        is: 'px-simple-line-chart',
+
+        /**
+         * Properties block, expose attribute values to the DOM via 'reflect'
+         *
+         * @property properties
+         * @type Object
+         */
+        properties: {
+            /**
+            * lineData
+            *
+            * Format: [ [7, 11], [10, 4], [15, 10] ... ]
+            */
+            lineData: {
+                type: Object,
+                observer: '_lineDataChanged'
+            },
+            /**
+            * threshold
+            *
+            * Format: Number
+            */
+            threshold: {
+                type: Number,
+                observer: '_thresholdChanged'
+            },
+            /**
+            * height
+            *
+            * Format: Number
+            */
+        },
+
+        width: 283,
+        height: 150,
+        numCols: 8,
+        numRows: 8,
+        xMin: 0,
+        xMax: 10,
+        yMin: 0,
+        yMax: 30,
+
+        setSizes: function() {
+            this.colSize = parseInt(this.width / this.numCols);
+            this.rowSize = parseInt(this.height / this.numRows);
+            this.barWidth = this.colSize + (this.width % this.colSize);
+            this.height = this.height - (this.height % this.rowSize);
+        },
+
+        extentWithPadding: function(data) {
+            var e = d3.extent(data, function(d) { return d[1]; });
+            var diff = Math.abs(e[0] - e[1]);
+            var pad = diff * 0.05; // pad vertical by 5%
+            return [ e[0] - pad, e[1] + pad ];
+        },
+
+        _lineDataChanged: function(data, previous) {
+            this.drawChart();
+        },
+
+        attachSVG: function() {
+            this.svg = d3.select("svg")
+                .attr("width", this.width)
+                .attr("height", this.height);
+        },
+
+        drawChartLine: function() {
+            this.svg.append("path")
+                .datum(this.lineData)
+                .attr("class", "chartLine")
+                .attr("d", this.chartLineFunction);
+            this.addStyleScope();
+        },
+
+        setScales: function() {
+            this.xScale = d3.scale.linear()
+                .range([this.barWidth+0.5, this.width-0.5])
+                .domain(d3.extent(this.lineData, function(d) { return d[0]; }));
+            this.yScale = d3.scale.linear()
+                .range([this.height, 0])
+                .domain(this.extentWithPadding(this.lineData));
+        },
+
+        drawChart: function() {
+            if(this.lineData) {
+                this.setSizes();
+                this.setScales();
+                this.setChartLineFunction();
+                this.setLinearLineFunction();
+                this.attachSVG();
+                this.addGridLines();
+                this.addAxisBar();
+                this.addChartBorders();
+                this.drawChartLine();
+                this.drawAxisLabel();
+                this.addStyleScope();
+            } else {
+                var that = this;
+                var timeout = setTimeout(function(){ that.drawChart(); }, 100);
+            }
+        },
+
+        // Fired on attached event
+        attached: function() {
+            this.drawChart();
+        },
+
+        addStyleScope: function() {
+            d3.selectAll(this.svg[0][0].childNodes)
+                .classed("px-simple-line-chart", true);
+        },
+
+        addAxisBar: function() {
+            this.svg.append("rect")
+                .attr("class", "axisBar")
+                .attr("x", 1)
+                .attr("y", 0)
+                .attr("width", this.barWidth - 2)
+                .attr("height", this.height);
+        },
+
+        drawAxisLabel: function() {
+            var y = this.yScale(this.threshold);
+            this.svg.append("text")
+                .attr("class", "axisLabel")
+                .attr("x", this.barWidth/2)
+                .attr("y", y + 5)
+                .attr("text-anchor", "middle")
+                .text("100");
+        },
+
+        setLinearLineFunction: function() {
+            this.linearLineFunction = d3.svg.line()
+                .x(function(d) { return d.x; })
+                .y(function(d) { return d.y; })
+                .interpolate("linear");
+        },
+
+        setChartLineFunction: function() {
+            var that = this;
+            this.chartLineFunction = d3.svg.line()
+                .x(function(d) { return that.xScale(d[0]); })
+                .y(function(d) { return that.yScale(d[1]); });
+        },
+
+        addChartBorders: function() {
+            // Append Top line and Bottom line
+            this.svg.append("path")
+                .attr("class", "chartBorder")
+                .attr("d", this.linearLineFunction([
+                    { "x": 0, "y": this.height },
+                    { "x": this.width, "y": this.height}
+                ])
+            );
+            this.svg.append("path")
+                .attr("class", "chartBorder")
+                .attr("d", this.linearLineFunction([
+                    { "x": 0, "y": 0 },
+                    { "x": this.width, "y": 0 }
+                ])
+            );
+        },
+
+        addGridLines: function() {
+
+            // Prepare gridlines matrix
+            var gridLines = [];
+
+            // Vertical column lines
+            gridLines.push([
+                { "x": 0.5, "y": 0 },
+                { "x": 0.5, "y": this.height }
+            ]);
+
+            for( i = 1; i <= this.numCols; i++) {
+                gridLines.push([
+                    { "x": ((i-1)*this.colSize)+this.barWidth-0.5, "y": 0 },
+                    { "x": ((i-1)*this.colSize)+this.barWidth-0.5, "y": this.height }
+                ]);
+            };
+
+            // Horizontal row lines
+            for( i = 0; i <= this.numRows; i++) {
+                gridLines.push([
+                    { "x": 0, "y": i*this.rowSize+0.5 },
+                    { "x": this.width, "y": i*this.rowSize+0.5 }
+                ]);
+            };
+
+            // Append grid lines to svg
+            for(i=0;i<gridLines.length;i++) {
+                this.svg.append("path")
+                    .attr("class", "chartGrid")
+                    .attr("d", this.linearLineFunction(gridLines[i]));
+            };
+
+        },
+
+        drawThreshold: function() {
+            if(this.svg) {
+                var y = this.yScale(this.threshold);
+                var path = this.svg.select('.thresholdLine');
+                if(path.empty()) {
+                    path = this.svg.append("path");
+                };
+                path.attr("class", "thresholdLine")
+                    .attr("d", this.linearLineFunction([
+                        { "x": this.barWidth, "y": y },
+                        { "x": this.width, "y": y }
+                    ])
+                );
+                this.addStyleScope();
+            } else {
+                var that = this;
+                var timeout = setTimeout(function() {
+                    that.drawThreshold();
+                }, 100)
+            }
+
+        },
+
+        _thresholdChanged: function(newValue, oldValue) {
+            this.threshold = newValue;
+            this.drawThreshold();
+        }
+
+    });
+</script>
