@@ -55,7 +55,12 @@ Simple line chart component
             threshold: {
                 type: Number,
                 observer: '_thresholdChanged'
-            }
+            },
+            /**
+            * height
+            *
+            * Format: Number
+            */
         },
 
         width: 283,
@@ -74,21 +79,25 @@ Simple line chart component
             this.height = this.height - (this.height % this.rowSize);
         },
 
-        _lineDataChanged: function(data, previous) {
+        extentWithPadding: function(data) {
+            var e = d3.extent(data, function(d) { return d[1]; });
+            var diff = Math.abs(e[0] - e[1]);
+            var pad = diff * 0.05; // pad vertical by 5%
+            return [ e[0] - pad, e[1] + pad ];
+        },
 
+        _lineDataChanged: function(data, previous) {
             this.xScale.domain(
                 d3.extent(data, function(d) { return d[0]; })
             );
             this.yScale.domain(
-                d3.extent(data, function(d) { return d[1]; })
+                this.extentWithPadding(data)
             );
             this.svg.append("path")
                 .datum(data)
                 .attr("class", "chartLine")
                 .attr("d", this.chartLineFunction);
-
             this.addStyleScope();
-
         },
 
         attached: function() {
@@ -124,7 +133,6 @@ Simple line chart component
 
         drawAxisLabel: function() {
             var y = this.yScale(this.threshold);
-            console.log('y', y)
             this.svg.append("text")
                 .attr("class", "axisLabel")
                 .attr("x", this.barWidth/2)
