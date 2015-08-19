@@ -38,14 +38,28 @@ Simple line chart component
          * @type Object
          */
         properties: {
+            /**
+            * lineData
+            *
+            * Format: [ [7, 11], [10, 4], [15, 10] ... ]
+            */
             lineData: {
                 type: Object,
                 observer: '_lineDataChanged'
+            },
+            /**
+            * threshold
+            *
+            * Format: Number
+            */
+            threshold: {
+                type: Number,
+                observer: '_thresholdChanged'
             }
         },
 
-        width: 283*2,
-        height: 150*2,
+        width: 283,
+        height: 150,
         numCols: 8,
         numRows: 8,
         xMin: 0,
@@ -60,11 +74,7 @@ Simple line chart component
             this.height = this.height - (this.height % this.rowSize);
         },
 
-        _lineDataChanged: function(newValue, old) {
-            console.log('data updates')
-            console.log(newValue, old);
-
-            var data = newValue.series;
+        _lineDataChanged: function(data, previous) {
 
             this.xScale.domain(
                 d3.extent(data, function(d) { return d[0]; })
@@ -72,12 +82,13 @@ Simple line chart component
             this.yScale.domain(
                 d3.extent(data, function(d) { return d[1]; })
             );
-
             this.svg.append("path")
                 .datum(data)
                 .attr("class", "chartLine")
                 .attr("d", this.chartLineFunction);
-                this.addStyleScope();
+
+            this.addStyleScope();
+
         },
 
         attached: function() {
@@ -92,7 +103,6 @@ Simple line chart component
 
             this.addGridLines();
             this.addAxisBar();
-            this.addAxisLabel();
             this.addChartBorders();
             this.addStyleScope();
 
@@ -112,11 +122,13 @@ Simple line chart component
                 .attr("height", this.height);
         },
 
-        addAxisLabel: function() {
+        drawAxisLabel: function() {
+            var y = this.yScale(this.threshold);
+            console.log('y', y)
             this.svg.append("text")
                 .attr("class", "axisLabel")
                 .attr("x", this.barWidth/2)
-                .attr("y", 42)
+                .attr("y", y + 5)
                 .attr("text-anchor", "middle")
                 .text("100");
         },
@@ -131,7 +143,7 @@ Simple line chart component
         setChartLineFunction: function() {
             this.xScale = d3.scale.linear()
                 .domain([this.xMin, this.xMax])
-                .range([this.colSize, this.width]); // start after first column
+                .range([this.barWidth+0.5, this.width-0.5]); // start after first column
             this.yScale = d3.scale.linear()
                 .domain([this.yMin, this.yMax])
                 .range([this.height, 0]);
@@ -192,33 +204,30 @@ Simple line chart component
             };
         },
 
-        addThresholdLine: function(svg, y, width) {
-            svg.append("path")
-                .attr("class", "thresholdLine")
-                .attr("d", this.linearLineFunction([
-                    { "x": 0, "y": y },
-                    { "x": width, "y": y }
-                ])
-            );
+        drawThreshold: function() {
+
+            if(this.svg) {
+                var y = this.yScale(this.threshold);
+                this.svg.append("path")
+                    .attr("class", "thresholdLine")
+                    .attr("d", this.linearLineFunction([
+                        { "x": this.barWidth, "y": y },
+                        { "x": this.width, "y": y }
+                    ])
+                );
+                this.drawAxisLabel();
+                this.addStyleScope();
+            } else {
+                var that = this;
+                var timeout = setTimeout(function() {
+                    that.drawThreshold();
+                }, 100)
+            }
         },
 
-
-        /**
-         * Handles click on the element defined in 'on-click' on the template
-         *
-         * @method handleClick
-         */
-        handleClick: function(event, detail, sender) {
-            this.increment();
-        },
-
-        /**
-         * Increments the counter
-         *
-         * @method increment
-         */
-        increment: function () {
-            this.counterValue++;
+        _thresholdChanged: function(newValue, oldValue) {
+            this.threshold = newValue;
+            this.drawThreshold();
         }
 
     });
