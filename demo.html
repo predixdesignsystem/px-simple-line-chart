@@ -4,27 +4,26 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="http://faviconist.com/icons/deb05d00a29ec744569f679f21140ba8/favicon.ico" />
         <title>px-simple-line-chart Demo</title>
         <!-- Requires Webcomponents.js polyfill is provided by the page for browsers that don't support html imports -->
         <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
         <!-- Import custom element. Note: see comment about relative paths to dependencies in the *.html file referenced below -->
+        <link rel="import" href="bower_components/iron-ajax/iron-ajax.html"/>
         <link rel="import" href="px-simple-line-chart.html"/>
-        <link rel="import" href="../iron-ajax/iron-ajax.html"/>
     </head>
 
     <body>
-        <!-- instance 1, "predix" theme -->
-        <px-simple-line-chart id="demo-line-chart" data="{}">&hearts;</px-simple-line-chart>
-        <iron-ajax
-            auto
-            url="demo-data/sample-data.json"
-            lastResponse="hresponse"
-            handle-as="json">
-        </iron-ajax>
-        <script>
-            var hresponse = function(dude) {
-                console.log('dude', dude)
-            }
-        </script>
+
+        <template id="just-for-demo" is="dom-bind">
+            <px-simple-line-chart id="demo-line-chart" line-data="{{sampleData}}">&hearts;</px-simple-line-chart>
+            <iron-ajax
+                auto
+                url="demo-data/sample-data.json"
+                handleAs="json"
+                last-response="{{sampleData}}">
+            </iron-ajax>
+        </template>
+
     </body>
 </html>

@@ -5,7 +5,7 @@
     'grunt depserve' (or similar server setup) to enable correct finding of bower dependencies for local runs
     See https://github.sw.ge.com/jreichenberg/grunt-dep-serve#why-do-we-need-this
 -->
-<link rel="import" href="../polymer/polymer.html"/>
+<link rel="import" href="bower_components/polymer/polymer.html"/>
 
 <!--
 Simple line chart component
@@ -26,9 +26,6 @@ Simple line chart component
         <svg id="svg"></svg>
     </template>
 </dom-module>
-
-
-
 <script>
     Polymer({
 
@@ -41,14 +38,14 @@ Simple line chart component
          * @type Object
          */
         properties: {
-            data: {
+            lineData: {
                 type: Object,
-                observer: '_dataChanged'
+                observer: '_lineDataChanged'
             }
         },
 
-        width: 1083,
-        height: 350,
+        width: 283*2,
+        height: 150*2,
         numCols: 8,
         numRows: 8,
         xMin: 0,
@@ -63,8 +60,24 @@ Simple line chart component
             this.height = this.height - (this.height % this.rowSize);
         },
 
-        _dataChanged: function(newValue, old) {
+        _lineDataChanged: function(newValue, old) {
+            console.log('data updates')
             console.log(newValue, old);
+
+            var data = newValue.series;
+
+            this.xScale.domain(
+                d3.extent(data, function(d) { return d[0]; })
+            );
+            this.yScale.domain(
+                d3.extent(data, function(d) { return d[1]; })
+            );
+
+            this.svg.append("path")
+                .datum(data)
+                .attr("class", "chartLine")
+                .attr("d", this.chartLineFunction);
+                this.addStyleScope();
         },
 
         attached: function() {
@@ -116,15 +129,16 @@ Simple line chart component
         },
 
         setChartLineFunction: function() {
-            var xScale = d3.scale.linear()
+            this.xScale = d3.scale.linear()
                 .domain([this.xMin, this.xMax])
                 .range([this.colSize, this.width]); // start after first column
-            var yScale = d3.scale.linear()
+            this.yScale = d3.scale.linear()
                 .domain([this.yMin, this.yMax])
                 .range([this.height, 0]);
+            var that = this;
             this.chartLineFunction = d3.svg.line()
-                .x(function(d) { return xScale(d.date); })
-                .y(function(d) { return yScale(d.close); });
+                .x(function(d) { return that.xScale(d[0]); })
+                .y(function(d) { return that.yScale(d[1]); });
         },
 
         addChartBorders: function() {
