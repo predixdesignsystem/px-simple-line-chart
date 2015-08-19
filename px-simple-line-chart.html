@@ -87,34 +87,54 @@ Simple line chart component
         },
 
         _lineDataChanged: function(data, previous) {
-            this.xScale.domain(
-                d3.extent(data, function(d) { return d[0]; })
-            );
-            this.yScale.domain(
-                this.extentWithPadding(data)
-            );
+            this.drawChart();
+        },
+
+        attachSVG: function() {
+            this.svg = d3.select("svg")
+                .attr("width", this.width)
+                .attr("height", this.height);
+        },
+
+        drawChartLine: function() {
             this.svg.append("path")
-                .datum(data)
+                .datum(this.lineData)
                 .attr("class", "chartLine")
                 .attr("d", this.chartLineFunction);
             this.addStyleScope();
         },
 
+        setScales: function() {
+            this.xScale = d3.scale.linear()
+                .range([this.barWidth+0.5, this.width-0.5])
+                .domain(d3.extent(this.lineData, function(d) { return d[0]; }));
+            this.yScale = d3.scale.linear()
+                .range([this.height, 0])
+                .domain(this.extentWithPadding(this.lineData));
+        },
+
+        drawChart: function() {
+            if(this.lineData) {
+                this.setSizes();
+                this.setScales();
+                this.setChartLineFunction();
+                this.setLinearLineFunction();
+                this.attachSVG();
+                this.addGridLines();
+                this.addAxisBar();
+                this.addChartBorders();
+                this.drawChartLine();
+                this.drawAxisLabel();
+                this.addStyleScope();
+            } else {
+                var that = this;
+                var timeout = setTimeout(function(){ that.drawChart(); }, 100);
+            }
+        },
+
+        // Fired on attached event
         attached: function() {
-
-            this.setSizes();
-            this.setChartLineFunction();
-            this.setLinearLineFunction();
-
-            this.svg = d3.select("svg")
-                .attr("width", this.width)
-                .attr("height", this.height);
-
-            this.addGridLines();
-            this.addAxisBar();
-            this.addChartBorders();
-            this.addStyleScope();
-
+            this.drawChart();
         },
 
         addStyleScope: function() {
@@ -149,12 +169,6 @@ Simple line chart component
         },
 
         setChartLineFunction: function() {
-            this.xScale = d3.scale.linear()
-                .domain([this.xMin, this.xMax])
-                .range([this.barWidth+0.5, this.width-0.5]); // start after first column
-            this.yScale = d3.scale.linear()
-                .domain([this.yMin, this.yMax])
-                .range([this.height, 0]);
             var that = this;
             this.chartLineFunction = d3.svg.line()
                 .x(function(d) { return that.xScale(d[0]); })
@@ -180,6 +194,7 @@ Simple line chart component
         },
 
         addGridLines: function() {
+
             // Prepare gridlines matrix
             var gridLines = [];
 
@@ -210,20 +225,22 @@ Simple line chart component
                     .attr("class", "chartGrid")
                     .attr("d", this.linearLineFunction(gridLines[i]));
             };
+
         },
 
         drawThreshold: function() {
-
             if(this.svg) {
                 var y = this.yScale(this.threshold);
-                this.svg.append("path")
-                    .attr("class", "thresholdLine")
+                var path = this.svg.select('.thresholdLine');
+                if(path.empty()) {
+                    path = this.svg.append("path");
+                };
+                path.attr("class", "thresholdLine")
                     .attr("d", this.linearLineFunction([
                         { "x": this.barWidth, "y": y },
                         { "x": this.width, "y": y }
                     ])
                 );
-                this.drawAxisLabel();
                 this.addStyleScope();
             } else {
                 var that = this;
@@ -231,6 +248,7 @@ Simple line chart component
                     that.drawThreshold();
                 }, 100)
             }
+
         },
 
         _thresholdChanged: function(newValue, oldValue) {
