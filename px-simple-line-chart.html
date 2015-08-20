@@ -23,7 +23,7 @@ Simple line chart component
     <script type="text/javascript" src="../d3/d3.js"></script>
     <link rel="import" type="css" href="css/px-simple-line-chart.css" />
     <template>
-        <svg id="svg"></svg>
+        <svg class="px-simple-line-chart-svg"></svg>
     </template>
 </dom-module>
 <script>
@@ -45,7 +45,7 @@ Simple line chart component
             */
             lineData: {
                 type: Object,
-                observer: '_lineDataChanged'
+                observer: 'drawChartDebounced'
             },
             /**
             * threshold
@@ -54,19 +54,27 @@ Simple line chart component
             */
             threshold: {
                 type: Number,
-                observer: '_thresholdChanged'
+                observer: 'drawChartDebounced'
             },
             /**
             * height
             *
             * Format: Number
             */
+            width: {
+                type: Number,
+                observer: 'drawChartDebounced',
+                value: 583
+            },
+            height: {
+                type: Number,
+                observer: 'drawChartDebounced',
+                value: 250
+            }
         },
 
-        width: 283,
-        height: 150,
-        numCols: 8,
-        numRows: 8,
+        numCols: 14,
+        numRows: 14,
         xMin: 0,
         xMax: 10,
         yMin: 0,
@@ -76,7 +84,16 @@ Simple line chart component
             this.colSize = parseInt(this.width / this.numCols);
             this.rowSize = parseInt(this.height / this.numRows);
             this.barWidth = this.colSize + (this.width % this.colSize);
+            this.padding = this.getAxisBarPadding();
+            if(this.padding > 0) {
+                this.colSize = parseInt( (this.width - this.padding) / this.numCols);
+                this.barWidth = this.barWidth + this.padding;
+            }
             this.height = this.height - (this.height % this.rowSize);
+        },
+
+        resetSizes: function() {
+            barWidth();
         },
 
         extentWithPadding: function(data) {
@@ -86,14 +103,22 @@ Simple line chart component
             return [ e[0] - pad, e[1] + pad ];
         },
 
-        _lineDataChanged: function(data, previous) {
-            this.drawChart();
+        drawChartDebounced: function(data, previous) {
+            this.debounce('drawChart', function() {
+                this.drawChart();
+            }, 200);
         },
 
         attachSVG: function() {
-            this.svg = d3.select("svg")
+
+            // select the svg element
+            this.svg = d3.select(this.$$(".px-simple-line-chart-svg"))
                 .attr("width", this.width)
                 .attr("height", this.height);
+
+            // Remove previous child elements
+            this.svg.text("");
+
         },
 
         drawChartLine: function() {
@@ -114,15 +139,19 @@ Simple line chart component
         },
 
         drawChart: function() {
+
+            console.log('drawChart');
+
             if(this.lineData) {
+                this.attachSVG();
                 this.setSizes();
                 this.setScales();
                 this.setChartLineFunction();
                 this.setLinearLineFunction();
-                this.attachSVG();
                 this.addGridLines();
                 this.addAxisBar();
                 this.addChartBorders();
+                this.drawThresholdLine();
                 this.drawChartLine();
                 this.drawAxisLabel();
                 this.addStyleScope();
@@ -134,12 +163,16 @@ Simple line chart component
 
         // Fired on attached event
         attached: function() {
-            this.drawChart();
+            this.debounce('drawChart', function() {
+                this.drawChart();
+            }, 200);
         },
 
         addStyleScope: function() {
-            d3.selectAll(this.svg[0][0].childNodes)
-                .classed("px-simple-line-chart", true);
+            if(this.svg[0] && this.svg[0][0]) {
+                d3.selectAll(this.svg[0][0].childNodes)
+                    .classed("px-simple-line-chart", true);
+            }
         },
 
         addAxisBar: function() {
@@ -153,12 +186,23 @@ Simple line chart component
 
         drawAxisLabel: function() {
             var y = this.yScale(this.threshold);
-            this.svg.append("text")
+            this.barLabel = this.svg.append("text")
                 .attr("class", "axisLabel")
-                .attr("x", this.barWidth/2)
-                .attr("y", y + 5)
                 .attr("text-anchor", "middle")
-                .text("100");
+                .text(this.threshold.toString())
+                .attr("x", this.barWidth/2)
+                .attr("y", y + 5);
+        },
+
+        getAxisBarPadding: function() {
+            this.barLabel = this.svg.append("text")
+                .attr("class", "axisLabel")
+                .attr("text-anchor", "middle")
+                .text(this.threshold.toString());
+            var labelWidth = parseInt(
+                this.barLabel.style("width").split('px')[0]
+            );
+            return (labelWidth+4) - this.barWidth;
         },
 
         setLinearLineFunction: function() {
@@ -228,7 +272,7 @@ Simple line chart component
 
         },
 
-        drawThreshold: function() {
+        drawThresholdLine: function() {
             if(this.svg) {
                 var y = this.yScale(this.threshold);
                 var path = this.svg.select('.thresholdLine');
@@ -246,14 +290,9 @@ Simple line chart component
                 var that = this;
                 var timeout = setTimeout(function() {
                     that.drawThreshold();
-                }, 100)
+                }, 100);
             }
 
-        },
-
-        _thresholdChanged: function(newValue, oldValue) {
-            this.threshold = newValue;
-            this.drawThreshold();
         }
 
     });
