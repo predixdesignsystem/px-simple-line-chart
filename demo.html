@@ -17,6 +17,7 @@
     <body>
 
         <template id="just-for-demo" is="dom-bind">
+
             <div style="width: 300px; float: left;">
                 <label>Width:</label>
                 <px-slider
@@ -50,39 +51,56 @@
                 </px-slider>
             </div>
             <br/><br/><br/>
+            <br/><br/><br/>
+            <!--
             <px-simple-line-chart
                 id="demo-line-chart"
                 line-data="{{sampleData.series}}"
                 width="{{width}}"
                 height="{{height}}"
-                num-rows="{{rows}}"
-                num-cols="{{columns}}"
-                threshold="1">&hearts;</px-simple-line-chart>
+                rows="{{rows}}"
+                columns="{{columns}}"
+                threshold="1.1">&hearts;</px-simple-line-chart>
+            -->
+            <br/><br/><br/>
             <br/><br/><br/>
             <px-simple-line-chart
                 id="demo-line-chart"
                 line-data="{{sampleData.series}}"
-                width="350"
-                height="190"
+                width="460"
+                height="490"
                 threshold="0.95"
-                rows="{{rows}}"
-                columns="{{columns}}">&hearts;</px-simple-line-chart>
+                columns="38"
+                rows="38"
+                >&hearts;</px-simple-line-chart>
+            <br />
             <br />
             <px-simple-line-chart
                 id="demo-line-chart"
                 line-data="{{sampleData.series}}"
+                width="360"
+                height="290"
+                threshold="0.95"
+                >&hearts;</px-simple-line-chart>
+            <!--
+            <px-simple-line-chart
+                id="demo-line-chart"
+                line-data="{{sampleData.series}}"
                 width="350"
-                height="190"
+                height="295"
+                rows="46"
+                columns="46"
                 threshold="0.99">&hearts;</px-simple-line-chart>
             <br />
-            <br />
+            <br />-->
+            <!--
             <px-simple-line-chart
                 id="demo-line-chart"
                 line-data="{{sampleData.series}}"
-                width="650"
-                height="290"
+                width="1050"
+                height="790"
                 threshold="1.1">&hearts;</px-simple-line-chart>
-
+            -->
             <iron-ajax
                 auto
                 url="demo-data/sample-data.json"

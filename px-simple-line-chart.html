@@ -71,34 +71,29 @@ Simple line chart component
                 observer: 'drawChartDebounced',
                 value: 250
             },
-            numCols: {
+            columns: {
                 type: Number,
                 observer: 'drawChartDebounced',
-                value: 8
+                value: 7
             },
-            numRows: {
+            rows: {
                 type: Number,
                 observer: 'drawChartDebounced',
-                value: 8
+                value: 7
             }
         },
 
-        xMin: 0,
-        xMax: 10,
-        yMin: 0,
-        yMax: 30,
-
         setSizes: function() {
-            this.colSize = parseInt(this.width / this.numCols);
-            this.rowSize = parseInt(this.height / this.numRows);
-            this.barWidth = parseInt( this.colSize + (this.width % this.colSize));
+            this.colSize = parseInt(this.width / this.columns);
+            this.rowSize = parseInt(this.height / this.rows);
+            this.barWidth = parseInt( this.columns + (this.width % this.columns));
             this.padding = this.getAxisBarPadding();
             if(this.padding > 0) {
                 this.barWidth = this.barWidth + this.padding;
-                this.colSize = parseInt(
-                    ((this.width - this.barWidth) / this.numCols)
+                this.columns = parseInt(
+                    ((this.width - this.barWidth) / this.columns)
                 );
-                this.barWidth += ((this.width - this.barWidth) % this.colSize);
+                this.barWidth += ((this.width - this.barWidth) % this.columns);
             }
             this.height = this.height - (this.height % this.rowSize);
         },
@@ -173,10 +168,12 @@ Simple line chart component
         attached: function() {
             this.debounce('drawChart', function() {
                 this.drawChart();
-            }, 200);
+            }, 100);
         },
 
         addStyleScope: function() {
+            // polymer does not apply the local style-scope classes to svg child nodes
+            // so we need to add .px-simple-line-chart-svg here
             if(this.svg[0] && this.svg[0][0]) {
                 d3.selectAll(this.svg[0][0].childNodes)
                     .classed("px-simple-line-chart", true);
@@ -262,21 +259,21 @@ Simple line chart component
                 }
             ]);
 
-            for( i = 0; i <= this.numCols; i++) {
+            for( i = 0; i <= this.columns; i++) {
                 gridLines.push([
                     {
-                        "x": (i*this.colSize)+this.barWidth-0.5,
+                        "x": (i*this.columns)+this.barWidth-0.5,
                         "y": 0
                     },
                     {
-                        "x": (i*this.colSize)+this.barWidth-0.5,
+                        "x": (i*this.columns)+this.barWidth-0.5,
                         "y": this.height
                     }
                 ]);
             };
 
             // Horizontal row lines
-            for( i = 0; i <= this.numRows; i++) {
+            for( i = 0; i <= this.rows; i++) {
                 gridLines.push([
                     { "x": 0, "y": i*this.rowSize+0.5 },
                     { "x": this.width, "y": i*this.rowSize+0.5 }
