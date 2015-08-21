@@ -70,11 +70,19 @@ Simple line chart component
                 type: Number,
                 observer: 'drawChartDebounced',
                 value: 250
+            },
+            numCols: {
+                type: Number,
+                observer: 'drawChartDebounced',
+                value: 8
+            },
+            numRows: {
+                type: Number,
+                observer: 'drawChartDebounced',
+                value: 8
             }
         },
 
-        numCols: 15,
-        numRows: 14,
         xMin: 0,
         xMax: 10,
         yMin: 0,

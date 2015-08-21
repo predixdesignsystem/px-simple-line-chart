@@ -33,12 +33,30 @@
                     max="550">
                 </px-slider>
             </div>
+            <div style="width: 300px; float: left;">
+                <label>Rows:</label>
+                <px-slider
+                    value="{{rows}}"
+                    min="2"
+                    max="50">
+                </px-slider>
+            </div>
+            <div style="width: 300px; float: left;">
+                <label>Columns:</label>
+                <px-slider
+                    value="{{columns}}"
+                    min="2"
+                    max="50">
+                </px-slider>
+            </div>
             <br/><br/><br/>
             <px-simple-line-chart
                 id="demo-line-chart"
                 line-data="{{sampleData.series}}"
                 width="{{width}}"
                 height="{{height}}"
+                num-rows="{{rows}}"
+                num-cols="{{columns}}"
                 threshold="1">&hearts;</px-simple-line-chart>
             <br/><br/><br/>
             <px-simple-line-chart
@@ -46,7 +64,9 @@
                 line-data="{{sampleData.series}}"
                 width="350"
                 height="190"
-                threshold="0.95">&hearts;</px-simple-line-chart>
+                threshold="0.95"
+                rows="{{rows}}"
+                columns="{{columns}}">&hearts;</px-simple-line-chart>
             <br />
             <px-simple-line-chart
                 id="demo-line-chart"
