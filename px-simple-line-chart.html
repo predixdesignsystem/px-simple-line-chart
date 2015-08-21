@@ -84,18 +84,18 @@ Simple line chart component
         },
 
         setSizes: function() {
-            this.colSize = parseInt(this.width / this.columns);
-            this.rowSize = parseInt(this.height / this.rows);
-            this.barWidth = parseInt( this.colSize + (this.width % this.colSize));
+            this.columnWidth = parseInt(this.width / this.columns);
+            this.rowHeight = parseInt(this.height / this.rows);
+            this.barWidth = parseInt( this.columnWidth + (this.width % this.columnWidth));
             this.padding = this.getAxisBarPadding();
             if(this.padding > 0) {
                 this.barWidth = this.barWidth + this.padding;
-                this.colSize = parseInt(
+                this.columnWidth = parseInt(
                     ((this.width - this.barWidth) / this.columns)
                 );
-                this.barWidth += ((this.width - this.barWidth) % this.colSize);
+                this.barWidth += ((this.width - this.barWidth) % this.columnWidth);
             }
-            this.height = this.height - (this.height % this.rowSize);
+            this.height = this.height - (this.height % this.rowHeight);
         },
 
         resetSizes: function() {
@@ -263,11 +263,11 @@ Simple line chart component
             for( i = 0; i <= this.columns; i++) {
                 gridLines.push([
                     {
-                        "x": (i*this.colSize)+this.barWidth-0.5,
+                        "x": (i*this.columnWidth)+this.barWidth-0.5,
                         "y": 0
                     },
                     {
-                        "x": (i*this.colSize)+this.barWidth-0.5,
+                        "x": (i*this.columnWidth)+this.barWidth-0.5,
                         "y": this.height
                     }
                 ]);
@@ -276,8 +276,8 @@ Simple line chart component
             // Horizontal row lines
             for( i = 0; i <= this.rows; i++) {
                 gridLines.push([
-                    { "x": 0, "y": i*this.rowSize+0.5 },
-                    { "x": this.width, "y": i*this.rowSize+0.5 }
+                    { "x": 0, "y": i*this.rowHeight+0.5 },
+                    { "x": this.width, "y": i*this.rowHeight+0.5 }
                 ]);
             };
 
