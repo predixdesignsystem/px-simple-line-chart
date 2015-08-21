@@ -88,16 +88,16 @@ Simple line chart component
             this.barWidth = parseInt(this.getAxisLabelWidth() + 14);
             this.chartWidth = this.width - this.barWidth;
             this.columnWidth = parseInt(this.chartWidth / ( this.columns ));
-            var remainder = this.chartWidth % this.columns;
-            this.barWidth += remainder;
+            this.barWidth += this.chartWidth % this.columns;
+            this.chartHeight = this.height;
             this.rowHeight = parseInt(this.height / this.rows);
-            this.height = this.height - (this.height % this.rowHeight);
+            this.chartHeight = this.chartHeight - (this.height % this.rows);
         },
 
         extentWithPadding: function(data) {
             var e = d3.extent(data, function(d) { return d[1]; });
             var diff = Math.abs(e[0] - e[1]);
-            var pad = diff * 0.05; // pad vertical by 5%
+            var pad = diff * 0.1; // pad vertical by 10%
             return [ e[0] - pad, e[1] + pad ];
         },
 
@@ -132,7 +132,7 @@ Simple line chart component
                 .range([this.barWidth+0.5, this.width-0.5])
                 .domain(d3.extent(this.lineData, function(d) { return d[0]; }));
             this.yScale = d3.scale.linear()
-                .range([this.height, 0])
+                .range([this.chartHeight, 0])
                 .domain(this.extentWithPadding(this.lineData));
         },
 
@@ -178,11 +178,11 @@ Simple line chart component
                 .attr("x", 1)
                 .attr("y", 0)
                 .attr("width", this.barWidth - 2)
-                .attr("height", this.height);
+                .attr("height", this.chartHeight);
         },
 
         drawAxisLabel: function() {
-            var y = this.yScale(this.threshold);
+            var y = parseInt(this.yScale(this.threshold));
             this.barLabel = this.svg.append("text")
                 .attr("class", "axisLabel")
                 .attr("text-anchor", "middle")
@@ -230,8 +230,8 @@ Simple line chart component
             this.svg.append("path")
                 .attr("class", "chartBorder")
                 .attr("d", this.linearLineFunction([
-                    { "x": 0, "y": this.height - 0.5 },
-                    { "x": this.width, "y": this.height - 0.5 }
+                    { "x": 0, "y": this.chartHeight - 0.5 },
+                    { "x": this.width, "y": this.chartHeight - 0.5 }
                 ])
             );
         },
@@ -249,7 +249,7 @@ Simple line chart component
                 },
                 {
                     "x": 0.5,
-                    "y": this.height
+                    "y": this.chartHeight
                 }
             ]);
 
@@ -261,13 +261,13 @@ Simple line chart component
                     },
                     {
                         "x": (i*this.columnWidth)+this.barWidth-0.5,
-                        "y": this.height
+                        "y": this.chartHeight
                     }
                 ]);
             };
 
             // Horizontal row lines
-            for( i = 0; i <= this.rows; i++) {
+            for( i = 0; i <= this.rows -1; i++) {
                 gridLines.push([
                     {
                         "x": 0,
@@ -291,7 +291,7 @@ Simple line chart component
 
         drawThresholdLine: function() {
             if(this.svg) {
-                var y = this.yScale(this.threshold);
+                var y = parseInt(this.yScale(this.threshold));
                 var path = this.svg.select('.thresholdLine');
                 if(path.empty()) {
                     path = this.svg.append("path");
@@ -300,11 +300,11 @@ Simple line chart component
                     .attr("d", this.linearLineFunction([
                         {
                             "x": this.barWidth,
-                            "y": y
+                            "y": y + 0.5
                         },
                         {
                             "x": this.width,
-                            "y": y
+                            "y": y + 0.5
                         }
                     ])
                 );
