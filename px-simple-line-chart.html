@@ -84,22 +84,14 @@ Simple line chart component
         },
 
         setSizes: function() {
-            this.columnWidth = parseInt(this.width / this.columns);
+            // calculate target column width including extra column for axis bar
+            this.barWidth = parseInt(this.getAxisLabelWidth() + 10);
+            this.chartWidth = this.width - this.barWidth;
+            this.columnWidth = parseInt(this.chartWidth / ( this.columns ));
+            var remainder = this.chartWidth % this.columns;
+            this.barWidth += remainder;
             this.rowHeight = parseInt(this.height / this.rows);
-            this.barWidth = parseInt( this.columnWidth + (this.width % this.columnWidth));
-            this.padding = this.getAxisBarPadding();
-            if(this.padding > 0) {
-                this.barWidth = this.barWidth + this.padding;
-                this.columnWidth = parseInt(
-                    ((this.width - this.barWidth) / this.columns)
-                );
-                this.barWidth += ((this.width - this.barWidth) % this.columnWidth);
-            }
             this.height = this.height - (this.height % this.rowHeight);
-        },
-
-        resetSizes: function() {
-            barWidth();
         },
 
         extentWithPadding: function(data) {
@@ -199,7 +191,7 @@ Simple line chart component
                 .attr("y", y + 5);
         },
 
-        getAxisBarPadding: function() {
+        getAxisLabelWidth: function() {
             this.barLabel = this.svg.append("text")
                 .attr("class", "axisLabel")
                 .attr("text-anchor", "middle")
@@ -208,7 +200,7 @@ Simple line chart component
                 this.barLabel.style("width").split('px')[0]
             );
             var barLabel = this.barLabel.remove(); // cleanup, we will redraw it later on
-            return (labelWidth+4) - this.barWidth;
+            return labelWidth;
         },
 
         setLinearLineFunction: function() {
@@ -226,19 +218,20 @@ Simple line chart component
         },
 
         addChartBorders: function() {
-            // Append Top line and Bottom line
+            // Top line
             this.svg.append("path")
                 .attr("class", "chartBorder")
                 .attr("d", this.linearLineFunction([
-                    { "x": 0, "y": this.height },
-                    { "x": this.width, "y": this.height}
+                    { "x": 0, "y": 0.5 },
+                    { "x": this.width, "y": 0.5 }
                 ])
             );
+            // Bottom line
             this.svg.append("path")
                 .attr("class", "chartBorder")
                 .attr("d", this.linearLineFunction([
-                    { "x": 0, "y": 0 },
-                    { "x": this.width, "y": 0 }
+                    { "x": 0, "y": this.height - 0.5 },
+                    { "x": this.width, "y": this.height - 0.5 }
                 ])
             );
         },
@@ -276,8 +269,14 @@ Simple line chart component
             // Horizontal row lines
             for( i = 0; i <= this.rows; i++) {
                 gridLines.push([
-                    { "x": 0, "y": i*this.rowHeight+0.5 },
-                    { "x": this.width, "y": i*this.rowHeight+0.5 }
+                    {
+                        "x": 0,
+                        "y": i*this.rowHeight+0.5
+                    },
+                    {
+                        "x": this.width,
+                        "y": i*this.rowHeight+0.5
+                    }
                 ]);
             };
 
@@ -299,8 +298,14 @@ Simple line chart component
                 };
                 path.attr("class", "thresholdLine")
                     .attr("d", this.linearLineFunction([
-                        { "x": this.barWidth, "y": y },
-                        { "x": this.width, "y": y }
+                        {
+                            "x": this.barWidth,
+                            "y": y
+                        },
+                        {
+                            "x": this.width,
+                            "y": y
+                        }
                     ])
                 );
                 this.addStyleScope();

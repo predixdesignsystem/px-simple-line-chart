@@ -52,7 +52,7 @@
             </div>
             <br/><br/><br/>
             <br/><br/><br/>
-            <!--
+
             <px-simple-line-chart
                 id="demo-line-chart"
                 line-data="{{sampleData.series}}"
@@ -61,27 +61,30 @@
                 rows="{{rows}}"
                 columns="{{columns}}"
                 threshold="1.1">&hearts;</px-simple-line-chart>
-            -->
-            <br/><br/><br/>
+
             <br/><br/><br/>
             <px-simple-line-chart
                 id="demo-line-chart"
                 line-data="{{sampleData.series}}"
-                width="460"
-                height="490"
-                threshold="0.95"
-                columns="38"
-                rows="38"
+                width="{{width}}"
+                height="{{height}}"
+                threshold="0.99"
+                columns="{{columns}}"
+                rows="{{rows}}"
                 >&hearts;</px-simple-line-chart>
+            <br />
             <br />
             <br />
             <px-simple-line-chart
                 id="demo-line-chart"
                 line-data="{{sampleData.series}}"
-                width="360"
-                height="290"
+                width="255"
+                height="150"
                 threshold="0.95"
+                columns="1"
+                rows="10"
                 >&hearts;</px-simple-line-chart>
+
             <!--
             <px-simple-line-chart
                 id="demo-line-chart"
