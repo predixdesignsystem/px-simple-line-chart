@@ -86,14 +86,14 @@ Simple line chart component
         setSizes: function() {
             this.colSize = parseInt(this.width / this.columns);
             this.rowSize = parseInt(this.height / this.rows);
-            this.barWidth = parseInt( this.columns + (this.width % this.columns));
+            this.barWidth = parseInt( this.colSize + (this.width % this.colSize));
             this.padding = this.getAxisBarPadding();
             if(this.padding > 0) {
                 this.barWidth = this.barWidth + this.padding;
-                this.columns = parseInt(
+                this.colSize = parseInt(
                     ((this.width - this.barWidth) / this.columns)
                 );
-                this.barWidth += ((this.width - this.barWidth) % this.columns);
+                this.barWidth += ((this.width - this.barWidth) % this.colSize);
             }
             this.height = this.height - (this.height % this.rowSize);
         },
@@ -207,6 +207,7 @@ Simple line chart component
             var labelWidth = parseInt(
                 this.barLabel.style("width").split('px')[0]
             );
+            var barLabel = this.barLabel.remove(); // cleanup, we will redraw it later on
             return (labelWidth+4) - this.barWidth;
         },
 
@@ -262,11 +263,11 @@ Simple line chart component
             for( i = 0; i <= this.columns; i++) {
                 gridLines.push([
                     {
-                        "x": (i*this.columns)+this.barWidth-0.5,
+                        "x": (i*this.colSize)+this.barWidth-0.5,
                         "y": 0
                     },
                     {
-                        "x": (i*this.columns)+this.barWidth-0.5,
+                        "x": (i*this.colSize)+this.barWidth-0.5,
                         "y": this.height
                     }
                 ]);
