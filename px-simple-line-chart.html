@@ -85,7 +85,7 @@ Simple line chart component
 
         setSizes: function() {
             // calculate target column width including extra column for axis bar
-            this.barWidth = parseInt(this.getAxisLabelWidth() + 10);
+            this.barWidth = parseInt(this.getAxisLabelWidth() + 14);
             this.chartWidth = this.width - this.barWidth;
             this.columnWidth = parseInt(this.chartWidth / ( this.columns ));
             var remainder = this.chartWidth % this.columns;
