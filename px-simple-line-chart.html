@@ -73,7 +73,7 @@ Simple line chart component
             }
         },
 
-        numCols: 14,
+        numCols: 15,
         numRows: 14,
         xMin: 0,
         xMax: 10,
@@ -83,11 +83,14 @@ Simple line chart component
         setSizes: function() {
             this.colSize = parseInt(this.width / this.numCols);
             this.rowSize = parseInt(this.height / this.numRows);
-            this.barWidth = this.colSize + (this.width % this.colSize);
+            this.barWidth = parseInt( this.colSize + (this.width % this.colSize));
             this.padding = this.getAxisBarPadding();
             if(this.padding > 0) {
-                this.colSize = parseInt( (this.width - this.padding) / this.numCols);
                 this.barWidth = this.barWidth + this.padding;
+                this.colSize = parseInt(
+                    ((this.width - this.barWidth) / this.numCols)
+                );
+                this.barWidth += ((this.width - this.barWidth) % this.colSize);
             }
             this.height = this.height - (this.height % this.rowSize);
         },
@@ -139,9 +142,6 @@ Simple line chart component
         },
 
         drawChart: function() {
-
-            console.log('drawChart');
-
             if(this.lineData) {
                 this.attachSVG();
                 this.setSizes();
@@ -244,14 +244,26 @@ Simple line chart component
 
             // Vertical column lines
             gridLines.push([
-                { "x": 0.5, "y": 0 },
-                { "x": 0.5, "y": this.height }
+                {
+                    "x": 0.5,
+                    "y": 0
+                },
+                {
+                    "x": 0.5,
+                    "y": this.height
+                }
             ]);
 
-            for( i = 1; i <= this.numCols; i++) {
+            for( i = 0; i <= this.numCols; i++) {
                 gridLines.push([
-                    { "x": ((i-1)*this.colSize)+this.barWidth-0.5, "y": 0 },
-                    { "x": ((i-1)*this.colSize)+this.barWidth-0.5, "y": this.height }
+                    {
+                        "x": (i*this.colSize)+this.barWidth-0.5,
+                        "y": 0
+                    },
+                    {
+                        "x": (i*this.colSize)+this.barWidth-0.5,
+                        "y": this.height
+                    }
                 ]);
             };
 
