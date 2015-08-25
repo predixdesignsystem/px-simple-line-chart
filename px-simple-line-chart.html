@@ -57,7 +57,7 @@ Simple line chart component
                 observer: 'drawChartDebounced'
             },
             /**
-            * height
+            * width
             *
             * Format: Number
             */
@@ -66,16 +66,31 @@ Simple line chart component
                 observer: 'drawChartDebounced',
                 value: 283
             },
+            /**
+            * height
+            *
+            * Format: Number
+            */
             height: {
                 type: Number,
                 observer: 'drawChartDebounced',
                 value: 150
             },
+            /**
+            * columns
+            *
+            * Format: Number
+            */
             columns: {
                 type: Number,
                 observer: 'drawChartDebounced',
                 value: 7
             },
+            /**
+            * rows
+            *
+            * Format: Number
+            */
             rows: {
                 type: Number,
                 observer: 'drawChartDebounced',
@@ -108,15 +123,12 @@ Simple line chart component
         },
 
         attachSVG: function() {
-
             // select the svg element
             this.svg = d3.select(this.$$(".px-simple-line-chart-svg"))
                 .attr("width", this.width)
                 .attr("height", this.height);
-
             // Remove previous child elements
             this.svg.text("");
-
         },
 
         drawChartLine: function() {
@@ -152,7 +164,9 @@ Simple line chart component
                 this.addStyleScope();
             } else {
                 var that = this;
-                var timeout = setTimeout(function(){ that.drawChart(); }, 100);
+                var timeout = setTimeout(function(){
+                    that.drawChart();
+                }, 100);
             }
         },
 
@@ -237,11 +251,9 @@ Simple line chart component
         },
 
         addGridLines: function() {
-
             // Prepare gridlines matrix
             var gridLines = [];
-
-            // Vertical column lines
+            // First vertical column line
             gridLines.push([
                 {
                     "x": 0.5,
@@ -252,7 +264,7 @@ Simple line chart component
                     "y": this.chartHeight
                 }
             ]);
-
+            // Vertical column lines
             for( i = 0; i <= this.columns; i++) {
                 gridLines.push([
                     {
@@ -265,7 +277,6 @@ Simple line chart component
                     }
                 ]);
             };
-
             // Horizontal row lines
             for( i = 0; i <= this.rows -1; i++) {
                 gridLines.push([
@@ -279,14 +290,12 @@ Simple line chart component
                     }
                 ]);
             };
-
             // Append grid lines to svg
             for(i=0;i<gridLines.length;i++) {
                 this.svg.append("path")
                     .attr("class", "chartGrid")
                     .attr("d", this.linearLineFunction(gridLines[i]));
             };
-
         },
 
         drawThresholdLine: function() {
@@ -315,7 +324,6 @@ Simple line chart component
                     that.drawThreshold();
                 }, 100);
             }
-
         }
 
     });
