@@ -5,7 +5,7 @@
     'grunt depserve' (or similar server setup) to enable correct finding of bower dependencies for local runs
     See https://github.sw.ge.com/jreichenberg/grunt-dep-serve#why-do-we-need-this
 -->
-<link rel="import" href="bower_components/polymer/polymer.html"/>
+<link rel="import" href="../polymer/polymer.html"/>
 
 <!--
 Simple line chart component
@@ -172,9 +172,7 @@ Simple line chart component
 
         // Fired on attached event
         attached: function() {
-            this.debounce('drawChart', function() {
-                this.drawChart();
-            }, 100);
+            this.drawChartDebounced();
         },
 
         addStyleScope: function() {
