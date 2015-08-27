@@ -62,6 +62,7 @@
 
             <br/><br/><br/>
             <br/><br/><br/>
+            <br/><br/><br/>
 
             <px-simple-line-chart
                 id="demo-line-chart"
@@ -73,49 +74,15 @@
                 rows="{{rows}}"
                 >&hearts;</px-simple-line-chart>
 
-            <br/><br/><br/>
-
             <px-simple-line-chart
                 id="demo-line-chart"
                 line-data="{{sampleData.series}}"
-                threshold="0.95"
+                width="{{width}}"
+                height="{{height}}"
+                columns="{{columns}}"
+                rows="{{rows}}"
                 >&hearts;</px-simple-line-chart>
 
-            <br/><br/><br/>
-
-            <px-simple-line-chart
-                id="demo-line-chart"
-                line-data="{{sampleData.series}}"
-                width="455"
-                height="350"
-                threshold="0.95"
-                columns="42"
-                rows="42"
-                >&hearts;</px-simple-line-chart>
-
-            <br/><br/><br/>
-
-            <px-simple-line-chart
-                id="demo-line-chart"
-                line-data="{{sampleData.series}}"
-                width="555"
-                height="150"
-                threshold="0.95"
-                columns="42"
-                rows="22"
-                >&hearts;</px-simple-line-chart>
-
-            <br/><br/><br/>
-
-            <px-simple-line-chart
-                id="demo-line-chart"
-                line-data="{{sampleData.series}}"
-                width="355"
-                height="350"
-                threshold="0.95"
-                columns="12"
-                rows="12"
-                >&hearts;</px-simple-line-chart>
 
             <iron-ajax
                 auto

@@ -54,7 +54,8 @@ Simple line chart component
             */
             threshold: {
                 type: Number,
-                observer: 'drawChartDebounced'
+                observer: 'drawChartDebounced',
+                value: null
             },
             /**
             * width
@@ -100,10 +101,18 @@ Simple line chart component
 
         setSizes: function() {
             // calculate target column width including extra column for axis bar
-            this.barWidth = parseInt(this.getAxisLabelWidth() + 14);
+            this.barWidth = 0;
+            this.fullWidth = this.width;
+            if(this.threshold || this.high || this.low) {
+                this.barWidth = parseInt(this.getAxisLabelWidth() + 14);
+            };
             this.chartWidth = this.width - this.barWidth;
             this.columnWidth = parseInt(this.chartWidth / ( this.columns ));
-            this.barWidth += this.chartWidth % this.columns;
+            if(this.barWidth) {
+                this.barWidth += this.chartWidth % this.columns;
+            } else {
+                this.fullWidth = this.fullWidth - (this.chartWidth % this.columns);
+            }
             this.chartHeight = this.height;
             this.rowHeight = parseInt(this.height / this.rows);
             this.chartHeight = this.chartHeight - (this.height % this.rows);
@@ -141,7 +150,7 @@ Simple line chart component
 
         setScales: function() {
             this.xScale = d3.scale.linear()
-                .range([this.barWidth+0.5, this.width-0.5])
+                .range([this.barWidth+0.5, this.fullWidth-0.5])
                 .domain(d3.extent(this.lineData, function(d) { return d[0]; }));
             this.yScale = d3.scale.linear()
                 .range([this.chartHeight, 0])
@@ -158,9 +167,11 @@ Simple line chart component
                 this.addGridLines();
                 this.addAxisBar();
                 this.addChartBorders();
-                this.drawThresholdLine();
+                if(this.threshold) {
+                    this.drawThresholdLine();
+                    this.drawAxisLabel();
+                };
                 this.drawChartLine();
-                this.drawAxisLabel();
                 this.addStyleScope();
             } else {
                 var that = this;
@@ -235,7 +246,7 @@ Simple line chart component
                 .attr("class", "chartBorder")
                 .attr("d", this.linearLineFunction([
                     { "x": 0, "y": 0.5 },
-                    { "x": this.width, "y": 0.5 }
+                    { "x": this.fullWidth, "y": 0.5 }
                 ])
             );
             // Bottom line
@@ -243,7 +254,7 @@ Simple line chart component
                 .attr("class", "chartBorder")
                 .attr("d", this.linearLineFunction([
                     { "x": 0, "y": this.chartHeight - 0.5 },
-                    { "x": this.width, "y": this.chartHeight - 0.5 }
+                    { "x": this.fullWidth, "y": this.chartHeight - 0.5 }
                 ])
             );
         },
@@ -283,7 +294,7 @@ Simple line chart component
                         "y": i*this.rowHeight+0.5
                     },
                     {
-                        "x": this.width,
+                        "x": this.fullWidth,
                         "y": i*this.rowHeight+0.5
                     }
                 ]);
@@ -310,7 +321,7 @@ Simple line chart component
                             "y": y + 0.5
                         },
                         {
-                            "x": this.width,
+                            "x": this.fullWidth,
                             "y": y + 0.5
                         }
                     ])
