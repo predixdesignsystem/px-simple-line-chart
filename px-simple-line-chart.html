@@ -53,9 +53,29 @@ Simple line chart component
             * Format: Number
             */
             threshold: {
-                type: Number,
+                type: String,
                 observer: 'drawChartDebounced',
-                value: null
+                value: ''
+            },
+            /**
+            * max
+            *
+            * Format: String
+            */
+            max: {
+                type: String,
+                observer: 'drawChartDebounced',
+                value: ''
+            },
+            /**
+            * min
+            *
+            * Format: String
+            */
+            min: {
+                type: String,
+                observer: 'drawChartDebounced',
+                value: ''
             },
             /**
             * width
@@ -103,7 +123,7 @@ Simple line chart component
             // calculate target column width including extra column for axis bar
             this.barWidth = 0;
             this.fullWidth = this.width;
-            if(this.threshold || this.high || this.low) {
+            if(this.threshold || this.min || this.max) {
                 this.barWidth = parseInt(this.getAxisLabelWidth() + 14);
             };
             this.chartWidth = this.width - this.barWidth;
@@ -111,7 +131,8 @@ Simple line chart component
             if(this.barWidth) {
                 this.barWidth += this.chartWidth % this.columns;
             } else {
-                this.fullWidth = this.fullWidth - (this.chartWidth % this.columns);
+                this.fullWidth = this.fullWidth -
+                    (this.chartWidth % this.columns);
             }
             this.chartHeight = this.height;
             this.rowHeight = parseInt(this.height / this.rows);
@@ -157,20 +178,49 @@ Simple line chart component
                 .domain(this.extentWithPadding(this.lineData));
         },
 
+        reconcileMin: function() {
+            if(this.min === '') {
+                this.minString = null;
+            } else if(this.min === 'auto') {
+                this.minString = d3.min(
+                    this.lineData, function(d) { return d[1]; }
+                ).toString();
+                console.log(this.minString);
+            } else if(parseFloat(this.min) !== NaN) {
+                this.minString = this.min;
+            }
+        },
+
+        reconcileMax: function() {
+            if(this.max === '') {
+                this.maxString = null;
+            } else if(this.max === 'auto') {
+                this.maxString = d3.max(
+                    this.lineData, function(d) { return d[1]; }
+                ).toString();
+            } else if(parseFloat(this.max) !== NaN) {
+                this.maxString = this.max;
+            }
+        },
+
         drawChart: function() {
             if(this.lineData) {
+                this.reconcileMax();
+                this.reconcileMin();
                 this.attachSVG();
                 this.setSizes();
                 this.setScales();
                 this.setChartLineFunction();
                 this.setLinearLineFunction();
                 this.addGridLines();
-                this.addAxisBar();
-                this.addChartBorders();
-                if(this.threshold) {
-                    this.drawThresholdLine();
-                    this.drawAxisLabel();
+                if(this.threshold || this.min || this.max) {
+                    this.addAxisBar();
+                    this.drawAxisLabels();
+                    if(this.threshold) {
+                        this.drawThresholdLine();
+                    };
                 };
+                this.addChartBorders();
                 this.drawChartLine();
                 this.addStyleScope();
             } else {
@@ -204,7 +254,7 @@ Simple line chart component
                 .attr("height", this.chartHeight);
         },
 
-        drawAxisLabel: function() {
+        drawAxisLabels: function() {
             var y = parseInt(this.yScale(this.threshold));
             this.barLabel = this.svg.append("text")
                 .attr("class", "axisLabel")
@@ -212,13 +262,38 @@ Simple line chart component
                 .text(this.threshold.toString())
                 .attr("x", this.barWidth/2)
                 .attr("y", y + 5);
+            if(this.minString) {
+                this.minLabel = this.svg.append("text")
+                    .attr("class", "axisLabel")
+                    .attr("text-anchor", "middle")
+                    .text(this.minString)
+                    .attr("x", this.barWidth/2)
+                    .attr("y", this.height - 14);
+            };
+            if(this.maxString) {
+                this.maxLabel = this.svg.append("text")
+                    .attr("class", "axisLabel")
+                    .attr("text-anchor", "middle")
+                    .text(this.maxString)
+                    .attr("x", this.barWidth/2)
+                    .attr("y", 18);
+            }
         },
 
         getAxisLabelWidth: function() {
+            var labelStrings = [
+                this.threshold.toString() || '',
+                this.max.toString() || '',
+                this.min.toString() || ''
+            ];
+            var longestString = labelStrings.sort(function (a, b) {
+                return b.length - a.length;
+            })[0];
+
             this.barLabel = this.svg.append("text")
                 .attr("class", "axisLabel")
                 .attr("text-anchor", "middle")
-                .text(this.threshold.toString());
+                .text(longestString);
             var labelWidth = parseInt(
                 this.barLabel.style("width").split('px')[0]
             );
