@@ -65,7 +65,7 @@ Simple line chart component
             max: {
                 type: String,
                 observer: 'drawChartDebounced',
-                value: ''
+                value: null
             },
             /**
             * min
@@ -75,7 +75,7 @@ Simple line chart component
             min: {
                 type: String,
                 observer: 'drawChartDebounced',
-                value: ''
+                value: null
             },
             /**
             * width
@@ -179,28 +179,19 @@ Simple line chart component
         },
 
         reconcileMin: function() {
-            if(this.min === '') {
-                this.minString = null;
-            } else if(this.min === 'auto') {
+            if(this.min) {
                 this.minString = d3.min(
                     this.lineData, function(d) { return d[1]; }
                 ).toString();
-                console.log(this.minString);
-            } else if(parseFloat(this.min) !== NaN) {
-                this.minString = this.min;
-            }
+            };
         },
 
         reconcileMax: function() {
-            if(this.max === '') {
-                this.maxString = null;
-            } else if(this.max === 'auto') {
+            if(this.max) {
                 this.maxString = d3.max(
                     this.lineData, function(d) { return d[1]; }
                 ).toString();
-            } else if(parseFloat(this.max) !== NaN) {
-                this.maxString = this.max;
-            }
+            };
         },
 
         drawChart: function() {
@@ -280,16 +271,31 @@ Simple line chart component
             }
         },
 
+        getMaxString: function() {
+            if(this.max) {
+                return this.max.toString() || '';
+            } else {
+                return '';
+            }
+        },
+
+        getMinString: function() {
+            if(this.min) {
+                return this.min.toString() || '';
+            } else {
+                return '';
+            }
+        },
+
         getAxisLabelWidth: function() {
             var labelStrings = [
                 this.threshold.toString() || '',
-                this.max.toString() || '',
-                this.min.toString() || ''
+                this.getMinString(),
+                this.getMaxString()
             ];
             var longestString = labelStrings.sort(function (a, b) {
                 return b.length - a.length;
             })[0];
-
             this.barLabel = this.svg.append("text")
                 .attr("class", "axisLabel")
                 .attr("text-anchor", "middle")
