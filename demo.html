@@ -72,7 +72,7 @@
                 columns="{{columns}}"
                 rows="{{rows}}"
                 min
-                max
+                max="auto"
                 >&hearts;</px-simple-line-chart>
             <br/><br/><br/>
             <px-simple-line-chart
@@ -82,7 +82,8 @@
                 height="{{height}}"
                 columns="{{columns}}"
                 rows="{{rows}}"
-                max
+                min="0.5"
+                max="1.0"
                 >&hearts;</px-simple-line-chart>
 
             <br/><br/><br/>
@@ -95,8 +96,8 @@
                 threshold="1.70"
                 columns="{{columns}}"
                 rows="{{rows}}"
-                min
-                max
+                min="1.7"
+                max="1.0"
                 >&hearts;</px-simple-line-chart>
 
             <br/><br/><br/>
@@ -107,6 +108,8 @@
                 width="{{width}}"
                 height="{{height}}"
                 threshold="0.99"
+                min="0.9"
+                max="1.1"
                 columns="{{columns}}"
                 rows="{{rows}}"
                 >&hearts;</px-simple-line-chart>
@@ -121,7 +124,6 @@
                 columns="{{columns}}"
                 rows="{{rows}}"
                 >&hearts;</px-simple-line-chart>
-
 
             <iron-ajax
                 auto

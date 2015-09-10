@@ -20,6 +20,9 @@ Predix branding rules go in px-simple-line-chart-predix.scss, not in this file.
   stroke-width: 1;
   fill: none; }
 
+rect.chartBottom {
+  fill: #ffffff; }
+
 rect.axisBar {
   fill: #F7F7FC; }
 
@@ -40,6 +43,3 @@ text.axisLabel {
 
 .newClass {
   stroke: #000; }
-
-body {
-  background: black; }
