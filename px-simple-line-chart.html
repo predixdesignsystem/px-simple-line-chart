@@ -71,6 +71,26 @@ Simple line chart component
                 value: null
             },
             /**
+            * max
+            *
+            * Format: String
+            */
+            maxLabel: {
+                type: String,
+                observer: 'drawChartDebounced',
+                value: ''
+            },
+            /**
+            * min
+            *
+            * Format: String
+            */
+            minLabel: {
+                type: String,
+                observer: 'drawChartDebounced',
+                value: ''
+            },
+            /**
             * width
             *
             * Format: Number
@@ -115,16 +135,6 @@ Simple line chart component
             *
             * Format: Number
             */
-            high: {
-                type: Number,
-                observer: 'drawChartDebounced',
-                value: null
-            },
-            low: {
-                type: Number,
-                observer: 'drawChartDebounced',
-                value: null
-            },
             padding: {
                 type: Boolean,
                 observer: 'drawChartDebounced',
@@ -205,15 +215,15 @@ Simple line chart component
         reconcileMinOrMax: function(value, type) {
             // value may be: number, number as string, 'auto', or empty string
             // type is 'min' or 'max'
-            this.auto = false;
+            this.autoMinMax = false;
             if(this.typeofToString(value) === 'string') {
                 if(value.length === 0) {
-                    this.auto = true; // empty string means 'auto' by default
+                    this.autoMinMax = true; // empty string means 'auto' by default
                 } else if(value === 'auto') {
-                    this.auto = true;
+                    this.autoMinMax = true;
                 };
             };
-            if(this.auto) {
+            if(this.autoMinMax) {
                 // automatic calculation
                 var valueFunction = (type === 'max') ? d3.max : d3.min;
                 return valueFunction(
@@ -232,6 +242,8 @@ Simple line chart component
             if(this.lineData) {
                 this.min = this.reconcileMinOrMax(this.min, 'min');
                 this.max = this.reconcileMinOrMax(this.max, 'max');
+                this.minLabel = this.minLabel !== '' ? this.minLabel : this.min.toString();
+                this.maxLabel = this.maxLabel !== '' ? this.maxLabel : this.max.toString();
                 this.requireAxisBar = (this.threshold || this.min || this.max) ? true : false;
                 this.attachSVG();
                 this.setSizes();
@@ -290,44 +302,28 @@ Simple line chart component
                 .attr("x", this.barWidth/2)
                 .attr("y", y + 5);
             if(this.min) {
-                this.minLabel = this.svg.append("text")
+                this.minLabelSVG = this.svg.append("text")
                     .attr("class", "axisLabel")
                     .attr("text-anchor", "middle")
-                    .text(this.min.toString())
+                    .text(this.minLabel.toString())
                     .attr("x", this.barWidth/2)
                     .attr("y", this.chartHeight - 8);
             };
             if(this.max) {
-                this.maxLabel = this.svg.append("text")
+                this.maxLabelSVG = this.svg.append("text")
                     .attr("class", "axisLabel")
                     .attr("text-anchor", "middle")
-                    .text(this.max.toString())
+                    .text(this.maxLabel.toString())
                     .attr("x", this.barWidth/2)
                     .attr("y", 18);
-            }
-        },
-
-        getMaxString: function() {
-            if(this.max) {
-                return this.max.toString() || '';
-            } else {
-                return '';
-            }
-        },
-
-        getMinString: function() {
-            if(this.min) {
-                return this.min.toString() || '';
-            } else {
-                return '';
             }
         },
 
         getAxisLabelWidth: function() {
             var labelStrings = [
                 this.threshold.toString() || '',
-                this.getMinString(),
-                this.getMaxString()
+                this.minLabel,
+                this.maxLabel
             ];
             var longestString = labelStrings.sort(function (a, b) {
                 return b.length - a.length;
