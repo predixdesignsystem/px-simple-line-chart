@@ -66,18 +66,17 @@
 
             <px-simple-line-chart
                 id="demo-line-chart"
-                line-data="{{sampleData.series}}"
                 width="{{width}}"
                 height="{{height}}"
                 columns="{{columns}}"
                 rows="{{rows}}"
-                min
-                min-label="100000000%"
+                min="0"
+                max="1"
                 max="auto"
                 >&hearts;</px-simple-line-chart>
             <br/><br/><br/>
-            <px-simple-line-chart
-                id="demo-line-chart"
+             <px-simple-line-chart
+                id="demo-line-chart2"
                 line-data="{{sampleData.series}}"
                 width="{{width}}"
                 height="{{height}}"
@@ -90,7 +89,7 @@
             <br/><br/><br/>
 
             <px-simple-line-chart
-                id="demo-line-chart"
+                id="demo-line-chart3"
                 line-data="{{sampleData.series}}"
                 width="{{width}}"
                 height="{{height}}"
@@ -104,7 +103,7 @@
             <br/><br/><br/>
 
             <px-simple-line-chart
-                id="demo-line-chart"
+                id="demo-line-chart4"
                 line-data="{{sampleData.series}}"
                 width="{{width}}"
                 height="{{height}}"
@@ -118,7 +117,7 @@
             <br/><br/><br/>
 
             <px-simple-line-chart
-                id="demo-line-chart"
+                id="demo-line-chart5"
                 line-data="{{sampleData.series}}"
                 width="{{width}}"
                 height="{{height}}"
@@ -133,7 +132,38 @@
                 last-response="{{sampleData}}">
             </iron-ajax>
 
-        </template>
+        <script>
+            var chart = Polymer.dom(document).querySelector('#demo-line-chart');
+            var lineData = [ [(new Date()).getTime(), Math.random()] ];
+            //     [1441102460000, 0.59]
+                // [1397139660000,1.92],
+                // [1397177400000, 1.97],
+                // [1397228040000, 1.12],
+                // [1397248260000, 1.09],
+                // [1397291280000, 1],
+                // [1397318100000,1.99],
+                // [1397342100000, 1.75],
+                // [1397390820000, 1.11],
+                // [1397408100000, 1.03],
+                // [1397458800000, 1.84],
+                // [1397522940000, 1.99],
+                // [1397542800000, 0.96],
+                // [1397640960000, 0.88],
+                // [1397663100000, 0.79],
+                // [1397700000000, 0.85],
+                // [1397753040000, 1.03],
+                // [1397772540000, 0.93]
+            // ];
+            chart.lineData = lineData;
+            setInterval(function() {
+                var point = [(new Date()).getTime(), Math.random()]
+                console.log('adding point ' + JSON.stringify(point));
+                chart.addPoint(point);
+                // lineData.push(point);
+                // chart.lineData = lineData;
+            }, 1000);
+        </script>
 
+        </template>
     </body>
 </html>

@@ -37,8 +37,9 @@ Simple line chart component
             * Format: [ [7, 11], [10, 4], [15, 10] ... ]
             */
             lineData: {
-                type: Object,
+                type: Array,
                 observer: 'drawChartDebounced'
+                // value: function() {return [[0,0]];}
             },
             /**
             * threshold
@@ -139,7 +140,26 @@ Simple line chart component
                 type: Boolean,
                 observer: 'drawChartDebounced',
                 value: true
+            },
+
+            maxDataPoints: {
+                type: Number,
+                value: 25
             }
+        },
+
+        attached: function() {
+            this.drawChart();
+        },
+
+        addPoint: function(point) {
+            if (this.lineData.length >= this.maxDataPoints) {
+                this.splice('lineData', 0, 1);
+            }
+            this.push('lineData', point);
+            this.drawChartDebounced();
+            // this.drawChartLine();
+            console.log('point added: ' + this.lineData.length);
         },
 
         setSizes: function() {
@@ -177,6 +197,10 @@ Simple line chart component
         },
 
         drawChartDebounced: function(data, previous) {
+            console.log('drawChartDebounced.');
+            if (this.lineData) {
+                console.log(' lineData: ' + this.lineData.length);
+            }
             this.debounce('drawChart', function() {
                 this.drawChart();
             }, 200);
@@ -239,7 +263,10 @@ Simple line chart component
         },
 
         drawChart: function() {
+            console.log('drawChart');
             if(this.lineData) {
+                console.log('drawChart' + this.lineData.length);
+
                 this.min = this.reconcileMinOrMax(this.min, 'min');
                 this.max = this.reconcileMinOrMax(this.max, 'max');
                 this.minLabel = this.minLabel !== '' ? this.minLabel : this.min.toString();
@@ -262,12 +289,13 @@ Simple line chart component
                 this.drawChartLine();
                 this.addChartBorders();
                 this.addStyleScope();
-            } else {
-                var that = this;
-                var timeout = setTimeout(function(){
-                    that.drawChart();
-                }, 100);
-            }
+            } 
+            // else {
+            //     var that = this;
+            //     var timeout = setTimeout(function(){
+            //         that.drawChart();
+            //     }, 100);
+            // }
         },
 
         // Fired on attached event
