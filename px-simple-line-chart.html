@@ -158,8 +158,6 @@ Simple line chart component
             }
             this.push('lineData', point);
             this.drawChartDebounced();
-            // this.drawChartLine();
-            console.log('point added: ' + this.lineData.length);
         },
 
         setSizes: function() {
@@ -197,10 +195,6 @@ Simple line chart component
         },
 
         drawChartDebounced: function(data, previous) {
-            console.log('drawChartDebounced.');
-            if (this.lineData) {
-                console.log(' lineData: ' + this.lineData.length);
-            }
             this.debounce('drawChart', function() {
                 this.drawChart();
             }, 200);
@@ -263,10 +257,7 @@ Simple line chart component
         },
 
         drawChart: function() {
-            console.log('drawChart');
             if(this.lineData) {
-                console.log('drawChart' + this.lineData.length);
-
                 this.min = this.reconcileMinOrMax(this.min, 'min');
                 this.max = this.reconcileMinOrMax(this.max, 'max');
                 this.minLabel = this.minLabel !== '' ? this.minLabel : this.min.toString();
