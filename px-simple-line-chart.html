@@ -43,9 +43,19 @@ Simple line chart component
             /**
             * threshold
             *
-            * Format: Number
+            * Format: String
             */
             threshold: {
+                type: String,
+                observer: 'drawChartDebounced',
+                value: ''
+            },
+            /**
+            * thresholdLabel
+            *
+            * Format: String
+            */
+            thresholdLabel: {
                 type: String,
                 observer: 'drawChartDebounced',
                 value: ''
@@ -234,16 +244,27 @@ Simple line chart component
                 return parseFloat(value);
             } else {
                 // do not show
-                return false;
+                return ''; // empty string evaluates to false
             };
+        },
+
+        reconcileThreshold: function(value) {
+            if(parseFloat(value)) {
+                return parseFloat(value);
+            } else {
+                return ''; // empty string evaluates to false
+            }
         },
 
         drawChart: function() {
             if(this.lineData) {
                 this.min = this.reconcileMinOrMax(this.min, 'min');
                 this.max = this.reconcileMinOrMax(this.max, 'max');
+                this.threshold = this.reconcileThreshold(this.threshold);
                 this.minLabel = this.minLabel !== '' ? this.minLabel : this.min.toString();
                 this.maxLabel = this.maxLabel !== '' ? this.maxLabel : this.max.toString();
+                this.thresholdLabel = this.thresholdLabel === '' ? this.threshold.toString() : this.thresholdLabel;
+console.log('t-label: '+this.thresholdLabel)
                 this.requireAxisBar = (this.threshold || this.min || this.max) ? true : false;
                 this.attachSVG();
                 this.setSizes();
@@ -294,13 +315,14 @@ Simple line chart component
         },
 
         drawAxisLabels: function() {
-            var y = parseInt(this.yScale(this.threshold));
-            this.barLabel = this.svg.append("text")
-                .attr("class", "axisLabel")
-                .attr("text-anchor", "middle")
-                .text(this.threshold.toString())
-                .attr("x", this.barWidth/2)
-                .attr("y", y + 5);
+            if(this.thresholdLabel) {
+                this.thresholdLabelSVG = this.svg.append("text")
+                    .attr("class", "axisLabel")
+                    .attr("text-anchor", "middle")
+                    .text(this.thresholdLabel)
+                    .attr("x", this.barWidth/2)
+                    .attr("y", parseInt(this.yScale(this.threshold)) + 5);
+            }
             if(this.min) {
                 this.minLabelSVG = this.svg.append("text")
                     .attr("class", "axisLabel")
@@ -321,7 +343,7 @@ Simple line chart component
 
         getAxisLabelWidth: function() {
             var labelStrings = [
-                this.threshold.toString() || '',
+                this.thresholdLabel,
                 this.minLabel,
                 this.maxLabel
             ];
@@ -335,7 +357,7 @@ Simple line chart component
             var labelWidth = parseInt(
                 this.barLabel.style("width").split('px')[0]
             );
-            var barLabel = this.barLabel.remove(); // cleanup, we will redraw it later on
+            var barLabel = this.barLabel.remove(); // cleanup, we will redraw it
             return labelWidth;
         },
 
