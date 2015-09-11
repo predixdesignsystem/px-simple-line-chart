@@ -64,71 +64,25 @@
             <br />
             <br />
 
-            <px-simple-line-chart
-                id="demo-line-chart"
-                line-data="{{sampleData.series}}"
-                width="{{width}}"
-                height="{{height}}"
-                columns="{{columns}}"
-                rows="{{rows}}"
-                min
-                min-label="10%"
-                max-label="100%"
-                max="auto"
-                threshold="1.2"
-                threshold-label="Threshold"
+            <template is="dom-repeat" items="{{examples}}">
+                Hello!
+                <span>{{item}}</span>
+                <px-simple-line-chart
+                    id="{{id}}"
+                    line-data="{{sampleData.series}}"
+                    width="{{width}}"
+                    height="{{height}}"
+                    columns="{{columns}}"
+                    rows="{{rows}}"
+                    min="{{min}}"
+                    max="{{max}}"
+                    threshold="{{threshold}}"
+                    min-label="{{minLabel}}"
+                    max-label="{{maxLabel}}"
+                    threshold-label="{{thresholdLabel}}"
+                    padding="{{padding}}"
                 >&hearts;</px-simple-line-chart>
-            <br/><br/><br/>
-            <px-simple-line-chart
-                id="demo-line-chart"
-                line-data="{{sampleData.series}}"
-                width="{{width}}"
-                height="{{height}}"
-                columns="{{columns}}"
-                rows="{{rows}}"
-                min="0.5"
-                max="1.0"
-                >&hearts;</px-simple-line-chart>
-
-            <br/><br/><br/>
-
-            <px-simple-line-chart
-                id="demo-line-chart"
-                line-data="{{sampleData.series}}"
-                width="{{width}}"
-                height="{{height}}"
-                threshold="1.70"
-                threshold-label="Threshold"
-                columns="{{columns}}"
-                rows="{{rows}}"
-                min
-                max
-                >&hearts;</px-simple-line-chart>
-
-            <br/><br/><br/>
-
-            <px-simple-line-chart
-                id="demo-line-chart"
-                line-data="{{sampleData.series}}"
-                width="{{width}}"
-                height="{{height}}"
-                threshold="0.99"
-                min="0.9"
-                max="1.1"
-                columns="{{columns}}"
-                rows="{{rows}}"
-                >&hearts;</px-simple-line-chart>
-
-            <br/><br/><br/>
-
-            <px-simple-line-chart
-                id="demo-line-chart"
-                line-data="{{sampleData.series}}"
-                width="{{width}}"
-                height="{{height}}"
-                columns="{{columns}}"
-                rows="{{rows}}"
-                >&hearts;</px-simple-line-chart>
+            </template>
 
             <iron-ajax
                 auto
@@ -138,6 +92,32 @@
             </iron-ajax>
 
         </template>
+
+        <script>
+            var template = document.querySelector('#just-for-demo');
+            // The dom-change event signifies when the template has stamped its DOM.
+            template.addEventListener('dom-change', function() {
+                console.log(examples);
+                this.examples = examples;
+            });
+            var examples = [
+                {
+                    id: '123',
+                    width: 283,
+                    height: 150,
+                    columns: 10,
+                    rows: 10,
+                    min: 'auto',
+                    max: 'auto',
+                    threshold: '',
+                    minLabel: '',
+                    maxLabel: '',
+                    thresholdLabel: '',
+                    padding: true
+                }
+            ];
+
+        </script>
 
     </body>
 </html>
