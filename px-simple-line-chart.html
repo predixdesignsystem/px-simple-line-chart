@@ -124,6 +124,11 @@ Simple line chart component
                 type: Number,
                 observer: 'drawChartDebounced',
                 value: null
+            },
+            padding: {
+                type: Boolean,
+                observer: 'drawChartDebounced',
+                value: true
             }
         },
 
@@ -151,11 +156,14 @@ Simple line chart component
             var extent = d3.extent(data, function(d) { return d[1]; });
             extent[0] = this.min ? this.min : extent[0];
             extent[1] = this.max ? this.max : extent[1];
+            if(this.padding) {
+                var diff = Math.abs(extent[0] - extent[1]);
+                var pad = diff * 0.05; // pad vertical by 5%
+                extent[0] -= pad;
+                extent[1] += pad;
+            }
             return extent;
-            // var diff = Math.abs(e[0] - e[1]);
-            // var pad = diff * 0.1; // pad vertical by 10%
-            // var pad = 0;
-            // return [ e[0] - pad, e[1] + pad ];
+
         },
 
         drawChartDebounced: function(data, previous) {
