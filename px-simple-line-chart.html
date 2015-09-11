@@ -189,7 +189,7 @@ Simple line chart component
         drawChartDebounced: function(data, previous) {
             this.debounce('drawChart', function() {
                 this.drawChart();
-            }, 200);
+            }, 10);
         },
 
         attachSVG: function() {
