@@ -346,7 +346,7 @@ Simple line chart component
         },
 
         drawAxisLabels: function() {
-            if(this.thresholdLabel) {
+            if(this.thresholdLabel && this.thresholdValue) {
                 this.thresholdLabelSVG = this.svg.append("text")
                     .attr("class", "axisLabel")
                     .attr("text-anchor", "middle")
@@ -354,7 +354,7 @@ Simple line chart component
                     .attr("x", this.barWidth/2)
                     .attr("y", parseInt(this.yScale(this.thresholdValue)) + 5);
             }
-            if(this.minLabel) {
+            if(this.minLabel && this.minValue) {
                 this.minLabelSVG = this.svg.append("text")
                     .attr("class", "axisLabel")
                     .attr("text-anchor", "middle")
@@ -362,7 +362,7 @@ Simple line chart component
                     .attr("x", this.barWidth/2)
                     .attr("y", this.chartHeight - 8);
             };
-            if(this.maxLabel) {
+            if(this.maxLabel && this.maxLabel) {
                 this.maxLabelSVG = this.svg.append("text")
                     .attr("class", "axisLabel")
                     .attr("text-anchor", "middle")
