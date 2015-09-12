@@ -18,6 +18,7 @@
                 padding: 1%;
                 font-family: sans-serif;
                 font-size: 14px;
+                line-height: 20px;
             }
             .controls {
                 width: 240px; float: right; margin: 0px; padding: 10px;
@@ -37,7 +38,8 @@
             }
             .description {
                 float: left;
-                width: 250px;
+                width: 300px;
+                margin-right: 20px;
             }
             hr {
                 height: 1px;
@@ -85,6 +87,88 @@
                     </px-slider>
                 </div>
             </div>
+
+            <div class="description">
+                <strong>Description</strong>
+                <br /><br />
+                <i>Default configuration.</i>
+            </div>
+
+            <div class="example">
+                <strong>Example chart</strong>
+                <br/><br/>
+                <px-simple-line-chart
+                    id="dude"
+                    class="example-chart"
+                    line-data="{{sampleData.series}}"
+                    width="{{width}}"
+                    height="{{height}}"
+                    columns="{{columns}}"
+                    rows="{{rows}}"
+                    min="{{min}}"
+                    max="{{max}}"
+                    threshold="{{threshold}}"
+                    min-label="{{minLabel}}"
+                    max-label="{{maxLabel}}"
+                    threshold-label="{{thresholdLabel}}"
+                    padding="{{padding}}"
+                >&hearts;</px-simple-line-chart>
+            </div>
+            <div class="config">
+                <strong>Element Configuration</strong>
+                <br/><br/>
+                &lt;px-simple-line-chart
+                <br />
+                <template is="dom-if" if="{{width}}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;width="<span>{{width}}</span>"
+                    <br/>
+                </template>
+                <template is="dom-if" if="{{height}}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;height="<span>{{height}}</span>"
+                    <br/>
+                </template>
+                <template is="dom-if" if="{{columns}}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;columns="<span>{{columns}}</span>"
+                    <br/>
+                </template>
+                <template is="dom-if" if="{{rows}}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;rows="<span>{{rows}}</span>"
+                    <br/>
+                </template>
+                <template is="dom-if" if="{{min}}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;min="<span>{{min}}</span>"
+                    <br/>
+                </template>
+                <template is="dom-if" if="{{max}}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;max="<span>{{max}}</span>"
+                    <br/>
+                </template>
+                <template is="dom-if" if="{{threshold}}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;threshold="<span>{{threshold}}</span>"
+                    <br/>
+                </template>
+                <template is="dom-if" if="{{minLabel}}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;min-label="<span>{{minLabel}}</span>"
+                    <br/>
+                </template>
+                <template is="dom-if" if="{{maxLabel}}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;max-label="<span>{{maxLabel}}</span>"
+                    <br/>
+                </template>
+                <template is="dom-if" if="{{thresholdLabel}}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;threshold-label="<span>{{thresholdLabel}}</span>"
+                    <br/>
+                </template>
+                <template is="dom-if" if="{{padding}}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;padding="<span>{{padding}}</span>"
+                    <br/>
+                </template>
+                &gt;&lt;px-simple-line-chart&gt;
+
+            </div>
+            <br clear="both"/>
+            <hr />
+
 
             <template is="dom-repeat" items="{{examples}}">
                 <div class="description">
@@ -178,12 +262,8 @@
         </template>
 
         <script>
-        var examples = [
-                {
-                    description: 'Default configuration',
-                    id: '123'
-                }
-            ];
+
+            var examples = [];
 
             function fiftyFifty() {
                 return Math.random() * 100 > 50;
@@ -217,26 +297,72 @@
                 return fiftyFifty() ? defaultValue : randomValue(min,max);
             };
 
-            function generateConfigValueFromSet(set, defaultValue) {
-                return set[0];
+            function generateConfigValueFromSet(set) {
+                return set[randomValue(0,set.length)];
             };
 
             function generateChartConfig() {
-                var min = parseFloat( generateConfigValue(0.79,1.5,'') );
-                var max = parseFloat( generateConfigValue(min,1.99,'') );
-                var threshold = parseFloat( generateConfigValue(min,max,'') );
+                var min = parseFloat( generateConfigValue(0.79-1,1.5,'') );
+                var max = parseFloat( generateConfigValue(min+(0.2),1.99+1,'') );
+                var threshold = parseFloat( generateConfigValue(min+0.2,max-0.2,'') );
+                var columns = generateConfigValue(0,42,'');
+                var rows = generateConfigValue(0,42,'');
+                var width = generateConfigValue(100,600,'');
+                var height = generateConfigValue(100,280,'');
+                var minLabel = generateConfigValueFromSet(['A', 'Min Label', '']);
+                var maxLabel = generateConfigValueFromSet(['B', 'Max Label', '']);
+                var thresholdLabel = generateConfigValueFromSet(['T', 'Threshold', '']);
+                var padding = generateConfigValueFromSet(['true', 'false']);
+                var d = false;
+                var d = 'This Simple Line Chart is ';
+                if(width) {
+                    d += width + ' pixels wide';
+                    if(height) {
+                        d += ' and ' + height + ' pixels high. ';
+                    } else {
+                        d += '.';
+                    };
+                } else if(!width && height) {
+                    d += height + ' pixels high. ';
+                } else if(!width && !height){
+                    d += ' configured with the following setup. '
+                };
+                if(min) {
+                    d += 'It has a minimum visible value of ' + min + ". ";
+                };
+                if(max) {
+                    d += "It's maximum visible value is " + max + ". ";
+                };
+                if(threshold) {
+                    d += "The threshold is set to " + threshold + ". ";
+                };
+                if(minLabel) {
+                    d += "It's minimum label is set to " + minLabel + ". ";
+                };
+                if(maxLabel) {
+                    d += "The maximum label is set to " + maxLabel + ". ";
+                };
+                if(thresholdLabel) {
+                    d += "The threshold label is set to " + thresholdLabel + ". ";
+                };
+                if(padding) {
+                    d += "The padding is set to " + padding + ". ";
+                };
+
+
                 var config = {
-                    columns: generateConfigValue(0,42,''),
-                    rows: generateConfigValue(0,42,''),
-                    width: generateConfigValue(100,500,''),
-                    height: generateConfigValue(100,280,''),
+                    description: d ? d : 'This is the default configuration of <px-simple-line-chart>.',
+                    columns: columns,
+                    rows: rows,
+                    width: width,
+                    height: height,
                     min: min,
                     max: max,
                     threshold: threshold,
-                    minLabel: generateConfigValueFromSet(['','yes'],''),
-                    maxLabel: generateConfigValueFromSet(['','yes'],''),
-                    thresholdLabel: generateConfigValueFromSet(['','yes'],''),
-                    padding: 'false'
+                    minLabel: minLabel,
+                    maxLabel: maxLabel,
+                    thresholdLabel: thresholdLabel,
+                    padding: padding
                 };
                 return config;
             };
@@ -244,7 +370,9 @@
             var template = document.querySelector('#just-for-demo');
             // The dom-change event signifies when the template has stamped its DOM.
             template.addEventListener('dom-change', function() {
-                examples.push(generateChartConfig());
+                for(i=0;i<100;i++) {
+                    examples.push(generateChartConfig());
+                };
                 this.examples = examples;
             });
 
