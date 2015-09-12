@@ -15,13 +15,14 @@
         <link rel="import" href="px-simple-line-chart.html"/>
         <style>
             body, html {
-                padding: 0;
+                padding: 1%;
                 font-family: sans-serif;
                 font-size: 14px;
             }
             .controls {
                 width: 240px; float: right; margin: 0px; padding: 10px;
                 border: 1px solid #ccc;
+                display: none;
             }
             .control {
                 width: 290px;
@@ -36,16 +37,21 @@
             }
             .description {
                 float: left;
-                width: 200px;
+                width: 250px;
             }
-
+            hr {
+                height: 1px;
+                border: 0;
+                background: #cccccc;
+                margin: 30px 0;
+            }
         </style>
     </head>
 
     <body>
 
         <template id="just-for-demo" is="dom-bind">
-                <div class="controls">
+            <div class="controls">
                 <div class="control">
                     <label>Width:</label>
                     <px-slider
@@ -93,7 +99,7 @@
                         id="{{item.id}}"
                         class="example-chart"
                         line-data="{{sampleData.series}}"
-                        width="{{this.width}}"
+                        width="{{item.width}}"
                         height="{{item.height}}"
                         columns="{{item.columns}}"
                         rows="{{item.rows}}"
@@ -174,28 +180,68 @@
         <script>
         var examples = [
                 {
-                    description: 'Basic, default configuration',
+                    description: 'Default configuration',
                     id: '123'
-                },
-                {
-                    description: '',
-                    id: '123',
-                    columns: 10,
-                    rows: 10,
-                    width: '283',
-                    height: '150',
-                    min: 'false',
-                    max: 'false',
-                    threshold: '',
-                    minLabel: '',
-                    maxLabel: '',
-                    thresholdLabel: '',
-                    padding: 'false'
                 }
             ];
+
+            function fiftyFifty() {
+                return Math.round(Math.random * 100) > 50;
+            };
+
+            function isInt(n){
+                return Number(n) === n && n % 1 === 0;
+            };
+
+            function isFloat(n){
+                return n === Number(n) && n % 1 !== 0;
+            };
+
+            function randomFloat(min,max) {
+                return (Math.random()*(max-min)+min).toFixed(2);
+            };
+
+            function randomInt(min,max) {
+                return Math.floor(Math.random()*(max-min+1)+min);
+            };
+
+            function randomValue(min,max) {
+                if(isFloat(min) || isFloat(max)) {
+                    return randomFloat(min,max);
+                } else {
+                    return randomInt(min,max);
+                }
+            }
+
+            function generateConfigValue(min, max, defaultValue) {
+                return fiftyFifty() ? defaultValue : randomValue(min,max);
+            };
+
+            function generateConfigValueFromSet(set, defaultValue) {
+                return set[0];
+            };
+
+            function generateChartConfig() {
+                var config = {
+                    columns: generateConfigValue(0,50,''),
+                    rows: generateConfigValue(0,50,''),
+                    width: generateConfigValue(100,700,''),
+                    height: generateConfigValue(100,350,''),
+                    min: generateConfigValue(0.79,1.1,''),
+                    max: generateConfigValue(1.2,1.99,''),
+                    threshold: generateConfigValue(0.79,1.99,''),
+                    minLabel: generateConfigValueFromSet(['','yes'],''),
+                    maxLabel: generateConfigValueFromSet(['','yes'],''),
+                    thresholdLabel: generateConfigValueFromSet(['','yes'],''),
+                    padding: 'false'
+                };
+                return config;
+            };
+
             var template = document.querySelector('#just-for-demo');
             // The dom-change event signifies when the template has stamped its DOM.
             template.addEventListener('dom-change', function() {
+                examples.push(generateChartConfig());
                 this.examples = examples;
             });
 
