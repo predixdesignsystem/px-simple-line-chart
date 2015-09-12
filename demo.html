@@ -186,7 +186,7 @@
             ];
 
             function fiftyFifty() {
-                return Math.round(Math.random * 100) > 50;
+                return Math.random() * 100 > 50;
             };
 
             function isInt(n){
@@ -211,7 +211,7 @@
                 } else {
                     return randomInt(min,max);
                 }
-            }
+            };
 
             function generateConfigValue(min, max, defaultValue) {
                 return fiftyFifty() ? defaultValue : randomValue(min,max);
@@ -222,14 +222,17 @@
             };
 
             function generateChartConfig() {
+                var min = parseFloat( generateConfigValue(0.79,1.5,'') );
+                var max = parseFloat( generateConfigValue(min,1.99,'') );
+                var threshold = parseFloat( generateConfigValue(min,max,'') );
                 var config = {
-                    columns: generateConfigValue(0,50,''),
-                    rows: generateConfigValue(0,50,''),
-                    width: generateConfigValue(100,700,''),
-                    height: generateConfigValue(100,350,''),
-                    min: generateConfigValue(0.79,1.1,''),
-                    max: generateConfigValue(1.2,1.99,''),
-                    threshold: generateConfigValue(0.79,1.99,''),
+                    columns: generateConfigValue(0,42,''),
+                    rows: generateConfigValue(0,42,''),
+                    width: generateConfigValue(100,500,''),
+                    height: generateConfigValue(100,280,''),
+                    min: min,
+                    max: max,
+                    threshold: threshold,
                     minLabel: generateConfigValueFromSet(['','yes'],''),
                     maxLabel: generateConfigValueFromSet(['','yes'],''),
                     thresholdLabel: generateConfigValueFromSet(['','yes'],''),
