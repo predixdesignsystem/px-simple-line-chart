@@ -97,6 +97,15 @@
             <div class="example">
                 <strong>Example chart</strong>
                 <br/><br/>
+
+                <px-simple-line-chart
+                    threshold-label="Threshold"
+                    line-data="{{sampleData.series}}"
+                    threshold=1.1
+                    min="0.9"
+                    min-label="Yeah"
+                ><px-simple-line-chart>
+                <!--
                 <px-simple-line-chart
                     id="dude"
                     class="example-chart"
@@ -113,6 +122,7 @@
                     threshold-label="{{thresholdLabel}}"
                     padding="{{padding}}"
                 >&hearts;</px-simple-line-chart>
+                -->
             </div>
             <div class="config">
                 <strong>Element Configuration</strong>
@@ -309,9 +319,9 @@
                 var rows = generateConfigValue(0,42,'');
                 var width = generateConfigValue(100,600,'');
                 var height = generateConfigValue(100,280,'');
-                var minLabel = generateConfigValueFromSet(['A', 'Min Label', '']);
-                var maxLabel = generateConfigValueFromSet(['B', 'Max Label', '']);
-                var thresholdLabel = generateConfigValueFromSet(['T', 'Threshold', '']);
+                var minLabel = generateConfigValueFromSet(['L', 'Min Label', '' , '', '', '', '']);
+                var maxLabel = generateConfigValueFromSet(['H', 'Max Label', '', '', '', '', '']);
+                var thresholdLabel = generateConfigValueFromSet(['T', 'Threshold Label', '', '', '', '']);
                 var padding = generateConfigValueFromSet(['true', 'false']);
                 var d = false;
                 var d = 'This Simple Line Chart is ';
@@ -370,7 +380,7 @@
             var template = document.querySelector('#just-for-demo');
             // The dom-change event signifies when the template has stamped its DOM.
             template.addEventListener('dom-change', function() {
-                for(i=0;i<100;i++) {
+                for(i=0;i<30;i++) {
                     examples.push(generateChartConfig());
                 };
                 this.examples = examples;
