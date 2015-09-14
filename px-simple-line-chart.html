@@ -36,8 +36,9 @@ Simple line chart component
             * Format: [ [7, 11], [10, 4], [15, 10] ... ]
             */
             lineData: {
-                type: Object,
+                type: Array,
                 observer: 'drawChartDebounced'
+                // value: function() {return [[0,0]];}
             },
             /**
             * threshold
@@ -144,7 +145,20 @@ Simple line chart component
                 type: String,
                 observer: 'drawChartDebounced',
                 value: ''
+            },
+
+            maxDataPoints: {
+                type: Number,
+                value: 25
             }
+        },
+
+        addPoint: function(point) {
+            if (this.lineData.length >= this.maxDataPoints) {
+                this.splice('lineData', 0, 1);
+            }
+            this.push('lineData', point);
+            this.drawChartDebounced();
         },
 
         setSizes: function() {
@@ -329,12 +343,13 @@ Simple line chart component
                 this.drawChartLine();
                 this.addChartBorders();
                 this.addStyleScope();
-            } else {
-                var that = this;
-                var timeout = setTimeout(function(){
-                    that.drawChart();
-                }, 100);
-            }
+            } 
+            // else {
+            //     var that = this;
+            //     var timeout = setTimeout(function(){
+            //         that.drawChart();
+            //     }, 100);
+            // }
         },
 
         // Fired on attached event
