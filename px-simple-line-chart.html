@@ -47,8 +47,7 @@ Simple line chart component
             */
             threshold: {
                 type: String,
-                observer: 'drawChartDebounced',
-                value: ''
+                value: null
             },
             /**
             * thresholdLabel
@@ -57,7 +56,6 @@ Simple line chart component
             */
             thresholdLabel: {
                 type: String,
-                observer: 'drawChartDebounced',
                 value: ''
             },
             /**
@@ -143,7 +141,6 @@ Simple line chart component
             */
             padding: {
                 type: String,
-                observer: 'drawChartDebounced',
                 value: ''
             },
 
@@ -197,7 +194,7 @@ Simple line chart component
         drawChartDebounced: function(data, previous) {
             this.debounce('drawChart', function() {
                 this.drawChart();
-            }, 300);
+            }, 50);
         },
 
         attachSVG: function() {
@@ -258,7 +255,7 @@ Simple line chart component
         },
 
         reconcileThreshold: function(value) {
-            if(parseFloat(value)) {
+            if(parseFloat(value) || parseFloat(value) === 0) {
                 return parseFloat(value);
             } else {
                 return false; // empty string evaluates to false
@@ -306,7 +303,7 @@ Simple line chart component
                 // if label exists without value
                 this.maxValue = this.reconcileMinOrMax('auto', 'max');
             };
-            if(this.thresholdLabel && !this.thresholdValue) {
+            if(this.thresholdLabel && (!this.thresholdValue && this.thresholdValue !== 0)) {
                 // if label exists without value
                 this.thresholdLabel = '';
             };
@@ -316,10 +313,11 @@ Simple line chart component
             if(this.maxValue) {
                 this.maxLabel = this.maxLabel !== false ? this.maxLabel : this.maxValue.toString();
             };
-            if(this.thresholdValue) {
+            if(this.thresholdValue || this.thresholdValue === 0) {
                 this.thresholdLabel = this.thresholdLabel !== '' ? this.thresholdLabel : this.thresholdValue.toString();
             };
-            if (this.thresholdValue || this.minValue || this.maxValue) {
+            if ((this.thresholdValue || this.minValue || this.maxValue) ||
+                (this.thresholdValue === 0 || this.minValue === 0 || this.maxValue === 0)) {
                 this.requireAxisBar = true;
             };
         },
@@ -336,14 +334,14 @@ Simple line chart component
                 if(this.requireAxisBar) {
                     this.addAxisBar();
                     this.drawAxisLabels();
-                    if(this.thresholdValue) {
+                    if(this.thresholdValue || this.thresholdValue === 0) {
                         this.drawThresholdLine();
                     };
                 };
                 this.drawChartLine();
                 this.addChartBorders();
                 this.addStyleScope();
-            } 
+            }
             // else {
             //     var that = this;
             //     var timeout = setTimeout(function(){
@@ -376,7 +374,7 @@ Simple line chart component
         },
 
         drawAxisLabels: function() {
-            if(this.thresholdLabel && this.thresholdValue) {
+            if(this.thresholdLabel) {
                 this.thresholdLabelSVG = this.svg.append("text")
                     .attr("class", "axisLabel")
                     .attr("text-anchor", "middle")
