@@ -23,5 +23,8 @@
     "px-starter-kit-design": "https://github.build.ge.com/PXd/px-starter-kit-design.git#~0.4.0",
     "px-slider": "https://github.build.ge.com/PXc/px-slider.git",
     "iron-ajax": "PolymerElements/iron-ajax#~1.0.4"
+  },
+  "resolutions": {
+    "polymer": "~1.0.0"
   }
 }
