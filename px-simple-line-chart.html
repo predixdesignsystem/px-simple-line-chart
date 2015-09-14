@@ -171,7 +171,7 @@ Simple line chart component
             var extent = d3.extent(data, function(d) { return d[1]; });
             extent[0] = this.minValue ? this.minValue : extent[0];
             extent[1] = this.maxValue ? this.maxValue : extent[1];
-            if(this.padding) {
+            if(this.paddingValue) {
                 var diff = Math.abs(extent[0] - extent[1]);
                 var pad = diff * 0.05; // pad vertical by 5%
                 extent[0] -= pad;
@@ -278,7 +278,7 @@ Simple line chart component
             this.heightValue = this.reconcileValue(this.height, 150);
             this.columns = this.reconcileValue(this.columns, 7);
             this.rows = this.reconcileValue(this.rows, 7);
-            this.padding = this.reconcileValue(this.padding, true);
+            this.paddingValue = this.reconcileValue(this.padding, true);
             this.minValue = this.reconcileMinOrMax(this.min, 'min');
             this.maxValue = this.reconcileMinOrMax(this.max, 'max');
             this.thresholdValue = this.reconcileThreshold(this.threshold);
@@ -404,7 +404,6 @@ Simple line chart component
                 this.barLabel.style("width").split('px')[0]
             );
             var barLabel = this.barLabel.remove(); // cleanup, we will redraw it
-            console.log(labelStrings, longestString, labelWidth);
             return labelWidth;
         },
 
