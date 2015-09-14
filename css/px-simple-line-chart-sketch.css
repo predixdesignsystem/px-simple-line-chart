@@ -37,7 +37,11 @@ text.axisLabel {
   stroke-width: 1;
   fill: none; }
 
-.thresholdLine {
+.thresholdLowLine {
+  stroke: #FAA43A;
+  stroke-width: 1; }
+
+.thresholdHighLine {
   stroke: #FAA43A;
   stroke-width: 1; }
 
