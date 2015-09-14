@@ -98,13 +98,8 @@
                 <strong>Example chart</strong>
                 <br/><br/>
 
-                <px-simple-line-chart
-                    threshold-label="Threshold"
-                    line-data="{{sampleData.series}}"
-                    threshold=1.1
-                    min="0.9"
-                    min-label="Yeah"
-                ><px-simple-line-chart>
+                <px-simple-line-chart line-data="{{sampleData.series}}">
+                </px-simple-line-chart>
                 <!--
                 <px-simple-line-chart
                     id="dude"
@@ -124,11 +119,25 @@
                 >&hearts;</px-simple-line-chart>
                 -->
             </div>
+
             <div class="config">
+                <strong>Element Configuration</strong>
+                <br/><br/>
+                &lt;px-simple-line-chart&gt;
+                <br />
+                &lt;/px-simple-line-chart&gt;
+            </div>
+
+
+
+            <div class="config">
+                <!--
                 <strong>Element Configuration</strong>
                 <br/><br/>
                 &lt;px-simple-line-chart
                 <br />
+
+
                 <template is="dom-if" if="{{width}}">
                     &nbsp;&nbsp;&nbsp;&nbsp;width="<span>{{width}}</span>"
                     <br/>
@@ -173,11 +182,16 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;padding="<span>{{padding}}</span>"
                     <br/>
                 </template>
-                &gt;&lt;px-simple-line-chart&gt;
+                &gt;
+                <br />&lt;/px-simple-line-chart&gt;
+
+                -->
 
             </div>
-            <br clear="both"/>
+            <br clear="both" /><br /><br />
             <hr />
+            <h3>101 Randomly Generated Examples:</h3>
+            <br clear="both"/>
 
 
             <template is="dom-repeat" items="{{examples}}">
@@ -380,7 +394,7 @@
             var template = document.querySelector('#just-for-demo');
             // The dom-change event signifies when the template has stamped its DOM.
             template.addEventListener('dom-change', function() {
-                for(i=0;i<42;i++) {
+                for(i=0;i<100;i++) {
                     examples.push(generateChartConfig());
                 };
                 this.examples = examples;
