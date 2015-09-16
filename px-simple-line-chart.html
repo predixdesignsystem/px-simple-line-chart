@@ -250,7 +250,7 @@ Simple line chart component
                 );
             } else if(value==='false') {
                 return false; // hide
-            } else if(parseFloat(value)){
+            } else if(typeof parseFloat(value) === 'number'){
                 // number as string
                 return parseFloat(value);
             } else {
