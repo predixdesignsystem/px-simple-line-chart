@@ -143,7 +143,11 @@ Simple line chart component
                 type: String,
                 value: ''
             },
-
+            /**
+            * maxDataPoints
+            *
+            * Format: Number
+            */
             maxDataPoints: {
                 type: Number,
                 value: 25
@@ -162,7 +166,7 @@ Simple line chart component
             // calculate target column width including extra column for axis bar
             this.barWidth = 0;
             this.fullWidth = this.widthValue;
-            if(this.thresholdLabel || this.minLabel || this.maxLabel) {
+            if(this.thresholdLabelValue || this.minLabelValue || this.maxLabelValue) {
                 this.barWidth = parseInt(this.getAxisLabelWidth() + 14);
             };
             this.chartWidth = this.widthValue - this.barWidth;
@@ -290,36 +294,42 @@ Simple line chart component
             this.columns = this.reconcileValue(this.columns, 7);
             this.rows = this.reconcileValue(this.rows, 7);
             this.paddingValue = this.reconcileValue(this.padding, true);
+
             this.minValue = this.reconcileMinOrMax(this.min, 'min');
             this.maxValue = this.reconcileMinOrMax(this.max, 'max');
             this.thresholdValue = this.reconcileThreshold(this.threshold);
-            this.minLabel = this.reconcileValue(this.minLabel, false);
-            this.maxLabel = this.reconcileValue(this.maxLabel, false);
-            if(this.minLabel && !this.minValue) {
-                // if label exists without value
-                this.minValue = this.reconcileMinOrMax('auto', 'min');
+            this.minLabelValue = this.reconcileValue(this.minLabel, false);
+            this.maxLabelValue = this.reconcileValue(this.maxLabel, false);
+
+
+            // automatically set a min label value from min value
+            if((this.minValue || this.minValue === 0) && this.minLabelValue === false && this.minLabel !== 'false') {
+                this.minLabelValue = this.minValue.toString();
             };
-            if(this.maxLabel && !this.maxValue) {
-                // if label exists without value
-                this.maxValue = this.reconcileMinOrMax('auto', 'max');
+
+            // automatically set a max label value from max value
+            if((this.maxValue || this.maxValue === 0) && this.maxLabelValue === false && this.maxLabel !== 'false') {
+                this.maxLabelValue = this.maxValue.toString();
             };
-            if(this.thresholdLabel && (!this.thresholdValue && this.thresholdValue !== 0)) {
-                // if label exists without value
-                this.thresholdLabel = '';
+
+
+            this.thresholdLabelValue = this.reconcileValue(this.thresholdLabel, false);
+
+            // automatically set a threshold label value from threshold value
+            if((this.thresholdValue || this.thresholdValue === 0) && this.thresholdLabelValue === false) {
+                this.thresholdLabelValue = this.thresholdValue.toString();
             };
-            if(this.minValue) {
-                this.minLabel = this.minLabel !== false ? this.minLabel : this.minValue.toString();
+
+            // if label exists without value
+            if(this.thresholdLabelValue && (!this.thresholdValue && this.thresholdValue !== 0)) {
+                this.thresholdLabelValue = false;
             };
-            if(this.maxValue) {
-                this.maxLabel = this.maxLabel !== false ? this.maxLabel : this.maxValue.toString();
-            };
-            if(this.thresholdValue || this.thresholdValue === 0) {
-                this.thresholdLabel = this.thresholdLabel !== '' ? this.thresholdLabel : this.thresholdValue.toString();
-            };
-            if ((this.thresholdValue || this.minValue || this.maxValue) ||
-                (this.thresholdValue === 0 || this.minValue === 0 || this.maxValue === 0)) {
+
+            // turn on requireAxisBar flag bar if necessary
+            if(this.thresholdLabelValue !== false || this.minLabelValue !== false || this.maxLabelValue !== false) {
                 this.requireAxisBar = true;
             };
+
         },
 
         drawChart: function() {
@@ -342,12 +352,6 @@ Simple line chart component
                 this.addChartBorders();
                 this.addStyleScope();
             }
-            // else {
-            //     var that = this;
-            //     var timeout = setTimeout(function(){
-            //         that.drawChart();
-            //     }, 100);
-            // }
         },
 
         // Fired on attached event
@@ -374,27 +378,27 @@ Simple line chart component
         },
 
         drawAxisLabels: function() {
-            if(this.thresholdLabel) {
+            if(this.thresholdLabelValue) {
                 this.thresholdLabelSVG = this.svg.append("text")
                     .attr("class", "axisLabel")
                     .attr("text-anchor", "middle")
-                    .text(this.thresholdLabel)
+                    .text(this.thresholdLabelValue.toString())
                     .attr("x", this.barWidth/2)
                     .attr("y", parseInt(this.yScale(this.thresholdValue)) + 5);
             };
-            if(this.minLabel) {
+            if(this.minLabelValue) {
                 this.minLabelSVG = this.svg.append("text")
                     .attr("class", "axisLabel")
                     .attr("text-anchor", "middle")
-                    .text(this.minLabel.toString())
+                    .text(this.minLabelValue.toString())
                     .attr("x", this.barWidth/2)
                     .attr("y", this.chartHeight - 8);
             };
-            if(this.maxLabel && this.maxValue) {
+            if(this.maxLabelValue) {
                 this.maxLabelSVG = this.svg.append("text")
                     .attr("class", "axisLabel")
                     .attr("text-anchor", "middle")
-                    .text(this.maxLabel.toString())
+                    .text(this.maxLabelValue.toString())
                     .attr("x", this.barWidth/2)
                     .attr("y", 18);
             };
@@ -402,9 +406,9 @@ Simple line chart component
 
         getAxisLabelWidth: function() {
             var labelStrings = [
-                this.thresholdLabel || '',
-                this.minLabel || '',
-                this.maxLabel || ''
+                this.thresholdLabelValue || '',
+                this.minLabelValue || '',
+                this.maxLabelValue || ''
             ];
             var longestString = labelStrings.sort(function (a, b) {
                 return b.length - a.length;

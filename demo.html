@@ -98,7 +98,12 @@
                 <strong>Example chart</strong>
                 <br/><br/>
 
-                <px-simple-line-chart line-data="{{sampleData.series}}">
+                <px-simple-line-chart
+                    line-data="{{sampleData.series}}"
+                    min="-1"
+                    max="2.5"
+                    min-label="false"
+                    max-label="false">
                 </px-simple-line-chart>
                 <!--
                 <px-simple-line-chart
@@ -331,7 +336,7 @@
                 var threshold = parseFloat( generateConfigValue(min+0.2,max-0.2,'') );
                 var columns = generateConfigValue(0,42,'');
                 var rows = generateConfigValue(0,42,'');
-                var width = generateConfigValue(100,600,'');
+                var width = generateConfigValue(200,600,'');
                 var height = generateConfigValue(100,280,'');
                 var minLabel = generateConfigValueFromSet(['L', 'Min Label', '' , '', '', '', '']);
                 var maxLabel = generateConfigValueFromSet(['H', 'Max Label', '', '', '', '', '']);
