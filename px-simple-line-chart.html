@@ -297,10 +297,12 @@ Simple line chart component
 
             this.minValue = this.reconcileMinOrMax(this.min, 'min');
             this.maxValue = this.reconcileMinOrMax(this.max, 'max');
+
             this.thresholdValue = this.reconcileThreshold(this.threshold);
             this.minLabelValue = this.reconcileValue(this.minLabel, false);
             this.maxLabelValue = this.reconcileValue(this.maxLabel, false);
 
+            console.log(this.minValue, this.maxValue);
 
             // automatically set a min label value from min value
             if((this.minValue || this.minValue === 0) && this.minLabelValue === false && this.minLabel !== 'false') {
