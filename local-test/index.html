@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="../webcomponentsjs/webcomponents.min.js"></script>
+        <script src="../web-component-tester/browser.js"></script>
+        <link rel="import" href="../px-simple-line-chart.html" />
+    </head>
+    <body>
+
+        <h1>Hello Test Fast Reload</h1>
+
+        <div class="in-html" id="fixture" awesomest></div>
+
+        <px-simple-line-chart
+            id="test-line-chart"
+            line-data='[
+            [13970, 1.99],
+            [13971, 1.92],
+            [13972, 1.97],
+            [13972, 1.12],
+            [13972, 1.09],
+            [13972, 1],
+            [13973, 1.99],
+            [13973, 1.75],
+            [13973, 1.11],
+            [13974, 1.03],
+            [13974, 1.84],
+            [13975, 1.99],
+            [13975, 0.96],
+            [13976, 0.88],
+            [13976, 0.79],
+            [13977, 0.85],
+            [13977, 1.03],
+            [13977, 0.93]
+            ]'
+        ></px-simple-line-chart>
+
+        <px-simple-line-chart
+            id="test-line-chart"
+            line-data='[
+            [10, 1.99],
+            [13, 1.92],
+            [14, 1.97],
+            [15, 1.12],
+            [16, 1.09],
+            [17, 1],
+            [18, 1.99],
+            [19, 1.75],
+            [20, 1.11],
+            [21, 1.03],
+            [22, 1.84],
+            [23, 1.99],
+            [24, 0.96],
+            [25, 0.88],
+            [26, 0.79],
+            [27, 0.85],
+            [28, 1.03],
+            [31, 0.93]
+        ]'></px-simple-line-chart>
+
+        <script>
+            WCT.loadSuites([
+                'awesome-tests.js'
+            ]);
+        </script>
+    </body>
+</html>

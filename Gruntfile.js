@@ -67,15 +67,29 @@ module.exports = function (grunt) {
                 files: ['sass/**/*.scss'],
                 tasks: ['sass', 'autoprefixer'],
                 options: {
-                    interrupt: true
+                    interrupt: true,
+                    livereload: true
+                }
+            },
+            htmljs: {
+                files: ['*.html', '*.js'],
+                options: {
+                    interrupt: true,
+                    livereload: true
+                }
+            },
+            localtest: {
+                files: ['local-test/*.html', 'local-test/*.js'],
+                options: {
+                    interrupt: true,
+                    livereload: true
                 }
             }
         },
 
         depserve: {
             options: {
-                open: '<%= depserveOpenUrl %>',
-                livereload: [__dirname + "/js", __dirname + "/css", __dirname]
+                open: '<%= depserveOpenUrl %>'
             }
         },
 
