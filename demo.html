@@ -212,10 +212,10 @@
                         rows="{{item.rows}}"
                         min="{{item.min}}"
                         max="{{item.max}}"
-                        threshold-low="{{item.thresholdLow}}"
+                        threshold="{{item.threshold}}"
                         min-label="{{item.minLabel}}"
                         max-label="{{item.maxLabel}}"
-                        threshold-low-label="{{item.thresholdLowLabel}}"
+                        threshold-label="{{item.thresholdLabel}}"
                         padding="{{item.padding}}"
                     >&hearts;</px-simple-line-chart>
                 </div>
@@ -248,8 +248,8 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;max="<span>{{item.max}}</span>"
                         <br/>
                     </template>
-                    <template is="dom-if" if="{{item.thresholdLow}}">
-                        &nbsp;&nbsp;&nbsp;&nbsp;threshold-low="<span>{{item.thresholdLow}}</span>"
+                    <template is="dom-if" if="{{item.threshold}}">
+                        &nbsp;&nbsp;&nbsp;&nbsp;threshold="<span>{{item.threshold}}</span>"
                         <br/>
                     </template>
                     <template is="dom-if" if="{{item.minLabel}}">
@@ -260,8 +260,8 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;max-label="<span>{{item.maxLabel}}</span>"
                         <br/>
                     </template>
-                    <template is="dom-if" if="{{item.thresholdLowLabel}}">
-                        &nbsp;&nbsp;&nbsp;&nbsp;threshold-low-label="<span>{{item.thresholdLowLabel}}</span>"
+                    <template is="dom-if" if="{{item.thresholdLabel}}">
+                        &nbsp;&nbsp;&nbsp;&nbsp;threshold-label="<span>{{item.thresholdLabel}}</span>"
                         <br/>
                     </template>
                     <template is="dom-if" if="{{item.padding}}">
@@ -327,14 +327,14 @@
             function generateChartConfig() {
                 var min = parseFloat( generateConfigValue(0.79-1,1.5,'') );
                 var max = parseFloat( generateConfigValue(min+(0.2),1.99+1,'') );
-                var thresholdLow = parseFloat( generateConfigValue(min+0.2,max-0.2,'') );
+                var threshold = parseFloat( generateConfigValue(min+0.2,max-0.2,'') );
                 var columns = generateConfigValue(0,42,'');
                 var rows = generateConfigValue(0,42,'');
                 var width = generateConfigValue(200,600,'');
                 var height = generateConfigValue(100,280,'');
                 var minLabel = generateConfigValueFromSet(['L', 'Min Label', '' , '', '', '', '']);
                 var maxLabel = generateConfigValueFromSet(['H', 'Max Label', '', '', '', '', '']);
-                var thresholdLowLabel = generateConfigValueFromSet(['T', 'Threshold Low Label', '', '', '', '']);
+                var thresholdLabel = generateConfigValueFromSet(['T', 'Threshold Label', '', '', '', '']);
                 var padding = generateConfigValueFromSet(['true', 'false']);
                 var d = false;
                 var d = 'This Simple Line Chart is ';
@@ -356,8 +356,8 @@
                 if(max) {
                     d += "It's maximum visible value is " + max + ". ";
                 };
-                if(thresholdLow) {
-                    d += "The low threshold is set to " + thresholdLow + ". ";
+                if(threshold) {
+                    d += "The threshold is set to " + threshold + ". ";
                 };
                 if(minLabel) {
                     d += "It's minimum label is set to " + minLabel + ". ";
@@ -365,8 +365,8 @@
                 if(maxLabel) {
                     d += "The maximum label is set to " + maxLabel + ". ";
                 };
-                if(thresholdLowLabel) {
-                    d += "The threshold low label is set to " + thresholdLowLabel + ". ";
+                if(thresholdLabel) {
+                    d += "The threshold label is set to " + thresholdLabel + ". ";
                 };
                 if(padding) {
                     d += "The padding is set to " + padding + ". ";
@@ -381,10 +381,10 @@
                     height: height,
                     min: min,
                     max: max,
-                    thresholdLow: thresholdLow,
+                    threshold: threshold,
                     minLabel: minLabel,
                     maxLabel: maxLabel,
-                    thresholdLowLabel: thresholdLowLabel,
+                    thresholdLabel: thresholdLabel,
                     padding: padding
                 };
                 return config;

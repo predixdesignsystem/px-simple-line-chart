@@ -72,11 +72,7 @@
                 rows="{{rows}}"
                 min="-1"
                 max="1"
-                threshold-low="-0.6"
-                threshold-low-label="-0.6 bar"
-                max-label= "1 bar"
-                threshold-high="0.6"
-                threshold-high-label="0.6 bar"
+                threshold="0"
                 >&hearts;</px-simple-line-chart>
 
         <script>
@@ -85,7 +81,7 @@
 
             chart.lineData = lineData;
             setInterval(function() {
-                var point = [(new Date()).getTime(), (Math.random() * 1.6) - 0.8]
+                var point = [(new Date()).getTime(), (Math.random() * 1.4) - 0.8]
                 console.log('adding point ' + JSON.stringify(point));
                 chart.addPoint(point);
             }, 150);
