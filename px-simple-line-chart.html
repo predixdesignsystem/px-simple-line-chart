@@ -41,20 +41,38 @@ Simple line chart component
                 // value: function() {return [[0,0]];}
             },
             /**
-            * threshold
+            * thresholdLow
             *
             * Format: String
             */
-            threshold: {
+            thresholdLow: {
                 type: String,
                 value: null
             },
             /**
-            * thresholdLabel
+            * thresholdLowLabel
             *
             * Format: String
             */
-            thresholdLabel: {
+            thresholdLowLabel: {
+                type: String,
+                value: ''
+            },
+            /**
+            * thresholdHigh
+            *
+            * Format: String
+            */
+            thresholdHigh: {
+                type: String,
+                value: null
+            },
+            /**
+            * thresholdHighLabel
+            *
+            * Format: String
+            */
+            thresholdHighLabel: {
                 type: String,
                 value: ''
             },
@@ -166,7 +184,7 @@ Simple line chart component
             // calculate target column width including extra column for axis bar
             this.barWidth = 0;
             this.fullWidth = this.widthValue;
-            if(this.thresholdLabelValue || this.minLabelValue || this.maxLabelValue) {
+            if(this.thresholdHighLabel || this.thresholdLowLabel || this.minLabel || this.maxLabel) {
                 this.barWidth = parseInt(this.getAxisLabelWidth() + 14);
             };
             this.chartWidth = this.widthValue - this.barWidth;
@@ -288,6 +306,18 @@ Simple line chart component
             };
         },
 
+        reconcileThresholdLabel: function(label, value) {
+            var newLabel;
+            if(label && (!value && value !== 0)) {
+                // if label exists without value
+                newLabel = '';
+            };
+            if(value || value === 0) {
+                newLabel = label !== '' ? label : value.toString();
+            };
+            return newLabel;
+        },
+
         reconcileValues: function() {
             this.widthValue = this.reconcileValue(this.width, 283);
             this.heightValue = this.reconcileValue(this.height, 150);
@@ -297,19 +327,23 @@ Simple line chart component
 
             this.minValue = this.reconcileMinOrMax(this.min, 'min');
             this.maxValue = this.reconcileMinOrMax(this.max, 'max');
+            this.thresholdLowValue = this.reconcileThreshold(this.thresholdLow);
+            this.thresholdHighValue = this.reconcileThreshold(this.thresholdHigh);
+            this.minLabel = this.reconcileValue(this.minLabel, false);
+            this.maxLabel = this.reconcileValue(this.maxLabel, false);
+            this.thresholdLowLabel = this.reconcileThresholdLabel(this.thresholdLowLabel, this.thresholdLowValue);
+            this.thresholdHighLabel = this.reconcileThresholdLabel(this.thresholdHighLabel, this.thresholdHighValue);
 
-            this.thresholdValue = this.reconcileThreshold(this.threshold);
-            this.minLabelValue = this.reconcileValue(this.minLabel, false);
-            this.maxLabelValue = this.reconcileValue(this.maxLabel, false);
-
-            // automatically set a min label value from min value
-            if((this.minValue || this.minValue === 0) && this.minLabelValue === false && this.minLabel !== 'false') {
-                this.minLabelValue = this.minValue.toString();
+            if(this.minLabel && !this.minValue) {
+                // if label exists without value
+                this.minValue = this.reconcileMinOrMax('auto', 'min');
             };
-
-            // automatically set a max label value from max value
-            if((this.maxValue || this.maxValue === 0) && this.maxLabelValue === false && this.maxLabel !== 'false') {
-                this.maxLabelValue = this.maxValue.toString();
+            if(this.maxLabel && !this.maxValue) {
+                // if label exists without value
+                this.maxValue = this.reconcileMinOrMax('auto', 'max');
+            };
+            if(this.minValue) {
+                this.minLabel = this.minLabel !== false ? this.minLabel : this.minValue.toString();
             };
 
 
@@ -319,14 +353,8 @@ Simple line chart component
             if((this.thresholdValue || this.thresholdValue === 0) && this.thresholdLabelValue === false) {
                 this.thresholdLabelValue = this.thresholdValue.toString();
             };
-
-            // if label exists without value
-            if(this.thresholdLabelValue && (!this.thresholdValue && this.thresholdValue !== 0)) {
-                this.thresholdLabelValue = false;
-            };
-
-            // turn on requireAxisBar flag bar if necessary
-            if(this.thresholdLabelValue !== false || this.minLabelValue !== false || this.maxLabelValue !== false) {
+            if ((this.thresholdLowValue || this.minValue || this.maxValue || this.thresholdHighValue) ||
+                (this.thresholdLowValue === 0 || this.minValue === 0 || this.maxValue === 0 || this.thresholdHighValue === 0)) {
                 this.requireAxisBar = true;
             };
 
@@ -344,9 +372,12 @@ Simple line chart component
                 if(this.requireAxisBar) {
                     this.addAxisBar();
                     this.drawAxisLabels();
-                    if(this.thresholdValue || this.thresholdValue === 0) {
-                        this.drawThresholdLine();
+                    if(this.thresholdLowValue || this.thresholdLowValue === 0) {
+                        this.drawThresholdLine(this.thresholdLowValue, 'thresholdLowLine');
                     };
+                    if (this.thresholdHighValue || this.thresholdHighValue === 0) {
+                        this.drawThresholdLine(this.thresholdHighValue, 'thresholdHighLine');
+                    }
                 };
                 this.drawChartLine();
                 this.addChartBorders();
@@ -378,13 +409,21 @@ Simple line chart component
         },
 
         drawAxisLabels: function() {
-            if(this.thresholdLabelValue) {
-                this.thresholdLabelSVG = this.svg.append("text")
+            if(this.thresholdLowLabel) {
+                this.thresholdLowLabelSVG = this.svg.append("text")
                     .attr("class", "axisLabel")
                     .attr("text-anchor", "middle")
-                    .text(this.thresholdLabelValue.toString())
+                    .text(this.thresholdLowLabel)
                     .attr("x", this.barWidth/2)
-                    .attr("y", parseInt(this.yScale(this.thresholdValue)) + 5);
+                    .attr("y", parseInt(this.yScale(this.thresholdLowValue)) + 5);
+            };
+            if(this.thresholdHighLabel) {
+                this.thresholdHighLabelSVG = this.svg.append("text")
+                    .attr("class", "axisLabel")
+                    .attr("text-anchor", "middle")
+                    .text(this.thresholdHighLabel)
+                    .attr("x", this.barWidth/2)
+                    .attr("y", parseInt(this.yScale(this.thresholdHighValue)) + 5);
             };
             if(this.minLabelValue) {
                 this.minLabelSVG = this.svg.append("text")
@@ -406,9 +445,9 @@ Simple line chart component
 
         getAxisLabelWidth: function() {
             var labelStrings = [
-                this.thresholdLabelValue || '',
-                this.minLabelValue || '',
-                this.maxLabelValue || ''
+                this.thresholdLowLabel || '',
+                this.minLabel || '',
+                this.maxLabel || ''
             ];
             var longestString = labelStrings.sort(function (a, b) {
                 return b.length - a.length;
@@ -513,14 +552,14 @@ Simple line chart component
             };
         },
 
-        drawThresholdLine: function() {
+        drawThresholdLine: function(value, lineClass) {
             if(this.svg) {
-                var y = parseInt(this.yScale(this.thresholdValue));
-                var path = this.svg.select('.thresholdLine');
+                var y = parseInt(this.yScale(value));
+                var path = this.svg.select('.' + lineClass);
                 if(path.empty()) {
                     path = this.svg.append("path");
                 };
-                path.attr("class", "thresholdLine")
+                path.attr("class", lineClass)
                     .attr("d", this.linearLineFunction([
                         {
                             "x": this.barWidth,
@@ -533,11 +572,6 @@ Simple line chart component
                     ])
                 );
                 this.addStyleScope();
-            } else {
-                var that = this;
-                var timeout = setTimeout(function() {
-                    that.drawThreshold();
-                }, 100);
             }
         }
 
