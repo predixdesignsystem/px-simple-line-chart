@@ -117,30 +117,27 @@
                     // console.log(chartSVG)
                     chartSVG.setAttribute("version", 1.1);
                     chartSVG.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+                    console.log(chartSVG);
                     var chartText = chartSVG.parentNode.innerHTML;
-                    var encoded = btoa(chartText.trim());
+                    var encoded = btoa(chartText);
                     var decoded = atob(encoded);
                     //console.log(decoded.trim());
                     var imgSrc = 'data:image/svg+xml;base64,'+encoded;
-                    //var imgDiv = document.querySelector('#chart-a');
+                    var imgDiv = document.querySelector('#chart-a');
                     var imgElement = document.createElement('img');
                     imgElement.setAttribute('src', imgSrc);
-                    //imgDiv.appendChild(imgElement);
+                    imgDiv.appendChild(imgElement);
 
 
-                    var html = d3.select("svg")
-                          .attr("version", 1.1)
-                          .attr("xmlns", "http://www.w3.org/2000/svg")
-                          .node().parentNode.innerHTML;
 
                     var imgsrc = 'data:image/svg+xml;base64,'+ encoded;
                     // console.log(imgsrc);
 
-                    var img = '<img src="'+imgsrc+'">';
+                    var img = "'<img src='"+imgsrc+"'>'";
                     d3.select("#chart-a").append("div").html(img);
-
                     d3.select('body').append('svg').html(decoded);
-                }, 5000);
+
+                }, 500);
 
 
             };
