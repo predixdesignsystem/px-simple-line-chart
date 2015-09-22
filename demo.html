@@ -99,8 +99,17 @@
                 <br/><br/>
 
                 <px-simple-line-chart
+                    min="-10"
+                    max="3"
+                    max-label="false"
+                    min-label="false"
                     line-data="{{sampleData.series}}">
                 </px-simple-line-chart>
+
+                <px-simple-line-chart
+                    line-data="{{sampleData.series}}">
+                </px-simple-line-chart>
+
                 <!--
                 <px-simple-line-chart
                     id="dude"
