@@ -294,13 +294,13 @@ Simple line chart component
             this.columns = this.reconcileValue(this.columns, 7);
             this.rows = this.reconcileValue(this.rows, 7);
             this.paddingValue = this.reconcileValue(this.padding, true);
-
             this.minValue = this.reconcileMinOrMax(this.min, 'min');
             this.maxValue = this.reconcileMinOrMax(this.max, 'max');
-
             this.thresholdValue = this.reconcileThreshold(this.threshold);
             this.minLabelValue = this.reconcileValue(this.minLabel, false);
             this.maxLabelValue = this.reconcileValue(this.maxLabel, false);
+
+
 
             // automatically set a min label value from min value
             if((this.minValue || this.minValue === 0) && this.minLabelValue === false && this.minLabel !== 'false') {
@@ -329,6 +329,19 @@ Simple line chart component
             if(this.thresholdLabelValue !== false || this.minLabelValue !== false || this.maxLabelValue !== false) {
                 this.requireAxisBar = true;
             };
+
+            console.log(
+                this.widthValue,
+                this.heightValue,
+                this.columns,
+                this.rows,
+                this.paddingValue,
+                this.minValue,
+                this.maxValue,
+                this.thresholdValue,
+                this.minLabelValue,
+                this.maxLabelValue
+            );
 
         },
 
@@ -416,6 +429,7 @@ Simple line chart component
             this.barLabel = this.svg.append("text")
                 .attr("class", "axisLabel")
                 .attr("text-anchor", "middle")
+                .style("display", "block")
                 .text(longestString);
             var labelWidth = parseInt(
                 this.barLabel.style("width").split('px')[0]
