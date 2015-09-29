@@ -11,6 +11,9 @@
 THIS FILE SHOULD CONTAIN ONLY ABSTRACT/'SKETCH' THEME RULES, NOT SPECIFIC TO PREDIX BRANDING
 Predix branding rules go in px-simple-line-chart-predix.scss, not in this file.
 */
+svg.px-simple-line-chart-svg {
+  overflow: hidden; }
+
 .chartBorder {
   stroke: #000000;
   stroke-width: 1; }
