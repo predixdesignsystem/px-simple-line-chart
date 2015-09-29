@@ -329,7 +329,7 @@ Simple line chart component
             if(this.thresholdLabelValue !== false || this.minLabelValue !== false || this.maxLabelValue !== false) {
                 this.requireAxisBar = true;
             };
-            
+
         },
 
         drawChart: function() {
@@ -418,11 +418,9 @@ Simple line chart component
                 .attr("text-anchor", "middle")
                 .style("display", "block")
                 .text(longestString);
-            var labelWidth = parseInt(
-                this.barLabel.style("width").split('px')[0]
-            );
-            var barLabel = this.barLabel.remove(); // cleanup, we will redraw it
-            return labelWidth;
+            var labelWidth = this.barLabel.node().getComputedTextLength();
+            var barLabel = this.barLabel.remove();
+            return Math.round(labelWidth - (labelWidth * 0.10));
         },
 
         setLinearLineFunction: function() {
