@@ -18,6 +18,22 @@ The `width` and `height` of the component are also configurable as well as the v
 
 We recommend viewing the <a href="http://pxc-demos.grc-apps.svc.ice.ge.com/bower_components/px-simple-line-chart/demo.html" target="_blank">Demo</a> page to become aware of the configuration possibilities. We also recommend using the default settings as they are designed for proper performance.
 
+<hr />
+## Usage
+
+Install the component to your project using bower
+
+```
+bower install https://github.com/PredixDev/px-simple-line-chart.git --save
+```
+
+Include the component in your page as you would any other Polymer element by importing it in application's head:
+
+```
+<link rel="import" href="bower_components/px-simple-line-chart.html" />
+```
+
+<hr />
 
 ### Options
 
