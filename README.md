@@ -29,7 +29,7 @@ bower install https://github.com/PredixDev/px-simple-line-chart.git --save
 
 Include the component in your page as you would any other Polymer element by importing it in application's head:
 
-```
+```html
 <link rel="import" href="bower_components/px-simple-line-chart.html" />
 ```
 
@@ -44,7 +44,7 @@ Options are passed into the component as attributes on the element tag.
 
 Send your data to the component via the `line-data` attribute which defines the series data to be charted. It needs to be passed in as a multi-dimensional array containing one or more arrays of numeric value pairs.
 
-```
+```html
 <px-simple-line-chart
     line-data="[ [1,2], [2,3], [3,4] ]">
 </px-simple-line-chart>
@@ -55,7 +55,7 @@ Send your data to the component via the `line-data` attribute which defines the 
 
 Use the `threshold` attribute to define a threshold value and draw a thin orange line across the chart at the y-axis position representing the threshold point.
 
-```
+```html
 <px-simple-line-chart
     threshold="1.5">
 </px-simple-line-chart>
@@ -66,7 +66,7 @@ Use the `threshold` attribute to define a threshold value and draw a thin orange
 
 Use the `threshold-label` attribute to define custom text for your threshold label. Pass in the value as a string. Set the value to 'false' to remove the threshold label.
 
-```
+```html
 <px-simple-line-chart
     ...
     threshold-label="Custom Label">
@@ -84,7 +84,7 @@ Use the `threshold-label` attribute to define custom text for your threshold lab
 
 Use the `min` and/or `max` attribute to define a the upper and lower bounds of your
 
-```
+```html
 <px-simple-line-chart
     ...
     min="1"
@@ -97,7 +97,7 @@ Use the `min` and/or `max` attribute to define a the upper and lower bounds of y
 
 By default the values of your min and max will be used to render text labels to the axis bar on the left side of the chart. Pass in strings to the `min-label` and/or `max-label` attributes to define custom text for a chart's min and max labels. Set the value to 'false' to remove the either of the labels from the axis bar.
 
-```
+```html
 <px-simple-line-chart
     ...
     threshold-label="Custom Label">
@@ -110,11 +110,11 @@ By default the values of your min and max will be used to render text labels to 
 
 ```
 
-##### columns and/or rows
+##### columns and rows
 
 Set the `columns` and/or `rows` attributes to define the grid lines to be drawn in the background of the chart.
 
-```
+```html
 <px-simple-line-chart
     ...
     columns="25"
@@ -127,7 +127,7 @@ Set the `columns` and/or `rows` attributes to define the grid lines to be drawn 
 
 Set the `width` and `height` attributes to define the target pixel width and height of the chart component. The default settings are 283 by 150.
 
-```
+```html
 <px-simple-line-chart
     ...
     width="370"
@@ -180,7 +180,7 @@ Your browser will also need to have the LiveReload extension installed and enabl
 
 This is an example watch configuration:
 
-```
+```javascript
 watch: {
     sass: {
         files: ['sass/**/*.scss'],
@@ -214,7 +214,7 @@ Starts a local server exactly the same as if you had run `grunt depserve` howeve
 
 This is an example `grunt watch` configuration which watches for changes to SASS files, then on changes executes SASS compilation and automatic prefixing:
 
-```
+```javascript
 watch: {
     sass: {
         files: ['sass/**/*.scss'],
