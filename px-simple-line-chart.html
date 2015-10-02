@@ -15,7 +15,9 @@ Simple line chart component
     <script type="text/javascript" src="../d3/d3.js"></script>
     <link rel="import" type="css" href="css/px-simple-line-chart.css" />
     <template>
-        <svg class="px-simple-line-chart-svg"></svg>
+        <div class="px-simple-line-chart-div">
+            <svg class="px-simple-line-chart-svg"></svg>
+        </div>
     </template>
 </dom-module>
 <script>
@@ -279,6 +281,8 @@ Simple line chart component
                 return defaultValue;
             } else if(value === 'false') {
                 return false;
+            } else if(value === 'auto') {
+                return 'auto';
             } else if(this.isFloat(value)) {
                 return parseFloat(value);
             } else if(this.isInt(value)) {
@@ -288,9 +292,28 @@ Simple line chart component
             };
         },
 
+        getWidthAuto: function() {
+            var el = this.$$('.px-simple-line-chart-div').parentNode.parentNode;
+            return parseInt(el.clientWidth);
+        },
+
+        getHeightAuto: function() {
+            var el = this.$$('.px-simple-line-chart-div').parentNode.parentNode;
+            return parseInt(el.clientHeight);
+        },
+
         reconcileValues: function() {
             this.widthValue = this.reconcileValue(this.width, 283);
             this.heightValue = this.reconcileValue(this.height, 150);
+            console.log(this.heightValue, this.widthValue);
+            // console.log(this.heightValue, this.widthValue);
+            if(this.widthValue === 'auto') {
+                this.widthValue = this.getWidthAuto();
+            };
+            if(this.heightValue === 'auto') {
+                this.heightValue = this.getHeightAuto();
+            };
+            // console.log(this.heightValue, this.widthValue);
             this.columns = this.reconcileValue(this.columns, 7);
             this.rows = this.reconcileValue(this.rows, 7);
             this.paddingValue = this.reconcileValue(this.padding, true);
@@ -299,8 +322,6 @@ Simple line chart component
             this.thresholdValue = this.reconcileThreshold(this.threshold);
             this.minLabelValue = this.reconcileValue(this.minLabel, false);
             this.maxLabelValue = this.reconcileValue(this.maxLabel, false);
-
-
 
             // automatically set a min label value from min value
             if((this.minValue || this.minValue === 0) && this.minLabelValue === false && this.minLabel !== 'false') {
@@ -311,7 +332,6 @@ Simple line chart component
             if((this.maxValue || this.maxValue === 0) && this.maxLabelValue === false && this.maxLabel !== 'false') {
                 this.maxLabelValue = this.maxValue.toString();
             };
-
 
             this.thresholdLabelValue = this.reconcileValue(this.thresholdLabel, false);
 
@@ -329,7 +349,6 @@ Simple line chart component
             if(this.thresholdLabelValue !== false || this.minLabelValue !== false || this.maxLabelValue !== false) {
                 this.requireAxisBar = true;
             };
-
         },
 
         drawChart: function() {
