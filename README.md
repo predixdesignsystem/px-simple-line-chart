@@ -135,6 +135,20 @@ Set the `width` and `height` attributes to define the target pixel width and hei
 </px-simple-line-chart>
 ```
 
+###### Automatic width and height for responsive layouts
+
+Set the `width` and `height` attributes to "auto" and the chart will expand to fill it's containing element. *Note: The containing element must be a block-level element.*
+
+```html
+<px-simple-line-chart
+    ...
+    width="auto"
+    height="auto">
+</px-simple-line-chart>
+```
+
+
+
 ### Function calls
 
 There are no external function calls for this component.
