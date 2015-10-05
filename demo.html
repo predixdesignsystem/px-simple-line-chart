@@ -19,11 +19,16 @@
                 margin-right: 15px;
                 width: auto;
                 display: block;
+                float: left;
             }
             .config {
+                float: left;
+                width: 400px;
             }
             .description {
                 margin-right: 20px;
+                float: left;
+                width: 250px;
             }
             hr {
                 height: 1px;
@@ -38,71 +43,64 @@
 
         <template id="just-for-demo" is="dom-bind">
 
+            <hr />
+
             <div class="description">
                 <strong>Description</strong>
                 <br /><br />
                 <i>Default configuration.</i>
             </div>
 
-            <div class="example" style="
-                width: 450px;
-                height: 136px;
-                padding: 50px;
-                margin: 50px;
-                display: block;
-                border: 1px solid #00e5bd;
-                white-space-collapse: discard;
-            ">
-            <px-simple-line-chart
-                width="auto"
-                height="auto"
-                min="0"
-                max="2"
-                threshold="1"
-                line-data="{{sampleData.series}}">
-            </px-simple-line-chart></div>
-
             <div class="config">
                 <strong>Element Configuration</strong>
                 <br/><br/>
-                &lt;px-simple-line-chart&gt;
+                &lt;px-simple-line-chart<br />
+                    width="auto"<br />
+                    height="auto"<br />
+                    min="0"<br />
+                    max="2"<br />
+                    threshold="1"
+                &gt;
                 <br />
                 &lt;/px-simple-line-chart&gt;
             </div>
-            <!--
+
+            <div class="example">
+                <strong>Example chart</strong>
+                <br/><br/>
+
+                <div style="
+                    width: 350px;
+                    height: 150px;
+                    padding: 10px;
+                    margin: 10px;
+                    display: block;
+                    border: 1px solid #00e5bd;
+                    white-space-collapse: discard;
+                ">
+                    <px-simple-line-chart
+                        width="auto"
+                        height="auto"
+                        min="0"
+                        max="2"
+                        threshold="1"
+                        line-data="{{sampleData.series}}">
+                    </px-simple-line-chart>
+                </div>
+            </div>
 
             <br clear="both" /><br /><br />
             <hr />
             <h3>101 Randomly Generated Examples:</h3>
             <br clear="both"/>
 
-            -->
             <template is="dom-repeat" items="{{examples}}">
                 <div class="description">
                     <strong>Description</strong>
                     <br /><br />
                     <i>{{item.description}}</i>
                 </div>
-                <div class="example">
-                    <strong>Example chart</strong>
-                    <br/><br/>
-                    <px-simple-line-chart
-                        id="{{item.id}}"
-                        class="example-chart"
-                        line-data="{{sampleData.series}}"
-                        width="{{item.width}}"
-                        height="{{item.height}}"
-                        columns="{{item.columns}}"
-                        rows="{{item.rows}}"
-                        min="{{item.min}}"
-                        max="{{item.max}}"
-                        threshold="{{item.threshold}}"
-                        min-label="{{item.minLabel}}"
-                        max-label="{{item.maxLabel}}"
-                        threshold-label="{{item.thresholdLabel}}"
-                        padding="{{item.padding}}"
-                    >&hearts;</px-simple-line-chart>
-                </div>
+
                 <div class="config">
                     <strong>Element Configuration</strong>
                     <br/><br/>
@@ -155,6 +153,28 @@
                     &gt;&lt;px-simple-line-chart&gt;
 
                 </div>
+
+                <div class="example">
+                    <strong>Example chart</strong>
+                    <br/><br/>
+                    <px-simple-line-chart
+                        id="{{item.id}}"
+                        class="example-chart"
+                        line-data="{{sampleData.series}}"
+                        width="{{item.width}}"
+                        height="{{item.height}}"
+                        columns="{{item.columns}}"
+                        rows="{{item.rows}}"
+                        min="{{item.min}}"
+                        max="{{item.max}}"
+                        threshold="{{item.threshold}}"
+                        min-label="{{item.minLabel}}"
+                        max-label="{{item.maxLabel}}"
+                        threshold-label="{{item.thresholdLabel}}"
+                        padding="{{item.padding}}"
+                    >&hearts;</px-simple-line-chart>
+                </div>
+
                 <br clear="both"/>
                 <hr />
             </template>
