@@ -294,23 +294,18 @@ Simple line chart component
 
         reconcileDimensionValue: function(value, defaultValue) {
             var r = defaultValue;
-            console.log('value: '+ value);
             switch(value) {
                 case '':
                 case false:
                 case undefined:
-                    console.log('defaultValue')
                     break;
                 case 'false':
-                    console.log('false')
                     r = false;
                     break;
                 case 'auto':
-                    console.log('auto');
                     r = 'auto';
                     break;
                 default:
-                    console.log('default')
                     if(this.isFloat(value)) {
                         r = parseFloat(value);
                     } else if(this.isInt(value)) {
@@ -322,7 +317,6 @@ Simple line chart component
             };
             return r;
         },
-
 
         getWidthAuto: function() {
             var el = this.$$('.px-simple-line-chart-div').parentNode.parentNode;
@@ -347,19 +341,14 @@ Simple line chart component
         },
 
         reconcileValues: function() {
-
             this.widthValue = this.reconcileDimensionValue(this.width, 283);
             this.heightValue = this.reconcileDimensionValue(this.height, 150);
-
-            console.log("hv: " + this.heightValue, "wv: " + this.widthValue);
-
             if(this.widthValue === 'auto') {
                 this.widthValue = this.getWidthAuto();
             };
             if(this.heightValue === 'auto') {
                 this.heightValue = this.getHeightAuto();
             };
-            // console.log(this.heightValue, this.widthValue);
             this.columns = this.reconcileValue(this.columns, 7);
             this.rows = this.reconcileValue(this.rows, 7);
             this.paddingValue = this.reconcileValue(this.padding, true);
