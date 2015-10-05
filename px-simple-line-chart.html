@@ -102,9 +102,9 @@ Simple line chart component
             * Format: Number
             */
             width: {
-                type: Number,
+                type: String,
                 observer: 'drawChartDebounced',
-                value: 283
+                value: '283'
             },
             /**
             * height
@@ -112,9 +112,9 @@ Simple line chart component
             * Format: Number
             */
             height: {
-                type: Number,
+                type: String,
                 observer: 'drawChartDebounced',
-                value: 150
+                value: '150'
             },
             /**
             * columns
@@ -292,21 +292,67 @@ Simple line chart component
             };
         },
 
+        reconcileDimensionValue: function(value, defaultValue) {
+            var r = defaultValue;
+            console.log('value: '+ value);
+            switch(value) {
+                case '':
+                case false:
+                case undefined:
+                    console.log('defaultValue')
+                    break;
+                case 'false':
+                    console.log('false')
+                    r = false;
+                    break;
+                case 'auto':
+                    console.log('auto');
+                    r = 'auto';
+                    break;
+                default:
+                    console.log('default')
+                    if(this.isFloat(value)) {
+                        r = parseFloat(value);
+                    } else if(this.isInt(value)) {
+                        r = parseInt(value);
+                    } else {
+                        r = value;
+                    };
+                    break;
+            };
+            return r;
+        },
+
+
         getWidthAuto: function() {
             var el = this.$$('.px-simple-line-chart-div').parentNode.parentNode;
-            return parseInt(el.clientWidth);
+            var padding = this.getElementPadding(el);
+            return parseInt(el.clientWidth - padding.left - padding.right);
         },
 
         getHeightAuto: function() {
             var el = this.$$('.px-simple-line-chart-div').parentNode.parentNode;
-            return parseInt(el.clientHeight);
+            var padding = this.getElementPadding(el);
+            return parseInt(el.clientHeight - padding.top - padding.bottom);
+        },
+
+        getElementPadding: function(el) {
+            var style = window.getComputedStyle(el, null);
+            return {
+                top: style.getPropertyValue('padding-top').split('px')[0],
+                right: style.getPropertyValue('padding-right').split('px')[0],
+                bottom: style.getPropertyValue('padding-bottom').split('px')[0],
+                left: style.getPropertyValue('padding-left').split('px')[0]
+            };
         },
 
         reconcileValues: function() {
-            this.widthValue = this.reconcileValue(this.width, 283);
-            this.heightValue = this.reconcileValue(this.height, 150);
-            console.log(this.heightValue, this.widthValue);
-            // console.log(this.heightValue, this.widthValue);
+
+            this.widthValue = this.reconcileDimensionValue(this.width, 283);
+            this.heightValue = this.reconcileDimensionValue(this.height, 150);
+
+            console.log("hv: " + this.heightValue, "wv: " + this.widthValue);
+
             if(this.widthValue === 'auto') {
                 this.widthValue = this.getWidthAuto();
             };

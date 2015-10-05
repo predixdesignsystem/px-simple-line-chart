@@ -44,29 +44,23 @@
                 <i>Default configuration.</i>
             </div>
 
-            <div class="example">
-                <strong>Example chart</strong>
-                <br/><br/>
-
-                <px-simple-line-chart
-                    width="auto"
-                    height="auto"
-                    min="0"
-                    max="2"
-                    threshold="1"
-                    line-data="{{sampleData.series}}">
-                </px-simple-line-chart>
-
-                <px-simple-line-chart
-                    width="350"
-                    height="150"
-                    min="0"
-                    max="2"
-                    threshold="1"
-                    line-data="{{sampleData.series}}">
-                </px-simple-line-chart>
-
-            </div>
+            <div class="example" style="
+                width: 450px;
+                height: 136px;
+                padding: 50px;
+                margin: 50px;
+                display: block;
+                border: 1px solid #00e5bd;
+                white-space-collapse: discard;
+            ">
+            <px-simple-line-chart
+                width="auto"
+                height="auto"
+                min="0"
+                max="2"
+                threshold="1"
+                line-data="{{sampleData.series}}">
+            </px-simple-line-chart></div>
 
             <div class="config">
                 <strong>Element Configuration</strong>
@@ -75,12 +69,14 @@
                 <br />
                 &lt;/px-simple-line-chart&gt;
             </div>
+            <!--
 
             <br clear="both" /><br /><br />
             <hr />
             <h3>101 Randomly Generated Examples:</h3>
             <br clear="both"/>
 
+            -->
             <template is="dom-repeat" items="{{examples}}">
                 <div class="description">
                     <strong>Description</strong>
