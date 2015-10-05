@@ -200,7 +200,7 @@ Simple line chart component
         drawChartDebounced: function(data, previous) {
             this.debounce('drawChart', function() {
                 this.drawChart();
-            }, 50);
+            }, 100);
         },
 
         attachSVG: function() {
@@ -343,12 +343,20 @@ Simple line chart component
         reconcileValues: function() {
             this.widthValue = this.reconcileDimensionValue(this.width, 283);
             this.heightValue = this.reconcileDimensionValue(this.height, 150);
+            if(this.heightValue === 'auto' || this.widthValue === 'auto') {
+                var that = this;
+                window.onresize = function() {
+                    that.removeChartDebounced();
+                    that.drawChartDebounced();
+                };
+            };
             if(this.widthValue === 'auto') {
                 this.widthValue = this.getWidthAuto();
             };
             if(this.heightValue === 'auto') {
                 this.heightValue = this.getHeightAuto();
             };
+
             this.columns = this.reconcileValue(this.columns, 7);
             this.rows = this.reconcileValue(this.rows, 7);
             this.paddingValue = this.reconcileValue(this.padding, true);
@@ -386,6 +394,20 @@ Simple line chart component
             };
         },
 
+        removeChart: function() {
+            this.svg = d3.select(this.$$(".px-simple-line-chart-svg"))
+                .attr("width", 1)
+                .attr("height", 1);
+            // Remove previous child elements
+            this.svg.text("");
+        },
+
+        removeChartDebounced: function() {
+            this.debounce('removeChart', function() {
+                this.removeChart();
+            }, 100);
+        },
+
         drawChart: function() {
             if(this.lineData) {
                 this.reconcileValues();
@@ -405,7 +427,7 @@ Simple line chart component
                 this.drawChartLine();
                 this.addChartBorders();
                 this.addStyleScope();
-            }
+            };
         },
 
         // Fired on attached event
