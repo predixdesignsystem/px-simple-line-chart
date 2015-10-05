@@ -15,7 +15,9 @@ Simple line chart component
     <script type="text/javascript" src="../d3/d3.js"></script>
     <link rel="import" type="css" href="css/px-simple-line-chart.css" />
     <template>
-        <svg class="px-simple-line-chart-svg"></svg>
+        <div class="px-simple-line-chart-div">
+            <svg class="px-simple-line-chart-svg"></svg>
+        </div>
     </template>
 </dom-module>
 <script>
@@ -100,9 +102,9 @@ Simple line chart component
             * Format: Number
             */
             width: {
-                type: Number,
+                type: String,
                 observer: 'drawChartDebounced',
-                value: 283
+                value: '283'
             },
             /**
             * height
@@ -110,9 +112,9 @@ Simple line chart component
             * Format: Number
             */
             height: {
-                type: Number,
+                type: String,
                 observer: 'drawChartDebounced',
-                value: 150
+                value: '150'
             },
             /**
             * columns
@@ -279,6 +281,8 @@ Simple line chart component
                 return defaultValue;
             } else if(value === 'false') {
                 return false;
+            } else if(value === 'auto') {
+                return 'auto';
             } else if(this.isFloat(value)) {
                 return parseFloat(value);
             } else if(this.isInt(value)) {
@@ -288,9 +292,63 @@ Simple line chart component
             };
         },
 
+        reconcileDimensionValue: function(value, defaultValue) {
+            var r = defaultValue;
+            switch(value) {
+                case '':
+                case false:
+                case undefined:
+                    break;
+                case 'false':
+                    r = false;
+                    break;
+                case 'auto':
+                    r = 'auto';
+                    break;
+                default:
+                    if(this.isFloat(value)) {
+                        r = parseFloat(value);
+                    } else if(this.isInt(value)) {
+                        r = parseInt(value);
+                    } else {
+                        r = value;
+                    };
+                    break;
+            };
+            return r;
+        },
+
+        getWidthAuto: function() {
+            var el = this.$$('.px-simple-line-chart-div').parentNode.parentNode;
+            var padding = this.getElementPadding(el);
+            return parseInt(el.clientWidth - padding.left - padding.right);
+        },
+
+        getHeightAuto: function() {
+            var el = this.$$('.px-simple-line-chart-div').parentNode.parentNode;
+            var padding = this.getElementPadding(el);
+            return parseInt(el.clientHeight - padding.top - padding.bottom);
+        },
+
+        getElementPadding: function(el) {
+            var style = window.getComputedStyle(el, null);
+            return {
+                top: style.getPropertyValue('padding-top').split('px')[0],
+                right: style.getPropertyValue('padding-right').split('px')[0],
+                bottom: style.getPropertyValue('padding-bottom').split('px')[0],
+                left: style.getPropertyValue('padding-left').split('px')[0]
+            };
+        },
+
         reconcileValues: function() {
-            this.widthValue = this.reconcileValue(this.width, 283);
-            this.heightValue = this.reconcileValue(this.height, 150);
+            this.widthValue = this.reconcileDimensionValue(this.width, 283);
+            this.heightValue = this.reconcileDimensionValue(this.height, 150);
+            if(this.widthValue === 'auto') {
+                this.widthValue = this.getWidthAuto();
+            };
+            if(this.heightValue === 'auto') {
+                this.heightValue = this.getHeightAuto();
+            };
             this.columns = this.reconcileValue(this.columns, 7);
             this.rows = this.reconcileValue(this.rows, 7);
             this.paddingValue = this.reconcileValue(this.padding, true);
@@ -299,8 +357,6 @@ Simple line chart component
             this.thresholdValue = this.reconcileThreshold(this.threshold);
             this.minLabelValue = this.reconcileValue(this.minLabel, false);
             this.maxLabelValue = this.reconcileValue(this.maxLabel, false);
-
-
 
             // automatically set a min label value from min value
             if((this.minValue || this.minValue === 0) && this.minLabelValue === false && this.minLabel !== 'false') {
@@ -311,7 +367,6 @@ Simple line chart component
             if((this.maxValue || this.maxValue === 0) && this.maxLabelValue === false && this.maxLabel !== 'false') {
                 this.maxLabelValue = this.maxValue.toString();
             };
-
 
             this.thresholdLabelValue = this.reconcileValue(this.thresholdLabel, false);
 
@@ -329,7 +384,6 @@ Simple line chart component
             if(this.thresholdLabelValue !== false || this.minLabelValue !== false || this.maxLabelValue !== false) {
                 this.requireAxisBar = true;
             };
-
         },
 
         drawChart: function() {
