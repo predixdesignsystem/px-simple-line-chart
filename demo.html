@@ -18,17 +18,18 @@
             .example {
                 margin-right: 15px;
                 width: auto;
+                height: auto;
                 display: block;
                 float: left;
             }
             .config {
                 float: left;
-                width: 400px;
+                width: 280px;
             }
             .description {
                 margin-right: 20px;
                 float: left;
-                width: 250px;
+                width: 280px;
             }
             hr {
                 height: 1px;
@@ -45,15 +46,15 @@
 
             <hr />
 
-            <div class="container" style="width: 100%; display: table;">
+            <div class="container" style="width: 100%; display: table; height: 100px;">
 
-                <div class="description" style="display: table-cell; width: 15%; margin: 10px; float: none;">
+                <div class="description" style="display: table-cell; float: none;">
                     <strong>Description</strong>
                     <br /><br />
-                    <i>Default configuration.</i>
+                    <i>Example of px-simple-line-chart using automatic width and height to fill containing element.</i>
                 </div>
 
-                <div class="config" style="display: table-cell; width: 18%; margin: 10px; float: none;">
+                <div class="config" style="display: table-cell; float: none;">
                     <strong>Element Configuration</strong>
                     <br/><br/>
                     &lt;px-simple-line-chart<br />
@@ -61,24 +62,42 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height="auto"<br />
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;min="0"<br />
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;max="2"<br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;threshold="1"
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;threshold="1.234567"
                     &gt;
                     <br />
                     &lt;/px-simple-line-chart&gt;
                 </div>
 
-                <div class="example" style="display: table-cell; width: auto; margin: 10px; float: none;">
+                <div class="example" style="
+                    display: table-cell;
+                    width: auto;
+                    height: 320px;
+                    margin: 10px;
+                    float: none;
+                    overflow: hidden;
+                ">
                     <strong>Example chart</strong>
                     <br/><br/>
                     <px-simple-line-chart
                         width="auto"
+                        height="auto"
                         min="0"
                         max="2"
-                        threshold="1.23456789"
+                        threshold="1.234567"
                         line-data="{{sampleData.series}}">
                     </px-simple-line-chart>
                 </div>
 
+            </div>
+
+            <div style="position: absolute; top: 5px; right: 10px;">
+                <px-simple-line-chart
+                    width="50"
+                    height="20"
+                    columns="1"
+                    rows="1"
+                    line-data="{{sampleData.series}}">
+                </px-simple-line-chart>
             </div>
 
             <br clear="both" /><br /><br />
