@@ -28,6 +28,10 @@ Simple line chart component
 
         behaviors: [pxSimpleChartCommonBehavior],
 
+        defaultChartData: [
+            [1,2,3,4,5,6,7]
+        ],
+
         /**
          * Properties block, expose attribute values to the DOM via 'reflect'
          *
@@ -42,8 +46,10 @@ Simple line chart component
             */
             lineData: {
                 type: Array,
-                observer: 'drawChartDebounced'
-                // value: function() {return [[0,0]];}
+                observer: '_drawChart',
+                value: function() {
+                    return this.defaultChartData;
+                }
             },
             /**
             * threshold
@@ -106,7 +112,7 @@ Simple line chart component
             */
             columns: {
                 type: Number,
-                observer: 'drawChartDebounced',
+                observer: '_drawChart',
                 value: 7
             },
             /**
@@ -116,7 +122,7 @@ Simple line chart component
             */
             rows: {
                 type: Number,
-                observer: 'drawChartDebounced',
+                observer: '_drawChart',
                 value: 7
             },
             /**
@@ -137,6 +143,12 @@ Simple line chart component
                 type: Number,
                 value: 25
             }
+        },
+
+        _drawChartDebounced: function(data, previous) {
+            this.debounce('drawChart', function() {
+                this.drawChart();
+            }, 100);
         },
 
         addPoint: function(point) {
@@ -180,11 +192,7 @@ Simple line chart component
             return extent;
         },
 
-        drawChartDebounced: function(data, previous) {
-            this.debounce('drawChart', function() {
-                this.drawChart();
-            }, 100);
-        },
+
 
         attachSVG: function() {
             // select the svg element
@@ -411,11 +419,6 @@ Simple line chart component
                 this.addChartBorders();
                 this.addStyleScope();
             };
-        },
-
-        // Fired on attached event
-        attached: function() {
-            this.drawChartDebounced();
         },
 
         addStyleScope: function() {
