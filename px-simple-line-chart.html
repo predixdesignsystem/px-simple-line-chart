@@ -282,7 +282,6 @@ Simple line chart component
                 this.barWidth = parseInt(this._getAxisLabelWidth() + 14);
             };
             this.chartWidth = this.widthValue - this.barWidth;
-            console.log('chartWidth: ',this.chartWidth, ' columns: ', this.columns);
             this.columnWidth = parseInt(this.chartWidth / ( this.columns ));
             if(this.barWidth) {
                 this.barWidth += this.chartWidth % this.columns;
