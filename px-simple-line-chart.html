@@ -273,7 +273,8 @@ Simple line chart component
             };
             this.chartHeight = this.heightValue;
             this.rowHeight = parseInt(this.heightValue / this.rows);
-            this.chartHeight = this.chartHeight - (this.heightValue % this.rows);
+            this.chartHeight = this.chartHeight -
+                (this.heightValue % this.rows);
             // set width and height of svg element
             this.svg
                 .attr("width", this.widthValue)
@@ -298,7 +299,6 @@ Simple line chart component
                 .datum(this.lineData)
                 .attr("class", "chartLine")
                 .attr("d", this.chartLineFunction);
-            this._addStyleScope();
         },
 
         _setScales: function() {
@@ -469,31 +469,23 @@ Simple line chart component
         },
 
         _drawThresholdLine: function() {
-            if(this.svg) {
-                var y = parseInt(this.yScale(this.thresholdValue));
-                var path = this.svg.select('.thresholdLine');
-                if(path.empty()) {
-                    path = this.svg.append("path");
-                };
-                path.attr("class", "thresholdLine")
-                    .attr("d", this.linearLineFunction([
-                        {
-                            "x": this.barWidth,
-                            "y": y + 0.5
-                        },
-                        {
-                            "x": this.fullWidth,
-                            "y": y + 0.5
-                        }
-                    ])
-                );
-                this._addStyleScope();
-            } else {
-                var that = this;
-                var timeout = setTimeout(function() {
-                    that.drawThreshold();
-                }, 100);
-            }
+            var y = parseInt(this.yScale(this.thresholdValue));
+            var path = this.svg.select('.thresholdLine');
+            if(path.empty()) {
+                path = this.svg.append("path");
+            };
+            path.attr("class", "thresholdLine")
+                .attr("d", this.linearLineFunction([
+                    {
+                        "x": this.barWidth,
+                        "y": y + 0.5
+                    },
+                    {
+                        "x": this.fullWidth,
+                        "y": y + 0.5
+                    }
+                ])
+            );
         }
 
     });
