@@ -202,8 +202,8 @@ Simple line chart component
             // TODO: This method shall be cleaned up.
             this.columns = this._reconcileValue(this.columns, 7);
             this.rows = this._reconcileValue(this.rows, 7);
-            this._ensureMinimum(this.columns, 1);
-            this._ensureMinimum(this.rows, 1);
+            this.columns = this._ensureMinimum(this.columns, 1);
+            this.rows = this._ensureMinimum(this.rows, 1);
             this.paddingValue = this._reconcileValue(this.padding, true);
             this.minValue = this._reconcileMinOrMax(this.min, 'min');
             this.maxValue = this._reconcileMinOrMax(this.max, 'max');
@@ -478,9 +478,6 @@ Simple line chart component
                     }
                 ]);
             };
-
-
-
             // Append grid lines to svg
             for(i=0;i<gridLines.length;i++) {
                 this.svg.append("path")
