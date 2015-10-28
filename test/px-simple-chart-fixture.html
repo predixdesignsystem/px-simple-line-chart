@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="../favicon.ico" />
+        <title>px-simple-line-chart Demo</title>
+        <!-- Requires Webcomponents.js polyfill is provided by the page for browsers that don't support html imports -->
+        <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+        <script src="../web-component-tester/browser.js"></script>
+        <script src="../demo-data/sample-data.js"></script>
+        <!-- Import custom element. Note: see comment about relative paths to dependencies in the *.html file referenced below -->
+        <link rel="import" href="../px-simple-line-chart.html" />
+    </head>
+    <body>
+
+        <px-simple-line-chart id="fixture"></px-simple-line-chart>
+
+        <script>
+            suite('default <px-simple-line-chart>', function() {
+                setup(function() {
+                    var fixture = document.getElementById('fixture');
+                    var svg = fixture.children[0].children[0];
+                });
+                test('fixture exists', function() {
+                    assert.isTrue(fixture !== null);
+                });
+                test('SVG element exists', function() {
+                    assert.isTrue(svg.tagName.toLowerCase() === 'svg');
+                });
+                test('SVG element has height greater than zero', function() {
+                    assert.isTrue(svg.clientHeight > 0);
+                });
+                test('SVG element has default height', function() {
+                    setTimeout(function() {
+                        assert.isTrue(svg.clientHeight === 150);
+                    }, 100);
+                });
+                test('SVG element has width greater than zero', function() {
+                    assert.isTrue(svg.clientWidth > 0);
+                });
+                test('SVG element has default width', function() {
+                    setTimeout(function() {
+                        var width = svg.clientWidth;
+                        assert.isTrue(Number(width) === 283);
+                    }, 100);
+                });
+            });
+        </script>
+
+    </body>
+</html>
