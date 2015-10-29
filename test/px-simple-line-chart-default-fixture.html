@@ -9,6 +9,7 @@
         <script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
         <script src="../web-component-tester/browser.js"></script>
         <script src="../demo-data/sample-data.js"></script>
+        <script src="px-test-helpers.js"></script>
         <!-- Import custom element. Note: see comment about relative paths to dependencies in the *.html file referenced below -->
         <link rel="import" href="../px-simple-line-chart.html" />
     </head>
@@ -20,24 +21,7 @@
 
             var fixture, div, svg, boundingBox;
 
-            function waitFor(done, fn) {
-              var myInterval, myTimeout;
 
-              myTimeout = setTimeout(function() {
-                clearInterval(myInterval); // worst case, kill interval after 1/2 a second
-                clearTimeout(myTimeout);
-                done();
-              }, 3001);
-
-              // loop until calendar cells have rendered
-              myInterval = setInterval(function() {
-                if (fn()) { // if the function returns true, call done()
-                  clearInterval(myInterval);
-                  clearTimeout(myTimeout);
-                  done();
-                }
-              }, 50);
-            };
 
             describe('default <px-simple-line-chart> basic features', function() {
 
