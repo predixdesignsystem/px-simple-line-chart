@@ -178,6 +178,9 @@ Simple line chart component
          * calls all of the subordinate functions to draw/redraw the chart
         */
         _drawChartDebounced: function() {
+
+            console.log('_drawChartDebounced: ', this.lineData);
+
             if(this.lineData) {
                 // clear the svg element
                 this._reconcileValues();
