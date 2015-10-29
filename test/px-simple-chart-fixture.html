@@ -18,10 +18,10 @@
 
         <script>
             suite('default <px-simple-line-chart>', function() {
-                setup(function() {
-                    var fixture = document.getElementById('fixture');
-                    var svg = fixture.children[0].children[0];
-                });
+
+                var fixture = document.getElementById('fixture');
+                var svg = fixture.children[0].children[0];
+
                 test('fixture exists', function() {
                     assert.isTrue(fixture !== null);
                 });
