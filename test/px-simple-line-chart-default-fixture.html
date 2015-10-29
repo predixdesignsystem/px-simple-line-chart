@@ -90,20 +90,30 @@
                 it('SVG element has height greater than zero', function(done) {
                     console.log('svg: ', svg.attributes);
                     console.log('svg: ', svg.width, svg.height);
-                    assert.isTrue(svg.offsetHeight > 0);
+                    
+                    
+                    var box = svg.getBoundingClientRect();
+					
+					
+                    
+                    assert.isTrue(box.height > 0)
                     done();
                 });
                 it('SVG element has default height', function(done) {
-                    assert.isTrue(svg.offsetHeight === 150);
+                var box = svg.getBoundingClientRect();
+                    assert.isTrue(box.height === 150);
                     done();
                 });
                 it('SVG element has width greater than zero', function(done) {
-                    assert.isTrue(svg.offsetHeight > 0);
+                 var box = svg.getBoundingClientRect();
+                    assert.isTrue(box.width > 0);
                     done();
                 });
                 it('SVG element has default width', function(done) {
-                    var width = svg.offsetHeight;
-                    assert.isTrue(Number(width) === 283);
+                    var width = svg.offsetWidth;
+                     var box = svg.getBoundingClientRect();
+                    
+                    assert.isTrue(box.width === 283 || box.width ===300);
                     done();
                 });
             });
