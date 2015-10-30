@@ -17,6 +17,14 @@
 
         <px-simple-line-chart id="fixture"></px-simple-line-chart>
 
+        <div style="width:320px; height:100px;">
+            <div>
+                <div>
+                    <px-simple-line-chart id="fixture1" width="auto" height="auto"></px-simple-line-chart>
+                </div>
+            </div>
+        </div>
+
         <script>
 
             var fixture, div, svg, boundingBox;
@@ -85,6 +93,76 @@
 
                     assert.isTrue(boundingBox.width === 283 || boundingBox.width ===300);
                     done();
+                });
+            });
+
+            describe('default <px-simple-line-chart> basic features', function() {
+
+                before(function(done) {
+                    var svgIsReady = function() {
+                        fixture = document.getElementById('fixture1');
+                        if(fixture) {
+                            div = fixture.querySelector('div');
+                            if(div) {
+                                svg = div.children[0];
+                                if(svg.tagName.toLowerCase() === 'svg') {
+                                    return true;
+                                } else {
+                                    return false;
+                                };
+                            } else {
+                                return false;
+                            };
+                        } else {
+                            return false;
+                        };
+                    };
+                    var chartIsDrawn = function() {
+                        waitFor(done, function(){
+                            boundingBox = svg.getBoundingClientRect();
+                            if(svg.offsetHeight > 0) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        });
+                    };
+                    waitFor(chartIsDrawn, svgIsReady)
+                });
+
+                it('fixture exists', function(done) {
+                    assert.isTrue(fixture !== null);
+                    done();
+                });
+                it('SVG element exists', function(done) {
+                    assert.isTrue(svg.tagName.toLowerCase() === 'svg');
+                    done();
+                });
+                it('SVG element has height greater than zero', function(done) {
+                    assert.isTrue(boundingBox.height > 0)
+                    done();
+                });
+                it('SVG element has default height', function(done) {
+                    setTimeout(function(){
+                    var box = svg.getBoundingClientRect();
+                    console.log("boundingBox.height", boundingBox.height);
+                    assert.isTrue(boundingBox.height === 100);
+                    done();
+                    }, 3000);
+                });
+                it('SVG element has width greater than zero', function(done) {
+                    var box = svg.getBoundingClientRect();
+                    assert.isTrue(boundingBox.width > 0);
+                    done();
+                });
+                it('SVG element has default width', function(done) {
+                    setTimeout(function(){
+                        var width = svg.offsetWidth;
+                    var box = svg.getBoundingClientRect();
+                    console.log("boundingBox.width", boundingBox.width);
+                    assert.isTrue(boundingBox.width === 337 || boundingBox.width ===320);
+                    done();
+                    }, 3000);
                 });
             });
         </script>
