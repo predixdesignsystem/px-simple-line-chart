@@ -399,7 +399,7 @@ Simple line chart component
                 .style("display", "block")
                 .text(longestString);
             var labelWidth = this.barLabel.node().getComputedTextLength();
-            var barLabel = this.barLabel.remove();
+            this.barLabel.remove();
             return Math.round(labelWidth - (labelWidth * 0.10));
         },
 
