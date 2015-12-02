@@ -307,7 +307,7 @@ Simple line chart component
 
         _extentWithPadding: function(data) {
             var extent = d3.extent(data, function(d) { return d[1]; });
-            extent[0] = this.minValue ? this.minValue : extent[0];
+            extent[0] = (this.minValue !== undefined && this.minValue !== null && !isNaN(this.minValue)) ? this.minValue : extent[0];
             extent[1] = this.maxValue ? this.maxValue : extent[1];
             if(this.paddingValue) {
                 var diff = Math.abs(extent[0] - extent[1]);
