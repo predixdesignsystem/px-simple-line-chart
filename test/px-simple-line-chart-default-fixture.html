@@ -18,11 +18,7 @@
         <px-simple-line-chart id="fixture"></px-simple-line-chart>
 
         <div style="width:320px; height:100px;">
-            <div>
-                <div>
-                    <px-simple-line-chart id="fixture1" width="auto" height="auto"></px-simple-line-chart>
-                </div>
-            </div>
+          <px-simple-line-chart id="fixture1" width="auto" height="auto"></px-simple-line-chart>
         </div>
 
         <script>
@@ -144,7 +140,7 @@
                 });
                 it('SVG element has default height', function(done) {
                     setTimeout(function(){
-                    var box = svg.getBoundingClientRect();
+                    var box = document.getElementById('fixture1').querySelector('svg').getBoundingClientRect();
                     console.log("boundingBox.height", boundingBox.height);
                     assert.isTrue(boundingBox.height === 100);
                     done();
