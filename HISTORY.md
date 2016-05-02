@@ -1,3 +1,7 @@
+v1.3.2
+==================
+* updated documentation to point github pages API
+
 v1.3.1
 ==================
 * Fix demo error for IE
