@@ -84,7 +84,7 @@
                         max="2.56"
                         padding="false"
                         line-data="{{sampleData.series}}">
-                    <px-simple-line-chart>
+                    </px-simple-line-chart>
 
                 </div>
 
@@ -309,10 +309,10 @@
             var template = document.querySelector('#just-for-demo');
             // The dom-change event signifies when the template has stamped its DOM.
             template.addEventListener('dom-change', function() {
+                this.examples = examples;
                 for(i=0;i<100;i++) {
                     examples.push(generateChartConfig());
                 };
-                this.examples = examples;
             });
 
 
