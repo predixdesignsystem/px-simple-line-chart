@@ -140,11 +140,11 @@
                 });
                 it('SVG element has default height', function(done) {
                     setTimeout(function(){
-                    var box = document.getElementById('fixture1').querySelector('svg').getBoundingClientRect();
-                    console.log("boundingBox.height", boundingBox.height);
-                    assert.isTrue(boundingBox.height === 100);
-                    done();
-                    }, 3000);
+                      var box = document.getElementById('fixture1').querySelector('svg').getBoundingClientRect();
+                      console.log("boundingBox.height", boundingBox.height);
+                      assert.isTrue(Math.round(boundingBox.height) === 100);
+                      done();
+                    }, 500);
                 });
                 it('SVG element has width greater than zero', function(done) {
                     var box = svg.getBoundingClientRect();
@@ -153,12 +153,12 @@
                 });
                 it('SVG element has default width', function(done) {
                     setTimeout(function(){
-                        var width = svg.offsetWidth;
-                    var box = svg.getBoundingClientRect();
-                    console.log("boundingBox.width", boundingBox.width);
-                    assert.isTrue(boundingBox.width === 337 || boundingBox.width ===320);
-                    done();
-                    }, 3000);
+                      var width = svg.offsetWidth;
+                      var box = svg.getBoundingClientRect();
+                      console.log("boundingBox.width", boundingBox.width);
+                      assert.isTrue(Math.round(boundingBox.width) === 337 || Math.round(boundingBox.width) ===320);
+                      done();
+                    }, 500);
                 });
             });
         </script>
