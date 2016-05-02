@@ -1,7 +1,17 @@
 <link rel="import" href="../polymer/polymer.html"/>
 <link rel="import" href="../px-simple-chart-common-behavior/px-simple-chart-common-behavior.html" />
 <!--
-Simple line chart component
+
+Use the Px-Simple-Line-Chart component to visualize a series of numeric values as a line chart. The series is represented by a thin blue line connecting a sequence of points, the position of each proportionally point representing a single coordinate value.
+
+Optionally, a `threshold` value may be defined to draw a thin orange line horizontally at the y-axis point representing the value. By default a threshold label will be drawn in an axis bar on the left side of the chart. If a custom threshold label is necessary a string may also be passed to the component as `threshold-label`.
+
+In addition, a `min` and `max` may be configured in order to scope the chart to a specific range of y values. By default these will also be represented by labels in an axis bar on the left side of the chart. If custom labels are necessary they can be passed as strings to the component as `min-label` and `max-label`.
+
+The `width` and `height` of the component are also configurable as well as the vertical columns and horizontal rows drawn in the background of the coordinate space.
+
+We recommend viewing the Demo page to become aware of the configuration possibilities. We also recommend using the default settings as they are designed for proper performance.
+
 
 ##### Usage
 
@@ -44,9 +54,11 @@ Simple line chart component
         properties: {
 
             /**
-            * lineData
+            * This property defines the series data to be charted. It needs to be passed in as a multi-dimensional array containing one or more arrays of numeric value pairs.
             *
-            * Format: [ [7, 11], [10, 4], [15, 10] ... ]
+            *     <px-simple-line-chart
+            *       line-data="[ [1,2], [2,3], [3,4] ]">
+            *     </px-simple-line-chart>
             */
             lineData: {
                 type: Array,
@@ -57,9 +69,11 @@ Simple line chart component
             },
 
             /**
-            * threshold
+            * define a threshold value to draw a thin orange line across the chart at the y-axis position representing the threshold point.
+            *     <px-simple-line-chart
+            *       threshold="1.5">
+            *     </px-simple-line-chart>
             *
-            * Format: String
             */
             threshold: {
                 type: String,
@@ -67,9 +81,17 @@ Simple line chart component
             },
 
             /**
-            * thresholdLabel
+            * define custom text for your threshold label. Pass in the value as a string. Set the value to 'false' to remove the threshold label.
             *
-            * Format: String
+            *      <px-simple-line-chart
+            *        ...
+            *        threshold-label="Custom Label">
+            *      </px-simple-line-chart>
+            * or
+            *      <px-simple-line-chart
+            *         ...
+            *         threshold-label="false">
+            *      </px-simple-line-chart>
             */
             thresholdLabel: {
                 type: String,
@@ -77,9 +99,12 @@ Simple line chart component
             },
 
             /**
-            * max
+            * define an upper bound of your data
             *
-            * Format: String
+            *      <px-simple-line-chart
+            *        ...
+            *        max="2">
+            *      </px-simple-line-chart>
             */
             max: {
                 type: String,
@@ -87,9 +112,12 @@ Simple line chart component
             },
 
             /**
-            * min
+            * define a lower bound of your data
             *
-            * Format: String
+            *      <px-simple-line-chart
+            *        ...
+            *        min="1">
+            *      </px-simple-line-chart>
             */
             min: {
                 type: String,
@@ -97,9 +125,18 @@ Simple line chart component
             },
 
             /**
-            * max
+            * define custom text for a chart's max label. The values of your max will be used by default to render text labels to the axis bar on the left side of the chart.
+            * Set the value to 'false' to remove the label from the axis bar.
             *
-            * Format: String
+            *      <px-simple-line-chart
+            *        ...
+            *        max-label="Custom Label">
+            *      </px-simple-line-chart>
+            * or
+            *      <px-simple-line-chart
+            *        ...
+            *        max-label="false">
+            *      </px-simple-line-chart>
             */
             maxLabel: {
                 type: String,
@@ -107,9 +144,18 @@ Simple line chart component
             },
 
             /**
-            * min
+            * define custom text for a chart's min label. The values of your min will be used by default to render text labels to the axis bar on the left side of the chart.
+            * Set the value to 'false' to remove the labels from the axis bar.
             *
-            * Format: String
+            *      <px-simple-line-chart
+            *        ...
+            *        min-label="Custom Label">
+            *      </px-simple-line-chart>
+            * or
+            *      <px-simple-line-chart
+            *        ...
+            *        min-label="false">
+            *      </px-simple-line-chart>
             */
             minLabel: {
                 type: String,
@@ -117,9 +163,12 @@ Simple line chart component
             },
 
             /**
-            * columns
+            * define the grid lines columns to be drawn in the background of the chart.
             *
-            * Format: Number
+            *      <px-simple-line-chart
+            *         ...
+            *         columns="25"
+            *      </px-simple-line-chart>
             */
             columns: {
                 type: Number,
@@ -128,9 +177,12 @@ Simple line chart component
             },
 
             /**
-            * rows
+            * define the grid lines rows to be drawn in the background of the chart.
             *
-            * Format: Number
+            *      <px-simple-line-chart
+            *         ...
+            *         rows="10"
+            *      </px-simple-line-chart>
             */
             rows: {
                 type: Number,
@@ -139,9 +191,9 @@ Simple line chart component
             },
 
             /**
-            * High
+            * define the padding in the chart
             *
-            * Format: Number
+            *
             */
             padding: {
                 type: String,
@@ -149,7 +201,7 @@ Simple line chart component
             },
 
             /**
-            * maxDataPoints
+            * definen the max data points in the chart
             *
             * Format: Number
             */
@@ -160,8 +212,8 @@ Simple line chart component
         },
 
         /**
-         * addPoint() adds a point to the chart
-         * This is a public method
+         * @method addPoint adds a point to the chart
+         *
          *
          * @param {Array} [Number, Number]
         */
@@ -174,11 +226,11 @@ Simple line chart component
         },
 
         /**
-         * _drawChartDebounced() is the main function of this componet which
+         * @method _drawChartDebounced
+         * the main function of this componet which
          * calls all of the subordinate functions to draw/redraw the chart
         */
         _drawChartDebounced: function() {
-            
             if(this.lineData) {
                 // clear the svg element
                 this._reconcileValues();
@@ -194,16 +246,14 @@ Simple line chart component
                     this._drawAxisLabels();
                     if(this.thresholdValue || this.thresholdValue === 0) {
                         this._drawThresholdLine();
-                    };
-                };
+                    }
+                }
                 this._drawChartLine();
                 this._addChartBorders();
                 this._addStyleScope();
-            };
+            }
         },
-
         _reconcileValues: function() {
-            // TODO: This method shall be cleaned up.
             this.columns = this._reconcileValue(this.columns, 7);
             this.rows = this._reconcileValue(this.rows, 7);
             this.columns = this._ensureMinimum(this.columns, 1);
@@ -218,31 +268,30 @@ Simple line chart component
             // automatically set a min label value from min value
             if((this.minValue || this.minValue === 0) && this.minLabelValue === false && this.minLabel !== 'false') {
                 this.minLabelValue = this.minValue.toString();
-            };
+            }
 
             // automatically set a max label value from max value
             if((this.maxValue || this.maxValue === 0) && this.maxLabelValue === false && this.maxLabel !== 'false') {
                 this.maxLabelValue = this.maxValue.toString();
-            };
+            }
 
             this.thresholdLabelValue = this._reconcileValue(this.thresholdLabel, false);
 
             // automatically set a threshold label value from threshold value
             if((this.thresholdValue || this.thresholdValue === 0) && this.thresholdLabelValue === false) {
                 this.thresholdLabelValue = this.thresholdValue.toString();
-            };
+            }
 
             // if label exists without value
             if(this.thresholdLabelValue && (!this.thresholdValue && this.thresholdValue !== 0)) {
                 this.thresholdLabelValue = false;
-            };
+            }
 
             // turn on requireAxisBar flag bar if necessary
             if(this.thresholdLabelValue !== false || this.minLabelValue !== false || this.maxLabelValue !== false) {
                 this._requireAxisBar = true;
-            };
+            }
         },
-
         _reconcileMinOrMax: function(value, type) {
             // value may be: number, number as string, 'auto', or empty string
             // type is 'min' or 'max'
@@ -252,8 +301,8 @@ Simple line chart component
                     this.autoMinMax = true; // empty string means 'auto' by default
                 } else if(value === 'auto') {
                     this.autoMinMax = true;
-                };
-            };
+                }
+            }
             if(this.autoMinMax) {
                 // automatic calculation
                 var valueFunction = (type === 'max') ? d3.max : d3.min;
@@ -267,7 +316,7 @@ Simple line chart component
                 return parseFloat(value);
             } else {
                 return false; // hide
-            };
+            }
         },
 
         _reconcileThreshold: function(value) {
@@ -284,7 +333,7 @@ Simple line chart component
             this.fullWidth = this.widthValue;
             if(this.thresholdLabelValue || this.minLabelValue || this.maxLabelValue) {
                 this.barWidth = parseInt(this._getAxisLabelWidth() + 14);
-            };
+            }
             this.chartWidth = this.widthValue - this.barWidth;
             this.columnWidth = parseInt(this.chartWidth / ( this.columns ));
             if(this.barWidth) {
@@ -292,7 +341,7 @@ Simple line chart component
             } else {
                 this.fullWidth = this.fullWidth -
                     (this.chartWidth % this.columns);
-            };
+            }
             this.chartHeight = this.heightValue;
             this.rowHeight = parseInt(this.heightValue / this.rows);
             this.chartHeight = this.chartHeight -
@@ -363,7 +412,7 @@ Simple line chart component
                     .text(this.thresholdLabelValue.toString())
                     .attr("x", this.barWidth/2)
                     .attr("y", parseInt(this.yScale(this.thresholdValue)) + 5);
-            };
+            }
             if(this.minLabelValue) {
                 this.minLabelSVG = this.svg.append("text")
                     .attr("class", "axisLabel")
@@ -371,7 +420,7 @@ Simple line chart component
                     .text(this.minLabelValue.toString())
                     .attr("x", this.barWidth/2)
                     .attr("y", this.chartHeight - 8);
-            };
+            }
             if(this.maxLabelValue) {
                 this.maxLabelSVG = this.svg.append("text")
                     .attr("class", "axisLabel")
@@ -379,7 +428,7 @@ Simple line chart component
                     .text(this.maxLabelValue.toString())
                     .attr("x", this.barWidth/2)
                     .attr("y", 18);
-            };
+            }
         },
 
         _getAxisLabelWidth: function() {
@@ -468,7 +517,7 @@ Simple line chart component
                         "y": this.chartHeight
                     }
                 ]);
-            };
+            }
             // Horizontal row lines
             for( i = 0; i <= this.rows -1; i++) {
                 gridLines.push([
@@ -481,13 +530,13 @@ Simple line chart component
                         "y": i*this.rowHeight+0.5
                     }
                 ]);
-            };
+            }
             // Append grid lines to svg
             for(i=0;i<gridLines.length;i++) {
                 this.svg.append("path")
                     .attr("class", "chartGrid")
                     .attr("d", this.linearLineFunction(gridLines[i]));
-            };
+            }
         },
 
         _drawThresholdLine: function() {
@@ -495,7 +544,7 @@ Simple line chart component
             var path = this.svg.select('.thresholdLine');
             if(path.empty()) {
                 path = this.svg.append("path");
-            };
+            }
             path.attr("class", "thresholdLine")
                 .attr("d", this.linearLineFunction([
                     {
@@ -509,6 +558,5 @@ Simple line chart component
                 ])
             );
         }
-
     });
 </script>
