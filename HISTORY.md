@@ -1,5 +1,9 @@
 v1.3.2
 ==================
+* added auto github pages functionality
+
+v1.3.2
+==================
 * updated documentation to point github pages API
 
 v1.3.1
