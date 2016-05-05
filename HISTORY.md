@@ -1,4 +1,4 @@
-v1.3.2
+v1.3.3
 ==================
 * added auto github pages functionality
 
