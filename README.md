@@ -42,7 +42,7 @@ Second, import the component to your application with the following tag in your 
 Finally, use the component in your application:
 
 ```
-<px-simple-line-chart data="{{data}}"></px-simple-line-chart>
+<px-simple-line-chart line-data="[ [1,2], [2,3], [3,4] ]"></px-simple-line-chart>
 ```
 
 
