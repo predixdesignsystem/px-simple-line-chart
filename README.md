@@ -1,4 +1,4 @@
-#Px-Simple-Line-Chart
+#Px-Simple-Line-Chart [![Build Status](https://travis-ci.org/PredixDev/px-simple-line-chart.svg?branch=master)](https://travis-ci.org/PredixDev/px-simple-line-chart)
 
 ## Overview
 
