@@ -1,13 +1,205 @@
 <!doctype html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>px-simple-line-chart API</title>
-        <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
-        <link rel="import" href="../iron-component-page/iron-component-page.html"/>
-    </head>
-    <body>
-        <iron-component-page src="px-simple-line-chart.html" active="px-simple-line-chart"></iron-component-page>
-    </body>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>px-simple-horizontal-line-chart Demo</title>
+  <link rel="stylesheet" type="text/css" href="css/px-simple-line-chart-demo.css" />
+  <!-- Import custom element. Note: see comment about relative paths to dependencies in the *.html file referenced below -->
+  <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../px-theme/px-theme.html" />
+  <link rel="import" href="../iron-ajax/iron-ajax.html" />
+  <link rel="import" href="../px-api-viewer/px-api-viewer.html" />
+  <link rel="import" href="../px-tabs/px-tab-set.html" />
+  <link rel="import" href="../px-dropdown/px-dropdown.html" />
+  <link rel="import" href="px-simple-line-chart.html" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+  <link rel="import" href="../px-demo-snippet/px-demo-snippet.html">
+  <link rel="import" href="../polymer-font-awesome/polymer-font-awesome.html">
+  <!-- Requires Webcomponents.js polyfill is provided by the page for browsers that don't support html imports -->
+<style>
+  .chart__demo{
+
+  }
+</style>
+</head>
+
+<body>
+
+  <!-- Wrap elements with auto-binding template to -->
+  <!-- allow use of Polymer bindings in main document -->
+  <template id="just-for-demo" is="dom-bind">
+
+    <!-- discription -->
+    <div class="hero u-p++ text--shadow">
+      <h1 class="delta">px-simple-line-chart</h1>
+      <p class="description-text">
+        The Simple Horizontal Bar Chart provides a quick way to visualize data in bars. It uses the data
+        visualization color palette by default, but this can be overridden with configuration. The height and
+        width are configurable, as are the legend labels – if none are provided, the legend will not be shown.
+        <br>
+        Each series is represented by a sequence of verically aligned bars, the length of
+        each proportionally representing a value.
+        <br>
+        The bar colors and legend labels are configurable.
+        <br>
+        The width and height of the component are also configurable.
+        We recommend using the default settings as they are designed for proper performance.
+
+      </p>
+      <div class="flex">
+        <img class="u-mr-- " src="https://img.shields.io/travis/PredixDev/px-simple-line-chart.svg?style=flat-square" alt="Travis"  onerror="this.style.display='none'"/>
+        <img class="u-mr--" src="https://img.shields.io/bower/v/px-simple-line-chart.svg?style=flat-square" alt="Bower" onerror="this.style.display='none'" />
+        <img class="u-mr--" src="https://img.shields.io/github/issues-raw/PredixDev/px-simple-line-chart.svg?style=flat-square" alt="Issues" onerror="this.style.display='none'" />
+        <img class="u-mr--" src="https://img.shields.io/github/watchers/PredixDev/px-simple-line-chart.svg?style=social&label=Watch" onerror="this.style.display='none'" />
+      </div>
+    </div>
+    <br />
+
+    <!-- mega demo -->
+    <div style="position: relative;" class="u-pb++ flex flex--col" id="defaultTab">
+      <div class="tabContainer u-pt++ u-pl++">
+        <px-tab-set selected="{{selected}}" bare no-bottom-border>
+          <template is="dom-repeat" items="{{optionsArray}}">
+            <px-tab>Configuration {{indexPlusOne(index)}}</px-tab>
+          </template>
+        </px-tab-set>
+      </div>
+      <px-tab-pages selected="{{selected}}">
+        <template is="dom-repeat" items="{{optionsArray}}">
+          <section class="tab-page flex flex--right flex--wrap">
+            <div class="mega-demo flex u-pb++">
+              <!-- Properties -->
+              <div class="properties u-ph+ u-pb+ u-mt++ u-mh++">
+                <p class="epsilon">Properties</p>
+                <div class="u-mb-">width:
+                  <input id="width{{indexPlusOne(index)}}" class="text-input" type="text" placeholder="{{item.width}}" value="{{item.width::input}}" />
+                </div>
+                <div class="u-mb-">height:
+                  <input id="height{{indexPlusOne(index)}}" class="text-input" type="text" placeholder="{{item.height}}" value="{{item.height::input}}" />
+                </div>
+              </div>
+
+              <div class="demoContainer u-mr++">
+                <!-- demo -->
+                <div class="flex flex--col">
+                  <div class="flex__item demo u-ph+ u-pb+ u-mt++">
+                    <div class="u-mt+">
+                      <px-simple-line-chart
+                        chart-data="{{item.chartData}}"
+                        width="{{item.width}}"
+                        height="{{item.height}}"
+                        legend-labels="{{item.legendLabels}}"
+                        colors="{{item.colors}}">
+                        </px-simple-line-chart>
+                    </div>
+                  </div>
+                  <div class="flex__item">
+                  <px-demo-snippet
+                    element-properties={{item}}
+                    element-name="px-datetime-range-field">
+                  </px-demo-snippet>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="apiContainer">
+            <div class="flex flex--col api u-mt++" >
+              <div>
+                <px-api-viewer source="px-simple-line-chart"></px-api-viewer>
+              </div>
+            </div>
+          </div>
+        </section>
+      </template>
+    </px-tab-pages>
+    </div>
+    <footer class="footer flex flex--center">
+    <div class="footer__container u-pv++">
+      <div>
+        <a href="https://ge.com/digital" >
+          <img src="monogram-wdmk.png" alt="GE Monogram" class="footer__img">
+        </a>
+      </div>
+      <div class="footer__list">
+        <ul class="list-inline list-inline--delimited">
+          <li>
+            <a href="http://predix.io/legal" class="footer__list--lnk">Legal</a>
+          </li>
+          <li>
+            <a href="mailto:info@predix.io" class="footer__list--lnk">Contact Us</a>
+          </li>
+          <li>Copyright &copy; {{year}} General Electric Company. All rights reserved.</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+  </template>
+  <script>
+    window.addEventListener('WebComponentsReady', function() {
+
+      var template = document.querySelector('template[is=dom-bind]'),
+          year = new Date(),
+          chartData = [
+            [ 88, 7, 54, 33, 12, 75, 99],
+            [2,8,5],
+            [22,54,11,66,44]
+          ],
+          width=["auto",250,500],
+          height=["auto",150,200],
+          legendLabels = [
+            [ "Alpha", "Beta", "Charlie", "Delta", "Echo","Fanta", "Gamma", "Hotel", "India", "Jakarta", "King", "Left"],
+            ["Apples","Oranges","Peaces"],
+            ["Florida", "Kentucky","Maryland","Michigan","Nevada", "Vermont"]
+          ],
+          colors = [
+            ["#5da5da", "#faa43a", "#60bd68", "#f17cb0", "#b2912f", "#b276b2", "#decf3f", "#f15854", "#4d4d4d"],
+            ["#A8E6CE", "#FFAAA6", "#FFD3B5", "#FF8C94","#DCEDC2"],
+            ["#EA3556", "#64938D", "#EDE5E2", "#ED146F", "#EDDE45", "#9BF0E9"]
+          ];
+
+          optionsArray = [
+            {
+              "chartData":chartData[0],
+              "width":width[0],
+              "height":height[0],
+              "legendLabels" :legendLabels[0],
+              "colors" :colors[0]
+            },
+            {
+              "chartData":chartData[1],
+              "width":width[1],
+              "height":height[1],
+              "legendLabels" :legendLabels[1],
+              "colors" :colors[1]
+            }
+            ,
+            {
+              "chartData":chartData[2],
+              "width":width[2],
+              "height":height[2],
+              "legendLabels" :legendLabels[2],
+              "colors" :colors[2]
+            }
+          ];
+          indexPlusOne = function(num) {
+            return num + 1;
+          },
+          onlyOneConfigItem = function() {
+            return (optionsArray.length === 1);
+          };
+
+          year = year.getFullYear();
+
+          template.selected = "0";
+          template.optionsArray = optionsArray;
+          template.indexPlusOne = indexPlusOne;
+          template.year = year;
+    });
+  </script>
+
+</body>
+
 </html>
