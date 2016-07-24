@@ -1,3 +1,7 @@
+v1.4.1
+==================
+* Upgrade to new demos
+
 v1.4.0
 ==================
 * Upgrade to Polymer 1.5.0

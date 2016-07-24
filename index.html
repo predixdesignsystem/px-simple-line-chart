@@ -41,18 +41,10 @@
     <div class="hero u-p++ text--shadow">
       <h1 class="delta">px-simple-line-chart</h1>
       <p class="description-text">
-        The Simple Horizontal Bar Chart provides a quick way to visualize data in bars. It uses the data
-        visualization color palette by default, but this can be overridden with configuration. The height and
-        width are configurable, as are the legend labels – if none are provided, the legend will not be shown.
-        <br>
-        Each series is represented by a sequence of verically aligned bars, the length of
-        each proportionally representing a value.
-        <br>
-        The bar colors and legend labels are configurable.
-        <br>
-        The width and height of the component are also configurable.
-        We recommend using the default settings as they are designed for proper performance.
-
+        The Simple Line Chart provides a quick way to visualize linear data. Configuration options include
+        setting the minimum and maximum values for the Y-axis, whether or not to include a orange horizontal line
+        at a certain threshold value, setting the number of vertical and horizontal grid marks; and customizing
+        the labels of the min, max, and threshold.
       </p>
       <div class="flex">
         <img class="u-mr-- " src="https://img.shields.io/travis/PredixDev/px-simple-line-chart.svg?style=flat-square" alt="Travis"  onerror="this.style.display='none'"/>
@@ -79,22 +71,17 @@
               <!-- Properties -->
               <div class="properties u-ph+ u-pb+ u-mt++ u-mh++">
                 <p class="epsilon">Properties</p>
-                <div class="u-mb-">width:
-                  <input id="width{{indexPlusOne(index)}}" class="text-input" type="text" placeholder="{{item.width}}" value="{{item.width::input}}" />
+                <div class="u-mb-">Width:
+                  <input id="width{{indexPlusOne(index)}}" class="text-input" type="number" placeholder="{{item.width}}" value="{{item.width::input}}" />
                 </div>
-                <div class="u-mb-">height:
-                  <input id="height{{indexPlusOne(index)}}" class="text-input" type="text" placeholder="{{item.height}}" value="{{item.height::input}}" />
+                <div class="u-mb-">Height:
+                  <input id="height{{indexPlusOne(index)}}" class="text-input" type="number" placeholder="{{item.height}}" value="{{item.height::input}}" />
                 </div>
                 <div class="u-mb-">Columns:
-                  <input id="columns{{indexPlusOne(index)}}" class="text-input" type="text" placeholder="{{item.columns}}" value="{{item.columns::input}}" />
+                  <input id="columns{{indexPlusOne(index)}}" class="text-input" type="number" placeholder="{{item.columns}}" value="{{item.columns::input}}" />
                 </div>
                 <div class="u-mb-">Rows:
-                  <input id="rows{{indexPlusOne(index)}}" class="text-input" type="text" placeholder="{{item.rows}}" value="{{item.rows::input}}" />
-                </div>
-                <div class="flex u-mb-">
-                  <input id="togglePadding{{indexPlusOne(index)}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.padding::change}}">
-                  <label for$="togglePadding{{indexPlusOne(index)}}" class="toggle__label toggle__label--small"></label>
-                  <div class="u-ml-">Padding</div>
+                  <input id="rows{{indexPlusOne(index)}}" class="text-input" type="number" placeholder="{{item.rows}}" value="{{item.rows::input}}" />
                 </div>
 
               <!-- end properties -->
@@ -112,7 +99,6 @@
                         max="{{item.max}}"
                         columns="{{item.columns}}"
                         rows="{{item.rows}}"
-                        padding="{{item.padding}}"
                         line-data="{{sampleData.series}}"
                         threshold="{{item.threshold}}"
                         min-label="{{item.minLabel}}"
@@ -168,40 +154,46 @@
 
       var template = document.querySelector('template[is=dom-bind]'),
           year = new Date(),
-          width="473",
-          height="120",
-          min="1.34",
-          max="2.56",
-          columns="1",
-          rows="1",
-          padding="true",
           lineData="{{sampleData.series}}",
-          threshold="2",
-          minLabel="",
-          maxLabel="",
-          thresholdLabel="";
+          width=["350","auto"],
+          height=["250","100px"],
+          min=["","0.5"],
+          max=["","3.0"],
+          columns=["8","5"],
+          rows=["5","3"],
+          threshold=["","1.8"],
+          minLabel=["","min"],
+          maxLabel=["","max"],
+          thresholdLabel=["",""];
 
           optionsArray = [
             {
-              "width":width,
-              "height":height,
-              "min":min,
-              "max":max,
-              "columns":columns,
-              "rows":rows,
-              "padding":padding,
+              "width":width[1],
+              "min":min[1],
+              "max":max[1],
+              "columns":columns[1],
+              "rows":rows[1],
               "lineData":lineData,
-              "threshold":threshold,
-              "minLabel":minLabel,
-              "maxLabel":maxLabel,
-              "thresholdLabel":thresholdLabel
+              "threshold":threshold[1],
+              "minLabel":minLabel[1],
+              "maxLabel":maxLabel[1],
+              "thresholdLabel":thresholdLabel[1]
             },
             {
-
-            }
-            ,
+              "width":width[0],
+              "height":height[0],
+              "min":min[0],
+              "max":max[0],
+              "columns":columns[0],
+              "rows":rows[0],
+              "lineData":lineData,
+              "threshold":threshold[0],
+              "minLabel":minLabel[0],
+              "maxLabel":maxLabel[0],
+              "thresholdLabel":thresholdLabel[0]
+            },
             {
-
+              "lineData":lineData
             }
           ];
           indexPlusOne = function(num) {
