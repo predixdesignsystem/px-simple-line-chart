@@ -29,3 +29,5 @@ node_modules
 bower_components
 
 .DS_Store
+
+px-simple-line-chart.png

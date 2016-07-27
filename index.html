@@ -17,7 +17,7 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
   <link rel="import" href="../px-demo-snippet/px-demo-snippet.html">
-  <link rel="import" href="../polymer-font-awesome/polymer-font-awesome.html">
+  <link rel="import" href="../px-polymer-font-awesome/polymer-font-awesome.html" />
   <!-- Requires Webcomponents.js polyfill is provided by the page for browsers that don't support html imports -->
 <style>
   .chart__demo{
@@ -39,6 +39,9 @@
     </iron-ajax>
     <!-- discription -->
     <div class="hero u-p++ text--shadow">
+      <a class="actionable flex flex--right flex--middle" href="https://github.com/PredixDev/px-px-simple-line-chart" target="_blank">
+        <iron-icon class="menu__open" icon="fa:fa-github"></iron-icon>View on Github
+      </a>
       <h1 class="delta">px-simple-line-chart</h1>
       <p class="description-text">
         The Simple Line Chart provides a quick way to visualize linear data. Configuration options include
@@ -50,7 +53,6 @@
         <img class="u-mr-- " src="https://img.shields.io/travis/PredixDev/px-simple-line-chart.svg?style=flat-square" alt="Travis"  onerror="this.style.display='none'"/>
         <img class="u-mr--" src="https://img.shields.io/bower/v/px-simple-line-chart.svg?style=flat-square" alt="Bower" onerror="this.style.display='none'" />
         <img class="u-mr--" src="https://img.shields.io/github/issues-raw/PredixDev/px-simple-line-chart.svg?style=flat-square" alt="Issues" onerror="this.style.display='none'" />
-        <img class="u-mr--" src="https://img.shields.io/github/watchers/PredixDev/px-simple-line-chart.svg?style=social&label=Watch" onerror="this.style.display='none'" />
       </div>
     </div>
     <br />
@@ -129,25 +131,25 @@
     </px-tab-pages>
     </div>
     <footer class="footer flex flex--center">
-    <div class="footer__container u-pv++">
-      <div>
-        <a href="https://ge.com/digital" >
-          <img src="monogram-wdmk.png" alt="GE Monogram" class="footer__img">
-        </a>
+      <div class="footer__container u-pv++">
+        <div>
+          <a href="https://ge.com/digital" >
+            <img src="monogram-wdmk.png" alt="GE Monogram" class="footer__img">
+          </a>
+        </div>
+        <div class="footer__list">
+          <ul class="list-inline list-inline--delimited">
+            <li>
+              <a href="http://predix.io/legal" class="footer__list--lnk">Legal</a>
+            </li>
+            <li>
+              <a href="mailto:info@predix.io" class="footer__list--lnk">Contact Us</a>
+            </li>
+            <li>Copyright &copy; {{year}} General Electric Company. All rights reserved.</li>
+          </ul>
+        </div>
       </div>
-      <div class="footer__list">
-        <ul class="list-inline list-inline--delimited">
-          <li>
-            <a href="http://predix.io/legal" class="footer__list--lnk">Legal</a>
-          </li>
-          <li>
-            <a href="mailto:info@predix.io" class="footer__list--lnk">Contact Us</a>
-          </li>
-          <li>Copyright &copy; {{year}} General Electric Company. All rights reserved.</li>
-        </ul>
-      </div>
-    </div>
-  </footer>
+    </footer>
   </template>
   <script>
     window.addEventListener('WebComponentsReady', function() {

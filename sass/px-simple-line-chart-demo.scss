@@ -17,7 +17,7 @@
 /*
 THIS FILE SHOULD CONTAIN ONLY ABSTRACT/'SKETCH' THEME RULES, NOT SPECIFIC TO PREDIX BRANDING
 Predix branding rules go in px-rangepicker-predix.scss, not in this file.
-*/ 
+*/
 
 //Settings
 @import "px-colors-design/_settings.colors.scss";
@@ -57,8 +57,8 @@ $inuit-enable-list-inline--delimited : true;
   width: 100%;
 }
 
-.hero{
-  max-width: calculateRem(725px);
+.description-text{
+  max-width: calculateRem(700px); 
 }
 
 .properties{
