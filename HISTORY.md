@@ -1,3 +1,7 @@
+v1.4.2
+==================
+* added github link and updated readme
+
 v1.4.1
 ==================
 * Upgrade to new demos
