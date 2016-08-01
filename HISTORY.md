@@ -1,3 +1,7 @@
+v1.4.3
+==================
+* fixed broken link in demo
+
 v1.4.2
 ==================
 * added github link and updated readme

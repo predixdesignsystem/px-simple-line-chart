@@ -1,6 +1,6 @@
 #Px-Simple-Line-Chart [![Build Status](https://travis-ci.org/PredixDev/px-simple-line-chart.svg?branch=master)](https://travis-ci.org/PredixDev/px-simple-line-chart)
 
-[![px-px-simple-line-chart demo](px-px-simple-line-chart.png?raw=true)](https://github.com/PredixDev/px-px-simple-line-chart)
+[![px-simple-line-chart demo](px-simple-line-chart.png?raw=true)](https://github.com/PredixDev/px-simple-line-chart)
 
 ## Overview
 
