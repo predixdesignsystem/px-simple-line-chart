@@ -1,3 +1,7 @@
+v1.4.4
+==================
+* fixed broken link in demo, added component screenshot for README
+
 v1.4.3
 ==================
 * fixed broken link in demo
