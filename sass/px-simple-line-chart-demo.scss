@@ -9,14 +9,14 @@
  */
 
 //
-// Sass for the "sketch" notion of the px-datetime-range-field component
+// Sass for the "sketch" notion of the px-simple-line-chart component
 //
 // @author
 //
 
 /*
 THIS FILE SHOULD CONTAIN ONLY ABSTRACT/'SKETCH' THEME RULES, NOT SPECIFIC TO PREDIX BRANDING
-Predix branding rules go in px-rangepicker-predix.scss, not in this file.
+Predix branding rules go in px-simple-line-chart.scss, not in this file.
 */
 
 //Settings
@@ -58,19 +58,20 @@ $inuit-enable-list-inline--delimited : true;
 }
 
 .description-text{
-  max-width: calculateRem(700px); 
+  max-width: calculateRem(700px);
 }
 
 .properties{
-  flex-basis: calculateRem(250px);
+  flex: 0 0 calculateRem(250px);
   background: $white;
   border: 1px solid $gray4;
   overflow-x: hidden;
   overflow-y: auto;
+  margin-right: calculateRem(20px);
 }
 
 .demoContainer {
-  flex: 1 1;
+  flex: 1 1 auto;
 }
 
 .demoSnippet {
@@ -89,6 +90,7 @@ $inuit-enable-list-inline--delimited : true;
   flex-basis: calculateRem(400px);
   background: $white;
   border: 1px solid $gray4;
+  overflow: auto;
 }
 .componentList {
   a {
@@ -111,9 +113,7 @@ $inuit-enable-list-inline--delimited : true;
   background-color: $white;
 }
 .tabContainer {
-  flex:0 0 100%;
-  height:calculateRem(60px);
-  margin-top:calculateRem(35px);
+  height:auto;
   background: $gray1;
 }
 
@@ -124,7 +124,6 @@ $inuit-enable-list-inline--delimited : true;
   flex-basis: 90%;
   color: $gray4;
   font-size: 12px;
-  //flex
   align-items: center;
   display: inline-flex;
   justify-content: space-between;
@@ -153,8 +152,8 @@ $inuit-enable-list-inline--delimited : true;
   .mega-demo {
     flex-direction: column;
   }
-  .demoContainer {
-    margin-left: calculateRem(30px);
+  .properties{
+    margin-right: 0px;
   }
   .footer__container{
     flex-direction: column;

@@ -1,3 +1,7 @@
+v1.4.5
+==================
+* updated mega demo styles and bower px-demo-snippet to ^
+
 v1.4.4
 ==================
 * fixed broken link in demo, added component screenshot for README

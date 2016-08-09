@@ -43,35 +43,36 @@
         <iron-icon class="menu__open" icon="fa:fa-github"></iron-icon>View on Github
       </a>
       <h1 class="delta">px-simple-line-chart</h1>
-      <p class="description-text">
-        The Simple Line Chart provides a quick way to visualize linear data. Configuration options include
-        setting the minimum and maximum values for the Y-axis, whether or not to include a orange horizontal line
-        at a certain threshold value, setting the number of vertical and horizontal grid marks; and customizing
-        the labels of the min, max, and threshold.
-      </p> 
+      <div class="description-text">
+        <p>
+          The Simple Line Chart provides a quick way to visualize linear data. Configuration options include
+          setting the minimum and maximum values for the Y-axis, whether or not to include a orange horizontal line
+          at a certain threshold value, setting the number of vertical and horizontal grid marks; and customizing
+          the labels of the min, max, and threshold.
+        </p>
+      </div>
       <div class="flex">
         <img class="u-mr-- " src="https://img.shields.io/travis/PredixDev/px-simple-line-chart.svg?style=flat-square" alt="Travis"  onerror="this.style.display='none'"/>
         <img class="u-mr--" src="https://img.shields.io/bower/v/px-simple-line-chart.svg?style=flat-square" alt="Bower" onerror="this.style.display='none'" />
         <img class="u-mr--" src="https://img.shields.io/github/issues-raw/PredixDev/px-simple-line-chart.svg?style=flat-square" alt="Issues" onerror="this.style.display='none'" />
       </div>
     </div>
-    <br />
 
     <!-- mega demo -->
     <div style="position: relative;" class="u-pb++ flex flex--col" id="defaultTab">
       <div class="tabContainer u-pt++ u-pl++">
         <px-tab-set selected="{{selected}}" bare no-bottom-border>
           <template is="dom-repeat" items="{{optionsArray}}">
-            <px-tab>Configuration {{indexPlusOne(index)}}</px-tab>
+            <px-tab>Option {{indexPlusOne(index)}}</px-tab>
           </template>
         </px-tab-set>
       </div>
       <px-tab-pages selected="{{selected}}">
         <template is="dom-repeat" items="{{optionsArray}}">
-          <section class="tab-page flex flex--right flex--wrap">
-            <div class="mega-demo flex u-pb++">
+          <section class="tab-page">
+            <div class="mega-demo flex flex--wrap u-ph++ u-pb++">
               <!-- Properties -->
-              <div class="properties u-ph+ u-pb+ u-mt++ u-mh++">
+              <div class="properties u-ph+ u-pb+ u-mt+">
                 <p class="epsilon">Properties</p>
                 <div class="u-mb-">Width:
                   <input id="width{{indexPlusOne(index)}}" class="text-input" type="number" placeholder="{{item.width}}" value="{{item.width::input}}" />
@@ -89,11 +90,11 @@
               <!-- end properties -->
               </div>
 
-              <div class="demoContainer u-mr++">
+              <div class="demoContainer u-mt+">
                 <!-- demo -->
                 <div class="flex flex--col">
-                  <div class="flex__item demo u-ph+ u-pb+ u-mt++">
-                    <div class="u-mt+">
+                  <div class="flex__item demo u-p+">
+
                       <px-simple-line-chart
                         width="{{item.width}}"
                         height="{{item.height}}"
@@ -108,7 +109,7 @@
                         threshold-label="{{item.thresholdLabel}}"
                         >
                         </px-simple-line-chart>
-                    </div>
+
                   </div>
                   <div class="flex__item">
                   <px-demo-snippet
