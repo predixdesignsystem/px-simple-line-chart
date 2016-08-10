@@ -1,3 +1,7 @@
+v1.4.6
+==================
+* Fixing issue #9 (addPoint)
+
 v1.4.5
 ==================
 * updated mega demo styles and bower px-demo-snippet to ^
