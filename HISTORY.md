@@ -1,3 +1,7 @@
+v1.4.7
+==================
+* Added overflow to demoContainer and removed flex__wrap from mega-demo
+
 v1.4.6
 ==================
 * Fixing issue #9 (addPoint)

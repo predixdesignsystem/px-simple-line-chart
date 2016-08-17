@@ -70,15 +70,15 @@
       <px-tab-pages selected="{{selected}}">
         <template is="dom-repeat" items="{{optionsArray}}">
           <section class="tab-page">
-            <div class="mega-demo flex flex--wrap u-ph++ u-pb++">
+            <div class="mega-demo flex u-ph++ u-pb++">
               <!-- Properties -->
               <div class="properties u-ph+ u-pb+ u-mt+">
                 <p class="epsilon">Properties</p>
                 <div class="u-mb-">Width:
-                  <input id="width{{indexPlusOne(index)}}" class="text-input" type="number" placeholder="{{item.width}}" value="{{item.width::input}}" />
+                  <input id="width{{indexPlusOne(index)}}" class="text-input" type="text" placeholder="{{item.width}}" value="{{item.width::input}}" />
                 </div>
                 <div class="u-mb-">Height:
-                  <input id="height{{indexPlusOne(index)}}" class="text-input" type="number" placeholder="{{item.height}}" value="{{item.height::input}}" />
+                  <input id="height{{indexPlusOne(index)}}" class="text-input" type="text" placeholder="{{item.height}}" value="{{item.height::input}}" />
                 </div>
                 <div class="u-mb-">Columns:
                   <input id="columns{{indexPlusOne(index)}}" class="text-input" type="number" placeholder="{{item.columns}}" value="{{item.columns::input}}" />
@@ -93,7 +93,7 @@
               <div class="demoContainer u-mt+">
                 <!-- demo -->
                 <div class="flex flex--col">
-                  <div class="flex__item demo u-p+">
+                  <div class="demo u-p+">
 
                       <px-simple-line-chart
                         width="{{item.width}}"
@@ -111,7 +111,7 @@
                         </px-simple-line-chart>
 
                   </div>
-                  <div class="flex__item">
+                  <div>
                   <px-demo-snippet
                     element-properties={{item}}
                     element-name="px-simple-line-chart">
