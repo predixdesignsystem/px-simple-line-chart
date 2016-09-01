@@ -1,3 +1,7 @@
+v1.4.8
+==================
+* fixed demo page for IE
+
 v1.4.7
 ==================
 * Added overflow to demoContainer and removed flex__wrap from mega-demo
