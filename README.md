@@ -38,7 +38,7 @@ bower install px-simple-line-chart --save
 Second, import the component to your application with the following tag in your head.
 
 ```
-<link rel="import" href="bower_components/px-simple-line-chart.html" />
+<link rel="import" href="bower_components/px-simple-line-chart/px-simple-line-chart.html" />
 ```
 
 Finally, use the component in your application:
