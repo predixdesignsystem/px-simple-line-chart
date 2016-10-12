@@ -1,3 +1,11 @@
+v1.5.1
+==================
+* Pickup latest gulp file and demo snippet dependency.
+
+v1.5.0
+==================
+* Grunt to gulp migration & style modules.
+
 v1.4.8
 ==================
 * fixed demo page for IE
