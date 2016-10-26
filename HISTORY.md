@@ -1,3 +1,7 @@
+v1.5.2
+==================
+* Update dependencies
+
 v1.5.1
 ==================
 * Pickup latest gulp file and demo snippet dependency.
