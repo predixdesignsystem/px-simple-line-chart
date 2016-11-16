@@ -1,3 +1,6 @@
+v1.5.4
+==================
+* fixed codepen by importing linedata and v3 of D3 to codepen
 
 v1.5.3
 ==================

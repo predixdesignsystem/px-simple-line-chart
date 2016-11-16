@@ -117,7 +117,9 @@
                   <div>
                   <px-demo-snippet
                     element-properties={{item}}
-                    element-name="px-simple-line-chart">
+                    element-name="px-simple-line-chart"
+                    scripts-includes="[[scriptsIncludes]]"
+                    >
                   </px-demo-snippet>
                 </div>
               </div>
@@ -160,7 +162,20 @@
 
       var template = document.querySelector('template[is=dom-bind]'),
           year = new Date(),
-          lineData="{{sampleData.series}}",
+          lineData=[
+            [1397102460000, 1.99],
+            [1397139660000, 1.92],
+            [1397177400000, 1.97],
+            [1397228040000, 1.12],
+            [1397248260000, 1.09],
+            [1397291280000, 1],
+            [1397318100000, 1.99],
+            [1397342100000, 1.75],
+            [1397390820000, 1.11],
+            [1397408100000, 1.93],
+            [1397458800000, 1.84],
+            [1397522940000, 1.99] 
+          ],
           width=["350","auto"],
           height=["250","100px"],
           min=["","0.5"],
@@ -215,6 +230,9 @@
           template.optionsArray = optionsArray;
           template.indexPlusOne = indexPlusOne;
           template.year = year;
+
+          template.scriptsIncludes = ['https://d3js.org/d3.v3.min.js'];
+
     });
   </script>
 
