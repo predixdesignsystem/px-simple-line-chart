@@ -1,13 +1,13 @@
 {
     "name": "px-simple-line-chart",
-    "version": "1.5.4",
+    "version": "1.5.5",
     "main": [
         "px-simple-line-chart.html"
     ],
     "ignore": [
         ".*",
         "npm-debug.log",
-        "Gruntfile.js",
+        "gulpfile.js",
         "sass",
         "bower_components",
         "node_modules",

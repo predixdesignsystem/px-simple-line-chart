@@ -1,3 +1,8 @@
+
+v1.5.5
+==================
+* changing Gruntfile.js to gulpfile.js
+
 v1.5.4
 ==================
 * fixed codepen by importing linedata and v3 of D3 to codepen
