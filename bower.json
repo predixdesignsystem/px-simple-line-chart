@@ -1,6 +1,6 @@
 {
     "name": "px-simple-line-chart",
-    "version": "1.5.10",
+    "version": "1.5.11",
     "main": [
         "px-simple-line-chart.html"
     ],
