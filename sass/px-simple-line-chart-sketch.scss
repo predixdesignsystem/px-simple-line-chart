@@ -19,19 +19,45 @@ THIS FILE SHOULD CONTAIN ONLY ABSTRACT/'SKETCH' THEME RULES, NOT SPECIFIC TO PRE
 Predix branding rules go in px-simple-line-chart-predix.scss, not in this file.
 */
 
-@import "chart.scss";
+svg.px-simple-line-chart-svg {
+  background: var(--px-simple-line-chart-background-color, transparent);
+  overflow: hidden;
+}
 
-// Generic
-// @import "px-normalize-design/_generic.normalize.scss";
-// @import "px-box-sizing-design/_generic.box-sizing.scss";
-// @import "px-helpers-design/_generic.helpers.scss";
+.chartBorder {
+  stroke: var(--px-simple-line-chart-border-color, #000000);
+  stroke-width: 1;
+}
 
-// Base
-// @import "px-flexbox-design/_base.flexbox.scss";
-// @import "px-viewport-design/_base.viewport.scss";
-// @import "px-typography-design/_base.typography.scss";
+.chartGrid {
+  stroke: var(--px-simple-line-chart-grid-color, #E4E4EA);
+  stroke-width: 1;
+  fill: none;
+}
 
-// Trumps
-// @import "inuit-clearfix/_trumps.clearfix.scss";
-// @import "px-spacing-responsive-design/_trumps.spacing-responsive.scss";
-// @import "px-widths-responsive-design/_trumps.widths-responsive.scss";
+rect.chartBottom {
+  fill: var(--px-simple-line-chart-bottom-color, #ffffff);
+}
+
+rect.axisBar {
+  fill: var(--px-simple-line-chart-axis-bar-color, #F7F7FC);
+}
+
+text.axisLabel {
+  fill: var(--px-simple-line-chart-axis-label-color, #7C7C84);
+  font-family: sans-serif;
+  font-size: 14px;
+  font-weight: var(--px-simple-line-chart-axis-label-font-weight, lighter);
+  display: block;
+}
+
+.chartLine {
+  stroke: var(--px-simple-line-chart-line-color, #01B2E5);
+  stroke-width: 1;
+  fill: none;
+}
+
+.thresholdLine {
+  stroke: var(--px-simple-line-chart-theshold-line-color, #FAA43A);
+  stroke-width: 1;
+}

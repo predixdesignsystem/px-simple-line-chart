@@ -1,22 +1,35 @@
 <link rel="import" href="../polymer/polymer.html" />
 <link rel="import" href="../px-simple-chart-common-behavior/px-simple-chart-common-behavior.html" />
 <!--
+Use the px-simple-line-chart component to visualize a series of numeric values as a line chart. The series is represented by a line connecting a sequence of points, the position of each proportionally point representing a single coordinate value.
 
-Use the Px-Simple-Line-Chart component to visualize a series of numeric values as a line chart. The series is represented by a thin blue line connecting a sequence of points, the position of each proportionally point representing a single coordinate value.
-
-Optionally, a `threshold` value may be defined to draw a thin orange line horizontally at the y-axis point representing the value. By default a threshold label will be drawn in an axis bar on the left side of the chart. If a custom threshold label is necessary a string may also be passed to the component as `threshold-label`.
+Optionally, a `threshold` value may be defined to draw a line horizontally at the y-axis point representing the value. By default a threshold label will be drawn in an axis bar on the left side of the chart. If a custom threshold label is necessary a string may also be passed to the component as `threshold-label`.
 
 In addition, a `min` and `max` may be configured in order to scope the chart to a specific range of y values. By default these will also be represented by labels in an axis bar on the left side of the chart. If custom labels are necessary they can be passed as strings to the component as `min-label` and `max-label`.
 
 The `width` and `height` of the component are also configurable as well as the vertical columns and horizontal rows drawn in the background of the coordinate space.
-
-We recommend viewing the Demo page to become aware of the configuration possibilities. We also recommend using the default settings as they are designed for proper performance.
 
 Simple-charts rely on D3 version 3.
 
 ##### Usage
 
     <px-simple-line-chart data="{{data}}"></px-simple-line-chart>
+
+### Styling
+
+The following custom properties are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--px-simple-line-chart-background-color` | The background color for the entire chart | `transparent`
+`--px-simple-line-chart-border-color` | The top and bottom border color | `#000000`
+`--px-simple-line-chart-grid-color` | The background grid color | `#E4E4EA`
+`--px-simple-line-chart-bottom-color` | The bottom divider color | `transparent`
+`--px-simple-line-chart-axis-bar-color` | The axis background color | `#F7F7FC`
+`--px-simple-line-chart-axis-label-color` | The axis text label color | `#7C7C84`
+`--px-simple-line-chart-axis-label-font-weight` | The axis text font weight | `lighter`
+`--px-simple-line-chart-line-color` | The data line color | `#01B2E5`
+`--px-simple-line-chart-theshold-line-color` | The data comparison threshold color | `#FAA43A`
 
 @element px-simple-line-chart
 @blurb Simple line chart component
@@ -31,7 +44,7 @@ Simple-charts rely on D3 version 3.
   <script type="text/javascript" src="../d3/d3.js"></script>
   <template>
     <style include="px-simple-line-chart-styles"></style>
-    
+
     <div class="px-simple-line-chart-div">
       <svg class="px-simple-line-chart-svg"></svg>
     </div>
