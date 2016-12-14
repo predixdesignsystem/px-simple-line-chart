@@ -5,11 +5,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>px-simple-horizontal-line-chart Demo</title>
-  <link rel="stylesheet" type="text/css" href="css/px-simple-line-chart-demo.css" />
+
   <!-- Import custom element. Note: see comment about relative paths to dependencies in the *.html file referenced below -->
   <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../polymer/polymer.html" />
 
-  <link rel="import" href="../px-theme/px-theme-styles.html">
+  <link rel="import" href="css/px-simple-line-chart-demo-styles.html"/>
+  <style include="px-simple-line-chart-demo-styles" is="custom-style"></style>
+
+  <link rel="import" href="../px-theme/px-theme-styles.html"/>
   <style include="px-theme-styles" is="custom-style"></style>
 
   <link rel="import" href="../iron-ajax/iron-ajax.html" />
@@ -167,7 +171,7 @@
             [1397390820000, 1.11],
             [1397408100000, 1.93],
             [1397458800000, 1.84],
-            [1397522940000, 1.99] 
+            [1397522940000, 1.99]
           ],
           width=["350","auto"],
           height=["250","100px"],
