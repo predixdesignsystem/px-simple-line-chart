@@ -1,3 +1,7 @@
+v1.7.0
+==================
+* Add theming capabilities
+
 v1.6.1
 ==================
 * Update missed design depndencies
