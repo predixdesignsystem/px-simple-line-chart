@@ -1,6 +1,6 @@
 {
   "name": "px-simple-line-chart",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "main": [
     "px-simple-line-chart.html"
   ],
@@ -24,7 +24,7 @@
     "px-simple-chart-common-behavior": "~1.5.0",
     "iron-ajax": "PolymerElements/iron-ajax#~1.4.3",
     "underscore": "~1.8.3",
-    "px-colors-design": "^0.2.34"
+    "px-colors-design": "^0.3.0"
   },
   "devDependencies": {
     "px-starter-kit-design": "^0.7.0",

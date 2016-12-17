@@ -1,5 +1,9 @@
 v1.7.0
 ==================
+* Fix color dependency
+
+v1.7.0
+==================
 * Add theming capabilities
 
 v1.6.1
