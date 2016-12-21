@@ -2,37 +2,29 @@ sudo: required
 dist: trusty
 language: node_js
 node_js:
-  - stable
+- stable
 branches:
   except:
-    - gh-pages
+  - gh-pages
 addons:
+  firefox: latest
   apt:
     sources:
-      - google-chrome
+    - google-chrome
     packages:
-      - google-chrome-stable
+    - google-chrome-stable
 before_script:
-  - npm install web-component-tester
-  - npm install bower
-  - 'export PATH=$PWD/node_modules/.bin:$PATH'
-  - bower install
+- npm install web-component-tester
+- npm install bower
+- export PATH=$PWD/node_modules/.bin:$PATH
+- bower install
 script:
-  - xvfb-run wct --skip-plugin sauce
-  - >-
-    if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then wct --plugin sauce
-    --skip-plugin local; fi
-env:
-  global:
-    - secure: >-
-        NAV5oZBte+H+Gt+3FKcbMScyzzvV9O99MTx1fOKNCxqFoqDgyly8z3TDIRzr+dHfhQj+938+2O+Bch2wqqLAmmWZ/3urlYcTORFJdgSreWGqy2AxnhwkvHS5W9VR59hCP4PGf7w5jpwBLkyFC7o0g3BSnC1VrP4kqwqJTwX7GDzK4nySZlrH6P00uAbTMo8Ug/awrYmXAeudW/pCqBQPzN66/uNcvtfMWljSt0SCiGGUUbexgrbEWIi8I7x3IRDplGSF6rltA5Wg2PD5qkRIbHPP9X00hse+QHZLkxADpV+0KdjNYlFglfagPNWHdxvbwARZxmzDLWkRfUEoI+MP/aWcjfl869k8Uq+rMdbyk9w2MD/MXCE5zktRXYfGOMJZD3Cu4LeqosCyRqu1COB1FxjwsS9tTy43TZO4cVfF3DEZ6Bzgh+GHh+RWDWFcrdcBhi5qJRXSYzXYfFTovu6LDvuuSwhIMTIibucFmVePeQl4cwuYiXnzZzR1AHfkwH+kbq85pm9ZkL+DxR6pOJT792eWeg1CleIjTnHMuRDpXcKLXu7ad0MUgMkz3KctKZtduJOzfArdeHCh3vJCpMNqHwgXBcL7/zmL2vmxPsLl5vpM6vyZURqpm2rPR0pEXdwHHiCz17DZWyhgRtW/DHHF/eoXgAMMKn9WcZxG6vXmSzA=
-    - secure: >-
-        G5avPHcdYqP/POPTv2N8+9/bhgDjCMUpIaut7PHQkiwcQe0hbX7uC/y5Ktbvpbiy/A0W9TqKsoEm9o0zYAcNLntTRzLXTw1JYfccFdpmS01mNm/bmGBw2tKbB1mB8F944jcd6+/tKbJ3aGRkKlZt3hQgDXPb0UecTnpWTGXnMslXatr5XdazmrHqGnIb1uOCj5tpN+Db2NIg/YIlnzRJYuZc0yrkeKux14KIcUzUcjaBOcYeVMyZcPDirURopfUMS8+3b7Gzlkiqka55mCX1/CfkDb3ipLugz1vHyPw+hqlWUIt4VQyA78LBRQniCuIjrX0rDNoQP3+ZL7LhB0/kjvFWYvP+fTV6we3cj/VFdKXovFD7iuj+3gSrDjYaqNfCZP/Lj5N1BAUeYF9IeXG2XS78tPuEAaENrdgjpK5capFktvFlDpu6YkeNEn0lEHfFK7RvVR5Eg9DD0YxoZF9ntatR+LFcJ1Pu6yFMeUq9eKTggR4Akfyskg2JGyLztXmkYvBRl4XXselP9bsRysiwC9hFOYfOilBhj36pfFPZ+Zg3bRnscNzkm6LnISkEgsjmLa8XvgDAZsmsuyQqMao2St46mtf9nVIVCiFxxRO5ADEC823ECJ/vmQE/lx8CCy6gnJ/ZmgEFXvFggL0Rxzfr3v8PRPHjeEIzqDSUKoy0SiU=
-before_install:
-  - >-
-    if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then openssl aes-256-cbc -k
-    "$password" -in id_rsa.enc -out deploy_key -d; fi
+- xvfb-run wct --skip-plugin sauce
+- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then wct --plugin sauce --skip-plugin
+  local; fi
 after_success:
-  - cd $TRAVIS_BUILD_DIR/scripts
-  - chmod 755 ghp.sh
-  - ./ghp.sh
+- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then openssl aes-256-cbc -k "$DEPLOYSECRET"
+  -in deploy.enc -out deploy_key -d; fi
+- cd $TRAVIS_BUILD_DIR/scripts
+- chmod 755 ghp.sh
+- "./ghp.sh"
