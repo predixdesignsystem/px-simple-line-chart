@@ -1,3 +1,7 @@
+v1.7.1
+==================
+* Update common behaviors dependency
+
 v1.7.0
 ==================
 * Fix color dependency
