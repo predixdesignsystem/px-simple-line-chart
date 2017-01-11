@@ -1,3 +1,7 @@
+v1.7.3
+==================
+* changing ghp.sh to account for Alpha releases
+
 v1.7.1
 ==================
 * Update common behaviors dependency
