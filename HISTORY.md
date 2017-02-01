@@ -1,3 +1,7 @@
+v1.7.5
+==================
+* replaced hard coded colors to our sass variables 
+
 v1.7.4
 ==================
 * Update colors design to pick up new colors

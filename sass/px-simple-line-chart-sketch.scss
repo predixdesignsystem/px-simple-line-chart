@@ -25,26 +25,26 @@ svg.px-simple-line-chart-svg {
 }
 
 .chartBorder {
-  stroke: var(--px-simple-line-chart-border-color, #000000);
+  stroke: var(--px-simple-line-chart-border-color, $black);
   stroke-width: 1;
 }
 
 .chartGrid {
-  stroke: var(--px-simple-line-chart-grid-color, #E4E4EA);
+  stroke: var(--px-simple-line-chart-grid-color, $gray3);
   stroke-width: 1;
   fill: none;
 }
 
 rect.chartBottom {
-  fill: var(--px-simple-line-chart-bottom-color, #ffffff);
+  fill: var(--px-simple-line-chart-bottom-color, $white);
 }
 
 rect.axisBar {
-  fill: var(--px-simple-line-chart-axis-bar-color, #F7F7FC);
+  fill: var(--px-simple-line-chart-axis-bar-color, $gray1);
 }
 
 text.axisLabel {
-  fill: var(--px-simple-line-chart-axis-label-color, #7C7C84);
+  fill: var(--px-simple-line-chart-axis-label-color, $gray7);
   font-family: sans-serif;
   font-size: 14px;
   font-weight: var(--px-simple-line-chart-axis-label-font-weight, lighter);
@@ -52,12 +52,12 @@ text.axisLabel {
 }
 
 .chartLine {
-  stroke: var(--px-simple-line-chart-line-color, #01B2E5);
+  stroke: var(--px-simple-line-chart-line-color, $dv-basic-blue);
   stroke-width: 1;
   fill: none;
 }
 
 .thresholdLine {
-  stroke: var(--px-simple-line-chart-theshold-line-color, #FAA43A);
+  stroke: var(--px-simple-line-chart-theshold-line-color, $dv-basic-orange);
   stroke-width: 1;
 }
