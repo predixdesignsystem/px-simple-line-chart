@@ -1,3 +1,7 @@
+v1.7.6
+==================
+* added .jshintrc 
+
 v1.7.5
 ==================
 * replaced hard coded colors to our sass variables 
