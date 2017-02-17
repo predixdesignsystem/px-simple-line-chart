@@ -9,6 +9,7 @@
 <link rel="import" href="../../px-demo/px-demo-configs.html" />
 <link rel="import" href="../../px-demo/px-demo-props.html" />
 <link rel="import" href="../../px-demo/px-demo-interactive.html" />
+<link rel="import" href="../../px-demo/px-demo-code-editor.html" />
 <link rel="import" href="../../px-demo/px-demo-component-snippet.html" />
 
 <!-- Imports for this componnent -->
@@ -36,6 +37,9 @@
 
       <!-- Props -->
       <px-demo-props props="{{props}}" config="[[chosenConfig]]"></px-demo-props>
+
+      <!-- Code Editor -->
+      <px-demo-code-editor props="{{props}}"></px-demo-code-editor>
 
       <!-- Component ---------------------------------------------------------->
       <px-demo-component>
@@ -154,9 +158,9 @@
     demoProps: {
 
       lineData: {
-        type: String,
+        type: Array,
         defaultValue: '[ [1,2], [2,3], [3,4] ]',
-        inputType: 'text'
+        inputType: 'code:JSON'
       },
 
       width: {

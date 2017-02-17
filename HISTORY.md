@@ -1,3 +1,7 @@
+v1.7.8
+==================
+* added code-editor to demo
+
 v1.7.7
 ==================
 * updated to px-demo
