@@ -1,3 +1,0 @@
-How to ingest data:
-
-public/sample-data

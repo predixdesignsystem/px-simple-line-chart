@@ -1,10 +1,14 @@
+v1.7.7
+==================
+* updated to px-demo
+
 v1.7.6
 ==================
-* added .jshintrc 
+* added .jshintrc
 
 v1.7.5
 ==================
-* replaced hard coded colors to our sass variables 
+* replaced hard coded colors to our sass variables
 
 v1.7.4
 ==================
