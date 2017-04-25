@@ -5,6 +5,7 @@
     "px-simple-line-chart.html"
   ],
   "ignore": [
+    "*.enc",
     "**/.*",
     "bower_components",
     "node_modules",
