@@ -1,3 +1,7 @@
+v2.0.0
+==================
+* update dependencies for design refresh
+
 v1.7.8
 ==================
 * added code-editor to demo

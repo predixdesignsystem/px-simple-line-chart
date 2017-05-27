@@ -30,7 +30,7 @@ svg.px-simple-line-chart-svg {
 }
 
 .chartGrid {
-  stroke: var(--px-simple-line-chart-grid-color, $gray3);
+  stroke: var(--px-simple-line-chart-grid-color, $gray2);
   stroke-width: 1;
   fill: none;
 }
@@ -44,7 +44,7 @@ rect.axisBar {
 }
 
 text.axisLabel {
-  fill: var(--px-simple-line-chart-axis-label-color, $gray7);
+  fill: var(--px-simple-line-chart-axis-label-color, $gray10);
   font-family: sans-serif;
   font-size: 14px;
   font-weight: var(--px-simple-line-chart-axis-label-font-weight, lighter);
@@ -52,12 +52,12 @@ text.axisLabel {
 }
 
 .chartLine {
-  stroke: var(--px-simple-line-chart-line-color, $dv-basic-blue);
+  stroke: var(--px-simple-line-chart-line-color, $blue5);
   stroke-width: 1;
   fill: none;
 }
 
 .thresholdLine {
-  stroke: var(--px-simple-line-chart-theshold-line-color, $dv-basic-orange);
+  stroke: var(--px-simple-line-chart-theshold-line-color, $orange5);
   stroke-width: 1;
 }
