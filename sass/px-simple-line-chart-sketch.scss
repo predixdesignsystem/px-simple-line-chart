@@ -8,43 +8,33 @@
  * under which the software has been supplied.
  */
 
-//
-// Sass for the "sketch" notion of the px-simple-line-chart component
-//
-// @author
-//
-
-/*
-THIS FILE SHOULD CONTAIN ONLY ABSTRACT/'SKETCH' THEME RULES, NOT SPECIFIC TO PREDIX BRANDING
-Predix branding rules go in px-simple-line-chart-predix.scss, not in this file.
-*/
-
 svg.px-simple-line-chart-svg {
   background: var(--px-simple-line-chart-background-color, transparent);
   overflow: hidden;
 }
 
 .chartBorder {
-  stroke: var(--px-simple-line-chart-border-color, $black);
+  stroke: var(--px-simple-line-chart-border-color, black);
   stroke-width: 1;
 }
 
 .chartGrid {
-  stroke: var(--px-simple-line-chart-grid-color, $gray2);
+  stroke: var(--px-simple-line-chart-grid-color, gray);
   stroke-width: 1;
   fill: none;
 }
 
 rect.chartBottom {
-  fill: var(--px-simple-line-chart-bottom-color, $white);
+  fill: var(--px-simple-line-chart-bottom-color, white);
 }
 
 rect.axisBar {
-  fill: var(--px-simple-line-chart-axis-bar-color, $gray1);
+  fill: var(--px-simple-line-chart-axis-bar-color, gray);
 }
 
 text.axisLabel {
-  fill: var(--px-simple-line-chart-axis-label-color, $gray10);
+  font-family: "GE Inspira Sans", sans-serif;
+  fill: var(--px-simple-line-chart-axis-label-color, gray);
   font-family: sans-serif;
   font-size: 14px;
   font-weight: var(--px-simple-line-chart-axis-label-font-weight, lighter);
@@ -52,12 +42,12 @@ text.axisLabel {
 }
 
 .chartLine {
-  stroke: var(--px-simple-line-chart-line-color, $blue5);
+  stroke: var(--px-simple-line-chart-line-color, blue);
   stroke-width: 1;
   fill: none;
 }
 
 .thresholdLine {
-  stroke: var(--px-simple-line-chart-theshold-line-color, $orange5);
+  stroke: var(--px-simple-line-chart-threshold-line-color, orange);
   stroke-width: 1;
 }

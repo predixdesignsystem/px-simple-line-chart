@@ -11,25 +11,25 @@ The `width` and `height` of the component are also configurable as well as the v
 
 Simple-charts rely on D3 version 3.
 
-##### Usage
+### Usage
 
-    <px-simple-line-chart data="{{data}}"></px-simple-line-chart>
+    <px-simple-line-chart line-data="[ [1,2], [2,3], [3,4] ]"></px-simple-line-chart>
 
 ### Styling
 
 The following custom properties are available for styling:
 
-Custom property | Description | Default
-----------------|-------------|----------
-`--px-simple-line-chart-background-color` | The background color for the entire chart | `transparent`
-`--px-simple-line-chart-border-color` | The top and bottom border color | `#000000`
-`--px-simple-line-chart-grid-color` | The background grid color | `#E4E4EA`
-`--px-simple-line-chart-bottom-color` | The bottom divider color | `transparent`
-`--px-simple-line-chart-axis-bar-color` | The axis background color | `#F7F7FC`
-`--px-simple-line-chart-axis-label-color` | The axis text label color | `#7C7C84`
-`--px-simple-line-chart-axis-label-font-weight` | The axis text font weight | `lighter`
-`--px-simple-line-chart-line-color` | The data line color | `#01B2E5`
-`--px-simple-line-chart-theshold-line-color` | The data comparison threshold color | `#FAA43A`
+Custom property | Description
+----------------|-------------
+`--px-simple-line-chart-background-color` | The background color for the entire chart
+`--px-simple-line-chart-border-color` | The top and bottom border color
+`--px-simple-line-chart-grid-color` | The background grid color
+`--px-simple-line-chart-bottom-color` | The bottom divider color
+`--px-simple-line-chart-axis-bar-color` | The axis background color
+`--px-simple-line-chart-axis-label-color` | The axis text label color
+`--px-simple-line-chart-axis-label-font-weight` | The axis text font weight
+`--px-simple-line-chart-line-color` | The data line color
+`--px-simple-line-chart-threshold-line-color` | The data comparison threshold color
 
 @element px-simple-line-chart
 @blurb Simple line chart component
@@ -57,43 +57,21 @@ Custom property | Description | Default
 
     behaviors: [pxSimpleChartCommonBehavior],
 
-    defaultChartData: [
-      [1, 2, 3, 4, 5, 6, 7]
-    ],
-
-    minimumHeight: 10,
-    minimumWidth: 30,
-
-    /**
-     * Properties block, expose attribute values to the DOM via 'reflect'
-     *
-     * @property properties
-     * @type Object
-     */
     properties: {
 
       /**
        * This property defines the series data to be charted. It needs to be passed in as a multi-dimensional array containing one or more arrays of numeric value pairs.
-       *
-       *     <px-simple-line-chart
-       *       line-data="[ [1,2], [2,3], [3,4] ]">
-       *     </px-simple-line-chart>
        */
       lineData: {
         type: Array,
         observer: '_drawChart',
         value: function() {
-          return this.defaultChartData;
+          return [1, 2, 3, 4, 5, 6, 7];
         }
       },
 
       /**
-       * define a threshold value to draw a thin orange line across the chart at the y-axis position representing the threshold point.
-       *
-       *     <px-simple-line-chart
-       *       threshold="1.5">
-       *     </px-simple-line-chart>
-       *
+       * Define a threshold value to draw a thin line across the chart at the y-axis position representing the threshold point.
        */
       threshold: {
         type: String,
@@ -101,17 +79,7 @@ Custom property | Description | Default
       },
 
       /**
-       * define custom text for your threshold label. Pass in the value as a string. Set the value to 'false' to remove the threshold label.
-       *
-       *      <px-simple-line-chart
-       *        ...
-       *        threshold-label="Custom Label">
-       *      </px-simple-line-chart>
-       *
-       *      <px-simple-line-chart
-       *         ...
-       *         threshold-label="false">
-       *      </px-simple-line-chart>
+       * Define custom text for your threshold label. Pass in the value as a string. Set the value to 'false' to remove the threshold label.
        */
       thresholdLabel: {
         type: String,
@@ -119,12 +87,7 @@ Custom property | Description | Default
       },
 
       /**
-       * define an upper bound of your data
-       *
-       *      <px-simple-line-chart
-       *        ...
-       *        max="2">
-       *      </px-simple-line-chart>
+       * Define an upper bound for your data.
        */
       max: {
         type: String,
@@ -132,12 +95,7 @@ Custom property | Description | Default
       },
 
       /**
-       * define a lower bound of your data
-       *
-       *      <px-simple-line-chart
-       *        ...
-       *        min="1">
-       *      </px-simple-line-chart>
+       * Define a lower bound for your data.
        */
       min: {
         type: String,
@@ -145,18 +103,9 @@ Custom property | Description | Default
       },
 
       /**
-       * define custom text for a chart's max label. The values of your max will be used by default to render text labels to the axis bar on the left side of the chart.
+       * Define custom text for a chart's max label.
+       * The values of your max will be used by default to render text labels to the axis bar on the left side of the chart.
        * Set the value to 'false' to remove the label from the axis bar.
-       *
-       *      <px-simple-line-chart
-       *        ...
-       *        max-label="Custom Label">
-       *      </px-simple-line-chart>
-       *
-       *      <px-simple-line-chart
-       *        ...
-       *        max-label="false">
-       *      </px-simple-line-chart>
        */
       maxLabel: {
         type: String,
@@ -164,18 +113,9 @@ Custom property | Description | Default
       },
 
       /**
-       * define custom text for a chart's min label. The values of your min will be used by default to render text labels to the axis bar on the left side of the chart.
+       * Define custom text for a chart's min label.
+       * The values of your min will be used by default to render text labels to the axis bar on the left side of the chart.
        * Set the value to 'false' to remove the labels from the axis bar.
-       *
-       *      <px-simple-line-chart
-       *        ...
-       *        min-label="Custom Label">
-       *      </px-simple-line-chart>
-       *
-       *      <px-simple-line-chart
-       *        ...
-       *        min-label="false">
-       *      </px-simple-line-chart>
        */
       minLabel: {
         type: String,
@@ -183,12 +123,7 @@ Custom property | Description | Default
       },
 
       /**
-       * define the grid lines columns to be drawn in the background of the chart.
-       *
-       *      <px-simple-line-chart
-       *         ...
-       *         columns="25"
-       *      </px-simple-line-chart>
+       * The number of vertical grid lines to be drawn in the background of the chart.
        */
       columns: {
         type: Number,
@@ -197,12 +132,7 @@ Custom property | Description | Default
       },
 
       /**
-       * define the grid lines rows to be drawn in the background of the chart.
-       *
-       *      <px-simple-line-chart
-       *         ...
-       *         rows="10"
-       *      </px-simple-line-chart>
+       * The number of horizontal grid lines to be drawn in the background of the chart.
        */
       rows: {
         type: Number,
@@ -211,9 +141,7 @@ Custom property | Description | Default
       },
 
       /**
-       * define the padding in the chart
-       *
-       *
+       * The padding in the chart.
        */
       padding: {
         type: String,
@@ -221,9 +149,7 @@ Custom property | Description | Default
       },
 
       /**
-       * definen the max data points in the chart
-       *
-       * Format: Number
+       * The max data points in the chart.
        */
       maxDataPoints: {
         type: Number,
@@ -232,10 +158,7 @@ Custom property | Description | Default
     },
 
     /**
-     * @method addPoint adds a point to the chart
-     *
-     *
-     * @param {Array} [Number, Number]
+     * Adds a point to the chart.
      */
     addPoint: function(point) {
       if (this.lineData.length >= this.maxDataPoints) {
@@ -246,9 +169,8 @@ Custom property | Description | Default
     },
 
     /**
-     * @method _drawChartDebounced
-     * the main function of this componet which
-     * calls all of the subordinate functions to draw/redraw the chart
+     * The main function of this component which
+     * calls all of the subordinate functions to draw/redraw the chart.
      */
     _drawChartDebounced: function() {
       if (this.lineData) {
@@ -346,7 +268,7 @@ Custom property | Description | Default
       if (parseFloat(value) || parseFloat(value) === 0) {
         return parseFloat(value);
       } else {
-        return false; // empty string evaluates to false
+        return false;
       }
     },
 

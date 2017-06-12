@@ -1,6 +1,7 @@
 v2.0.0
 ==================
 * update dependencies for design refresh
+* component redesign, remove default styles
 
 v1.7.8
 ==================
