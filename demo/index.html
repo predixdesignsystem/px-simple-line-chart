@@ -114,17 +114,7 @@
           return [
             { configName: "Simple",
               configShowProps: ['lineData','width','height','columns','rows'],
-              lineData: data,
-              width: "auto",
-              height: "200",
-              min: "",
-              max: "",
-              columns: "8",
-              rows: "5",
-              threshold: "",
-              minLabel: "",
-              maxLabel: "",
-              thresholdLabel: ""},
+              configReset: true },
 
             { configName: "Full config",
               lineData: data,
@@ -158,7 +148,7 @@
 
       lineData: {
         type: Array,
-        defaultValue: '[ [1,2], [2,3], [3,4] ]',
+        defaultValue: [ [1,2], [2,3], [3,4] ],
         inputType: 'code:JSON'
       },
 
