@@ -8,6 +8,21 @@
  * under which the software has been supplied.
  */
 
+ // Settings
+
+ // Tools
+
+ // Generic
+ @import "px-normalize-design/_generic.normalize.scss";
+ @import "px-box-sizing-design/_generic.box-sizing.scss";
+
+ // Base
+
+ // Meta
+
+ // Objects
+
+ // Component
 svg.px-simple-line-chart-svg {
   background: var(--px-simple-line-chart-background-color, transparent);
   overflow: hidden;
@@ -51,3 +66,5 @@ text.axisLabel {
   stroke: var(--px-simple-line-chart-threshold-line-color, orange);
   stroke-width: 1;
 }
+
+// Trumps
