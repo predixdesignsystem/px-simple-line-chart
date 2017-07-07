@@ -21,7 +21,7 @@
     "npm-debug.log"
   ],
   "dependencies": {
-    "polymer": "^v1.6.1",
+    "polymer": "^1.9.0",
     "d3": "~3.5.6",
     "px-simple-chart-common-behavior": "^2.0.0",
     "iron-ajax": "PolymerElements/iron-ajax#~1.4.3",
