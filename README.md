@@ -1,7 +1,5 @@
 #Px-Simple-Line-Chart [![Build Status](https://travis-ci.org/PredixDev/px-simple-line-chart.svg?branch=master)](https://travis-ci.org/PredixDev/px-simple-line-chart)
 
-[![px-simple-line-chart demo](px-simple-line-chart.png?raw=true)](https://predixdev.github.io/px-simple-line-chart/px-simple-line-chart)
-
 ## Overview
 
 Px-Simple-Line-Chart is a Predix UI component.
