@@ -1,10 +1,8 @@
-#Px-Simple-Line-Chart [![Build Status](https://travis-ci.org/PredixDev/px-simple-line-chart.svg?branch=master)](https://travis-ci.org/PredixDev/px-simple-line-chart)
+# px-simple-line-chart [![Build Status](https://travis-ci.org/PredixDev/px-simple-line-chart.svg?branch=master)](https://travis-ci.org/PredixDev/px-simple-line-chart)
 
 ## Overview
 
-Px-Simple-Line-Chart is a Predix UI component.
-
-Use the px-simple-line-chart component to visualize a series of numeric values as a line chart. The series is represented by a thin blue line connecting a sequence of points, the position of each proportionally point representing a single coordinate value.
+Px-simple-line-chart is a Predix UI component used to visualize a series of numeric values as a line chart. The series is represented by a thin blue line connecting a sequence of points, the position of each proportionally point representing a single coordinate value.
 
 Optionally, a `threshold` value may be defined to draw a thin orange line horizontally at the y-axis point representing the value. By default a threshold label will be drawn in an axis bar on the left side of the chart. If a custom threshold label is necessary a string may also be passed to the component as `threshold-label`.
 
@@ -12,7 +10,7 @@ In addition, a `min` and `max` may be configured in order to scope the chart to 
 
 The `width` and `height` of the component are also configurable as well as the vertical columns and horizontal rows drawn in the background of the coordinate space.
 
-We recommend viewing the Demo page to become aware of the configuration possibilities. We also recommend using the default settings as they are designed for proper performance.
+We recommend viewing the demo page to see all the various configuration possibilities. We also recommend using the default settings as they are designed for proper performance.
 
 <hr />
 ## Usage
@@ -49,7 +47,7 @@ Finally, use the component in your application:
 <br />
 <hr />
 
-## documentation
+## Documentation
 
 Read the full API and view the demo [here](https://predixdev.github.io/px-simple-line-chart).
 
