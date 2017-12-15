@@ -18,55 +18,57 @@
 <!-- Demo DOM module -->
 <dom-module id="px-simple-line-chart-demo">
   <template>
-    <style include="px-demo-styles" is="custom-style"></style>
+    <custom-style>
+      <style include="px-demo-styles" is="custom-style"></style>
+    </custom-style>
 
     <!-- Header -->
     <px-demo-header
-        module-name="px-simple-line-chart"
-        description="The Simple Line Chart provides a quick way to visualize linear data. Configuration options include
-        setting the minimum and maximum values for the Y-axis, whether or not to include a orange horizontal line
-        at a certain threshold value, setting the number of vertical and horizontal grid marks; and customizing
-        the labels of the min, max, and threshold."
-        mobile tablet desktop>
+      module-name="px-simple-line-chart"
+      description="The Simple Line Chart provides a quick way to visualize linear data. Configuration options include
+      setting the minimum and maximum values for the Y-axis, whether or not to include a orange horizontal line
+      at a certain threshold value, setting the number of vertical and horizontal grid marks; and customizing
+      the labels of the min, max, and threshold."
+      mobile tablet desktop>
     </px-demo-header>
 
     <!-- Interactive -->
     <px-demo-interactive>
       <!-- Configs -->
-      <px-demo-configs configs="[[configs]]" props="{{props}}" chosen-config="{{chosenConfig}}"></px-demo-configs>
+      <px-demo-configs slot="px-demo-configs" configs="[[configs]]" props="{{props}}" chosen-config="{{chosenConfig}}"></px-demo-configs>
 
       <!-- Props -->
-      <px-demo-props props="{{props}}" config="[[chosenConfig]]"></px-demo-props>
+      <px-demo-props slot="px-demo-props" props="{{props}}" config="[[chosenConfig]]"></px-demo-props>
 
       <!-- Code Editor -->
-      <px-demo-code-editor props="{{props}}"></px-demo-code-editor>
+      <px-demo-code-editor slot="px-demo-code-editor" props="{{props}}"></px-demo-code-editor>
 
       <!-- Component ---------------------------------------------------------->
-      <px-demo-component>
-
+      <px-demo-component slot="px-demo-component">
         <div>
           <px-simple-line-chart
-              width="{{props.width.value}}"
-              height="{{props.height.value}}"
-              min="{{props.min.value}}"
-              max="{{props.max.value}}"
-              columns="{{props.columns.value}}"
-              rows="{{props.rows.value}}"
-              line-data="{{props.lineData.value}}"
-              threshold="{{props.threshold.value}}"
-              min-label="{{props.minLabel.value}}"
-              max-label="{{props.maxLabel.value}}"
-              threshold-label="{{props.thresholdLabel.value}}"
-              max-data-points="{{props.maxDataPoints.value}}" >
+            width="{{props.width.value}}"
+            height="{{props.height.value}}"
+            min="{{props.min.value}}"
+            max="{{props.max.value}}"
+            columns="{{props.columns.value}}"
+            rows="{{props.rows.value}}"
+            line-data="{{props.lineData.value}}"
+            threshold="{{props.threshold.value}}"
+            min-label="{{props.minLabel.value}}"
+            max-label="{{props.maxLabel.value}}"
+            threshold-label="{{props.thresholdLabel.value}}"
+            max-data-points="{{props.maxDataPoints.value}}" >
           </px-simple-line-chart>
         </div>
       </px-demo-component>
       <!-- END Component ------------------------------------------------------>
 
       <px-demo-component-snippet
-          element-properties="{{props}}"
-          element-name="px-simple-line-chart"
-          scripts-includes=[[scriptsIncludes]]>
+        slot="px-demo-component-snippet"
+        element-properties="{{props}}"
+        element-name="px-simple-line-chart"
+        scripts-includes=[[scriptsIncludes]]>
       </px-demo-component-snippet>
     </px-demo-interactive>
 

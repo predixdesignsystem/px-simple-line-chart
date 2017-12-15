@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="../favicon.ico" />
+        <title>px-simple-line-chart test</title>
+        <!-- Requires Webcomponents.js polyfill is provided by the page for browsers that don't support html imports -->
+        <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+        <script src="../../web-component-tester/browser.js"></script>
+        <script src="px-simple-line-chart-tests.js"></script>
+        <!-- Import custom element. Note: see comment about relative paths to dependencies in the *.html file referenced below -->
+        <link rel="import" href="../px-simple-line-chart.html" />
+    </head>
+    <body>
+        <px-simple-line-chart id="fixture"></px-simple-line-chart>
+        <div style="width:320px; height:100px;">
+            <px-simple-line-chart id="fixture1" width="auto" height="auto"></px-simple-line-chart>
+        </div>
+
+    </body>
+</html>
